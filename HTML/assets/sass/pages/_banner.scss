@@ -1,0 +1,109 @@
+.banner {
+    $banner: &;
+
+    &__image {
+        display: block;
+        overflow: hidden;
+        position: relative;
+        @include border-radius(10px);
+    }
+
+    //
+    &__productAdvert {
+        .heading {
+            &__title {
+                &::before,
+                &::after {
+                    background-color: $gray-400;
+                }
+            }
+        }
+
+        .slick {
+            &-arrow {
+                color: $gray-700;
+                background-color: transparent;
+            }
+
+            &-next {
+                right: 30px;
+            }
+
+            &-prev {
+                left: 40px;
+            }
+        }
+
+        &-section {
+            background-color: $gray-100;
+        }
+
+        &-inner {
+            width: 100%;
+            height: 100%;
+        }
+
+        &-slide__inner {
+            padding: 4% 10%;
+            position: relative;
+        }
+
+        #{$banner}__item {
+            &-inner {
+                padding-top: 50%;
+                position: relative;
+                overflow: hidden;
+
+                img {
+                    @include imgObject(cover);
+                }
+            }
+        }
+
+        .product {
+            &__item {
+                margin: 0px !important;
+                padding-left: 0.25rem !important;
+                padding-right: 0.25rem !important;
+            }
+
+            &__inner {
+                padding: .625rem;
+                background-color: $white;
+            }
+        }
+    }
+    
+    @include bp('max-width', '767px') {
+        &__productAdvert {
+            &-slide__inner {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .slick {
+                &-prev {
+                    left: 10px;
+                }
+
+                &-next {
+                    right: 10px;
+                }
+            }
+
+            .product {
+                &__price {
+                    -webkit-flex-direction: column;
+                    flex-direction: column;
+                    -webkit-justify-content: flex-start !important;
+                    justify-content: flex-start !important;
+
+                    > * {
+                        width: 100%;
+                        margin-left: 0px !important;
+                    }
+                }  
+            }
+        }
+    }
+}

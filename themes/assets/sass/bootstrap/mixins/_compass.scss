@@ -1,0 +1,41 @@
+@mixin box-sizing($value) {
+	-webkit-box-sizing: $value;
+			box-sizing: $value;
+}
+
+@mixin appearance($value) {
+	-webkit-appearance: $value;
+			appearance: $value;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: ($opacity * 100); 
+  filter: alpha(opacity=$opacity-ie);
+  -moz-opacity: $opacity;
+}
+
+@mixin translate3d($X,$Y,$Z) {
+	-webkit-transform: translate3d($X, $Y, $Z);
+    		transform: translate3d($X, $Y, $Z);
+}
+
+@mixin translate($X, $Y) {
+	-webkit-transform: translate($X, $Y);
+    		transform: translate($X, $Y);
+}
+
+@mixin translateX($value) {
+	-webkit-transform: translateX($value);
+			transform: translateX($value);
+}
+
+@mixin translateY($value) {
+	-webkit-transform: translateY($value);
+			transform: translateY($value);
+}
+
+@mixin rotate($value) {
+	-webkit-transform: rotate($value);
+            transform: rotate($value);
+}

@@ -1,0 +1,20 @@
+.user {
+    $user: &;
+    
+    &__avatar {
+        margin-bottom: 1rem;
+    }
+
+    &__image {
+        width: 100px;
+        height: 100px;
+        margin: 0px auto;
+        @include border-radius(50%);
+        position: relative;
+        overflow: hidden;
+
+        img {
+            @include imgObject(cover);
+        }
+    }
+}

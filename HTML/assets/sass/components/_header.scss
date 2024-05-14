@@ -1,0 +1,355 @@
+.header {
+    $header: &;
+    padding: .625rem 0px;
+    background-color: $white;
+
+    @include bp('max-width', '1023px') {
+        padding-bottom: 0px;
+
+        .btnNavigationMenu {
+            color: $gray-600;
+            font-size: 1.125rem;
+            position: absolute;
+            
+            left: 5px;
+            top: 5px;
+        }    
+    }
+
+    &__top {
+        @include bp('max-width', '1023px') {
+            padding: 0px;
+            position: relative;
+        }
+    }
+
+    &__logo {
+        flex: 0 0 200px;
+        max-width: 200px;
+
+        @include bp('max-width', '1023px') {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @include bpminmax('1024px', '1199px') {
+            flex: 0 0 160px;
+            max-width: 160px;
+        }
+
+        @include media-breakpoint-up(lg) {
+            margin-right: 2rem;
+        }
+        
+        @include media-breakpoint-up(xl) {
+            margin-right: 3rem;
+        }
+    }
+
+    &__col {
+        margin-right: 1rem;
+
+        &:nth-last-of-type(1) {
+            margin-right: 0px;
+        }
+    }
+
+    //
+    // Search
+    //
+    &__search {
+        margin-right: 1rem;
+        
+        &-inner {
+            min-width: 320px;
+            position: relative;
+        }
+    
+        .btn {
+            color: $primary;
+            font-size: 20px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            position: absolute;
+            height: 100%;
+            right: 0px;
+            top: 0px;
+
+            > i {
+                position: relative;
+                top: -2px;
+            }
+
+            &-topSearch {
+                color: $gray-600;
+                font-size: 24px;
+                @include translateY(-50%);
+                top: 50%;
+            }
+
+            &-search {
+                padding-left: 10px;
+                padding-right: 1rem;
+            }
+
+            &:hover,
+            &:active {
+                color: $primary;
+            }
+        }
+
+        @include bp('max-width', '1023px') {
+            margin-top: 10px;
+            margin-right: 0px;
+            padding: .625rem 1rem;
+            background-color: $primary;
+        }
+
+        @include bpminmax('1024px', '1199px') {
+            &-inner {
+                min-width: 230px;
+            }
+        }
+
+        .dropdown-menu {
+            width: 100%;
+            @include border-radius(0);
+
+            .dropdown-inner {
+                width: 100%;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+
+            ul {
+                margin: 0px;
+                padding: 0px;
+                @include list-unstyled;
+
+                li {
+                    display: block;
+                    padding: 4px 10px;
+
+                    &:nth-child(odd) {
+                        background-color: #eee;
+                    }
+
+                    &:nth-child(even) {
+                        background-color: $white;
+                    }
+                }
+
+                .img {
+                    flex: 0 0 30px;
+                    margin-right: 8px;
+                }
+
+                .product__name {
+                    font-size: 14px;
+                }
+
+                .btn-remove-search {
+                    font-size: 12px;
+                    font-weight: bold;
+                    margin-left: 10px;
+                }
+            }
+
+            .category__latest {
+                padding: 0px 1rem;
+            }
+
+            .search-cat-list {
+                margin-bottom: 10px;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+
+                .img {
+                    max-width: 54px;
+                    display: block;
+                    margin: 0px auto;
+                }
+                .search-cat__name {
+                    font-size: 12px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    &__contact {
+        .contact-no {
+            padding-left: 2.625rem;
+            position: relative;
+
+            &:before {
+                content: '\e908';
+                color: $primary;
+                font-size: 1.875rem;
+                line-height: 1;
+                font-family: $font-icomoon-name;
+                @include translateY(-50%);
+                position: absolute;
+                left: 0px;
+                top: 50%;
+            }
+
+            a {
+                color: $gray-600;
+                font-size: 1rem;
+                line-height: 1;
+                font-weight: 700;
+                white-space: nowrap;
+                display: block;
+            }
+        }
+
+        @include bp('max-width', '1023px') {
+            display: none;
+        }
+
+        @include bpminmax('1024px', '1199px') {
+            margin-right: 0px;
+        }
+    }
+
+    &__nav {
+        .nav {
+            &-item {
+
+            }
+
+            &-link {
+                color: $gray-600;
+                font-size: 0.875rem;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+        }
+
+        @include bp('max-width', '1023px') {
+            display: none;
+        }
+
+        @include bpminmax('1024px', '1199px') {
+            .nav {
+                &-link {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+            }
+        }
+    }
+
+    &__cart {
+        margin-left: 1rem;
+        position: relative;
+    
+        > .btn-cart {
+            font-size: 1.5rem;
+            line-height: 1;
+            display: block;
+            @include box-shadow(none);
+            padding: 10px 25px 10px 10px;
+            position: relative;
+            border: none;
+    
+            &:after {
+                display: none;
+                visibility: hidden;
+            }
+    
+            #cart-total {
+                color: $white;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 22px;
+                width: 22px;
+                height: 22px;
+                text-align: center;
+                @include border-radius(50%);
+                background-color: $primary;
+                position: absolute;
+                right: 0px;
+                top: 0px;
+            }
+        }
+    
+        > .dropdown-menu {
+            right: 0px;
+            left: auto;
+            padding: 20px;
+            min-width: 315px;
+            border-color: $border-color;
+            @include border-radius(8px);
+            @include box-shadow(0px 4px 6px -2px rgba($black, 0.35));
+    
+            &:before {
+                left: auto;
+                right: 15px;   
+            }
+        }
+    
+        &.open > .dropdown-menu {
+            display: block;
+        }
+    
+        ul {
+            list-style: none;
+    
+            .item {
+                position: relative;
+            }
+    
+            .add-success {
+                width: 60px;
+                height: 60px;
+                color: $white;
+                text-align: center;
+                line-height: 60px;
+                padding-top: 5px;
+                @include border-radius(50%);
+                background-color: $green;
+                margin: 0px auto 10px;
+    
+                > span {
+                    font-size: 30px;
+                }
+            }
+    
+            .btn-close-cart {
+                color: $gray-500;
+                font-size: 20px;
+                position: absolute;
+                top: -5px;
+                right: 0px;
+    
+                &:hover {
+                    color: $gray-700;
+                }
+            }
+        }
+    
+        .buttons-set {
+            margin-bottom: 5px;
+    
+            .btn {
+                width: 100%;
+                display: block;
+                text-transform: none;
+                background-color: $red;
+                border-color: $red;
+                @include border-radius(4px);
+            }
+        }
+
+        @include bp('max-width', '1023px') {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+    }
+}

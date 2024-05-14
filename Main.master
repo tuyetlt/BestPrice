@@ -1,0 +1,28 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Main.master.cs" Inherits="Main" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%=Utils.HtmlDecode(SEO.meta_title) %></title>
+    <meta name="keywords" content="<%=Utils.HtmlDecode( SEO.meta_keyword) %>" />
+    <meta name="description" content="<%= Utils.HtmlDecode(SEO.meta_description) %>" />
+    <link rel="canonical" href="<%= SEO.canonical %>" />
+    <link rel="shortcut icon" href="<%= ConfigWeb.Icon %>" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% if (!Utils.IsNullOrEmpty(SEO.content_share_facebook))
+            Response.Write(SEO.content_share_facebook);%>
+    <%=Utils.LoadUserControl("~/Controls/HeaderLoad.ascx") %>
+</head>
+<body>
+     <%= ConfigWeb.CodeBody %>
+     <%=Utils.LoadUserControl("~/Controls/HeaderTop.ascx") %>
+     <%=Utils.LoadUserControl("~/Controls/WidgetMenu.ascx") %>
+    <div class="main">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        </asp:ContentPlaceHolder>
+        <%=Utils.LoadUserControl("~/Controls/Footer.ascx") %>
+    </div>
+    <%=Utils.LoadUserControl("~/Controls/FooterLoad.ascx") %>
+</body>
+</html>

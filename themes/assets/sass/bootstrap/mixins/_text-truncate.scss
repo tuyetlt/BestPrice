@@ -1,0 +1,16 @@
+// Text truncate
+// Requires inline-block or block for proper styling
+
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-ellipsis($number) {
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: $number;
+  -webkit-box-orient: vertical;
+}

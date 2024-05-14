@@ -1,0 +1,39 @@
+﻿@media screen and (max-width:1400px) {
+    .form-group > div:first-child {
+        width: 100%;
+        margin: 10px 0 7px;
+        font-weight: bold;
+         float: none; 
+         text-align:left;
+    }
+    .form-group > div:last-child{
+        width:100%;
+        float:none;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .left-panel{position:fixed;z-index:99; display:none}
+    .right-panel{margin-left:0}
+    .top-panel{overflow:hidden; height:auto}
+        .top-panel .admin-info{
+            left:60px;
+            float:none
+        } 
+        .top-panel a#menu {
+            position: absolute;
+            top: 10px;
+            right: 10px
+        }
+
+    .form-group button[type="submit"]{
+        margin:10px 0 0;
+    }
+
+    .edit .left{
+        width:100%;
+    }
+    .edit .right {
+        width: 100%;
+    }
+}

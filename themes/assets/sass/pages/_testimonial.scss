@@ -1,0 +1,55 @@
+.testimonials {
+    padding: 2.875rem 0px 4.625rem;
+    background-color: $gray-200;
+
+    &__section {
+        position: relative;
+
+        .slick-dots {
+            bottom: -35px;
+        }
+    }
+
+    &__name {
+        font-size: 1rem;
+        margin-bottom: .625rem;
+    }
+
+    &__item {
+        padding: 0px .5rem;
+    }
+
+    &__inner {
+        padding: 1.25rem;
+        background-color: $white;
+    }
+
+    &__info {
+        p {
+            &:nth-last-of-type(1) {
+                margin-bottom: 0px;
+            }
+        }
+    }
+
+    @include bp('max-width', '1023px') {
+        &__inner {
+            padding: 1.25rem;
+            background-color: $white;
+        }
+    }
+
+    @include bp('min-width', '1024px') {
+        &__item {
+            padding-left: 0.625rem;
+            padding-right: 0.625rem;
+        }
+    }
+
+    @include bp('min-width', '1200px') {
+        &__item {
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+        }
+    }
+}

@@ -1,0 +1,126 @@
+﻿<div style="max-width: 800px; margin: 0 auto; border:0px solid #00BEF2; font-family:Arial; font-size:10pt">
+    <table cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>
+                    <p style="text-align:right;">
+                        <span style="font-size: 11pt; display: block; border: 3px dotted #dbdbdb; background:#ededed; padding: 5px 10px;  float:right">Đơn hàng số: {OrderID} </span>
+                    </p>
+                    <div style="clear:both">
+                        &nbsp;
+                    </div>
+                    <p>
+                        Xin kính chào quý khách <b>{Name}</b>,
+                    </p>
+                    <p>
+                        Cảm ơn quý khách đã đặt hàng tại <a href="{SiteLink}">{SiteName}</a>. Thông tin đặt hàng của quý khách như sau:
+                    </p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td width="150">
+                                    <b>Họ và tên:</b>
+                                </td>
+                                <td>
+                                    {Name}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Điện thoại:</b>
+                                </td>
+                                <td>
+                                    {Tel}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Email:</b>
+                                </td>
+                                <td>
+                                    {Email}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Địa chỉ:</b>
+                                </td>
+                                <td>
+                                    {Address}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Ngày đặt hàng:</b>
+                                </td>
+                                <td>
+                                    {Date}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="border-top:1px dotted #dbdbdb; height:10px; margin-top:10px; clear:both; width:50%">
+                        &nbsp;
+                    </div>
+                    <p>
+                        Ghi chú: {Note}
+                    </p>
+                    <div style="border-top:1px dotted #dbdbdb; height:10px; margin-top:10px; clear:both; width:50%">
+                        &nbsp;
+                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td width="200">
+                                    <b>Phương thức thanh toán</b>
+                                </td>
+                                <td>
+                                    {payment_menthod}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        &nbsp;
+                    </p>
+                    
+                    <table border="0" cellpadding="5" cellspacing="5" rules="all" style="width: 100%; border: 1px solid #999">
+                        <tbody>
+                            <tr align="center" style="background-color: #ededed; font-weight: bold;">
+                                <td>
+                                    Hình ảnh
+                                </td>
+                                <td>
+                                    Tên sản phẩm
+                                </td>
+                                <td>
+                                    Số lượng
+                                </td>
+                                <td>
+                                    Đơn giá
+                                </td>
+                                <td>
+                                    Thành tiền
+                                </td>
+                            </tr>
+                            {ProductList}
+                        </tbody>
+                    </table>
+                    <p style="margin-top:10px; text-align:right">
+                        Tổng tiền: <span style="color: #FF0000; font-weight: bold">{TongTien}</span>
+                    </p>
+                    <p>
+                        Nếu có bất cứ vấn đề gì cần hỗ trợ hãy liên hệ ngay với chúng tôi qua số điện thoại (Zalo): {tel_web}, Email: <a href="mailto:{email_web}">{email_web}</a> hoặc <a href="{{facebook_web}}">facebook chat</a>. <a href="{SiteLink}">{SiteName}</a> luôn sẵn sàng phục vụ quý khách
+                    </p>
+                    <p>
+                        Trân trọng cảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của <a href="{SiteLink}">{SiteName}</a> trong suốt thời gian qua.
+                    </p>
+                    <p style="text-align:right">
+                        Ban quản trị <a href="{SiteLink}">{SiteName}</a>.
+                    </p>
+                </td>
+            </tr>
+         
+        </tbody>
+    </table>
+</div>

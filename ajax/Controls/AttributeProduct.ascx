@@ -1,0 +1,1 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="AttributeProduct.ascx.cs" Inherits="ajax_Controls_AttributeProduct" %>

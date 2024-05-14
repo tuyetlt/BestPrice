@@ -1,0 +1,299 @@
+.main {
+    &__wrapper {
+        padding-top: 35px;
+        padding-bottom: 35px;
+
+        @include media-breakpoint-up(lg) {
+            padding-bottom: 3rem;
+        }
+    
+        @include media-breakpoint-up(xl) {
+            padding-bottom: 4rem;
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        .two-column {
+            .column__left {
+                padding-right: 1.25rem;
+            }
+            
+            .column__right {
+                padding-left: 1.25rem;
+            }
+        }
+    }
+
+    @include media-breakpoint-up(xl) {
+        .two-column {
+            .column__left,
+            .column__right {
+                flex: 0 0 300px;
+            }
+
+            .column__main {
+                flex: 0 0 calc(100% - 300px);
+            }
+        }
+    }
+}
+
+.page {
+    $page: &;
+
+    &__title {
+        margin-bottom: 1.25rem;
+    }
+
+    &__heading {
+        margin-bottom: 2rem;
+
+        #{$page}__title {
+            color: $primary;
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            margin-bottom: 0px;
+        
+            &::after {
+                content: '';
+                width: 200px;
+                height: 2px;
+                display: block;
+                background-color: $primary;
+                margin: 1rem auto 0px;
+            }
+        
+            &.on-left {
+                &::after {
+                    margin-left: 0px;
+                }
+            }
+        
+            @include media-breakpoint-up(sm) {
+                font-size: 1.625rem;
+            }
+        
+            @include media-breakpoint-up(lg) {
+                font-size: 2rem;
+            }
+        }
+        
+        @include media-breakpoint-up(lg) {
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+.heading {
+    $heading: &;
+    margin-bottom: 1.625rem;
+
+    &__title {
+        @extend .d-flex;
+        @extend .align-items-center;
+        font-size: 1.25rem;
+        text-transform: uppercase;
+        margin-bottom: 0px;
+
+        &::before,
+        &::after {
+            content: '';
+            height: 2px;
+            @extend .col;
+            background-color: $primary;
+        }
+
+        span {
+            margin: 0px 1.25rem;
+        }
+    }
+
+    @include media-breakpoint-up(sm) {
+        margin-bottom: 2.5rem;
+    }
+      
+    @include media-breakpoint-up(md) {
+        margin-bottom: 3rem;
+    }
+      
+    @include media-breakpoint-up(lg) {
+        margin-bottom: 3.75rem;
+
+        &__title {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+// Tags
+.tags {
+    $tags: &;
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 6px 6px; 
+
+    &__item {
+        font-size: .875rem;
+        padding: 4px .875rem;
+        @include border-radius(4px);
+        background-color: $gray-100;
+        border: 1px solid rgba($border-color, 35%);
+
+        &:hover,
+        &.active {
+            color: $white;
+            background-color: $primary;
+        }
+    }
+}
+
+// Rating
+.rating {
+    $rating: &;
+    color: $primary;
+    font-size: 1rem;
+    line-height: 1rem;
+    margin-bottom: .625rem;
+
+    &__inner {
+        width: 5.5625rem;
+        height: 1rem;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '\f006 \f006 \f006 \f006 \f006';
+            font-family: 'icomoon';
+            letter-spacing: 3px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    &__pre {
+        height: 100%;
+        display: block;
+        overflow: hidden;
+        position: absolute;
+        top: 0px;
+        left: 0px; 
+        
+        &::before {
+            content: '\f005 \f005 \f005 \f005 \f005';
+            font-family: 'icomoon';
+            letter-spacing: 3px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}
+
+.txt-link {
+    color: $link-hover-color;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.bg-frame {
+    display: block;
+    padding: 1rem 20px;
+    @include border-radius(4px);
+    border: 1px solid $border-color;
+    background-color: rgba($border-color, 0.15);
+}
+
+// Format slider button
+.moduleProductSlideshow {
+    &__wrap {
+        display: block;
+        position: relative;
+
+        .slick-arrow {
+            visibility: hidden;
+            @include opacity(0);
+        }
+
+        .slick-prev {
+            left: 20px;
+        }
+
+        .slick-next {
+            right: 20px;
+        }
+
+        &:hover {
+            .slick-arrow {
+                visibility: visible;
+                @include opacity(1);
+            }
+
+            .slick-prev {
+                left: 0px;
+            }
+
+            .slick-next {
+                right: 0px;
+            }
+        }
+    }
+
+    &__section {
+        position: relative;
+        overflow: hidden;
+
+        &-inner {
+            margin-left: -0.625rem;
+            margin-right: -0.625rem;
+        }
+    }
+}
+
+// Text Ellipsis
+@each $ellipsis, $value in $text-ellipsis {
+    .text-ellipsis-#{$ellipsis} {
+        @include text-ellipsis($value);
+    }
+}
+
+// Font size
+@each $size, $value in $font-sizes-body {
+    .fs-#{$size} {
+        font-size: $value;
+    }
+}
+
+// Min Width
+@each $width, $value in $min-widths {
+    .min-w-#{$width} {
+        min-width: $value;
+    }
+}
+
+@include bp('max-width', '1023px') {
+    .hidden-xs-sm {
+        display: none !important;
+        visibility: hidden !important;
+        @include opacity(0);
+    }
+}
+
+@include bp('max-width', '767px') {
+    .hidden-xs {
+        display: none !important;
+        visibility: hidden !important;
+        @include opacity(0);
+    }
+}
+
+@include bp('min-width', '1024px') {
+    .hidden-md {
+        display: none !important;
+        visibility: hidden !important;
+        @include opacity(0);
+    }
+}

@@ -1,0 +1,32 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Admin.master.cs" Inherits="admin_Admin" %>
+
+<%@ Register Src="~/admin/Controls/AdminControl/TopPanel.ascx" TagPrefix="uc1" TagName="TopPanel" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title><%=Utils.HtmlDecode(SEO.meta_title) %></title>
+    <meta name="keywords" content="<%=Utils.HtmlDecode( SEO.meta_keyword) %>" />
+    <meta name="description" content="<%= Utils.HtmlDecode(SEO.meta_description) %>" />
+    <link rel="canonical" href="<%= SEO.canonical %>" />
+    <link rel="shortcut icon" href="/admin/images/admin-panel.png" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property='og:image' content='<%= C.ROOT_URL %>/admin/images/Use-Invoicing-Software.jpg' />
+
+    <%=Utils.LoadUserControl("~/admin/Controls/AdminControl/HeaderLoad.ascx") %>
+    <%= ConfigWeb.CodeHeader %>
+</head>
+<body>
+    <%= ConfigWeb.CodeBody %>
+    <%=Utils.LoadUserControl("~/admin/Controls/AdminControl/LeftPanel.ascx") %>
+    <div class="right-panel">
+           <%-- <%=Utils.LoadUserControl("~/admin/Controls/TopPanel.ascx") %>--%>
+        <uc1:TopPanel runat="server" ID="TopPanel" />
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <%=Utils.LoadUserControl("~/admin/Controls/AdminControl/FooterLoad.ascx") %>
+</body>
+</html>

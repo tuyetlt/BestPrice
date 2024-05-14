@@ -1,0 +1,46 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Login.master.cs" Inherits="login_Login" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Đăng nhập hệ thống</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property='og:image' content='/login/images/login.jpg' />
+    <link rel="icon" type="image/png" href="/login/images/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/login/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/login/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/login/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="/login/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/login/css/main.css">
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/MotionCAPTCHA/jquery.motionCaptcha.0.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/js/MotionCAPTCHA/jquery.motionCaptcha.0.2.css" />
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt">
+                    <img src="/login/images/img-01.png" alt="IMG">
+                </div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/tilt/tilt.jquery.min.js"></script>
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+
+  <body>
+    <h1>Dynamic Pagination</h1>
+    <div class="page-container">
+      <button class="first-page" disabled>
+        <i class="fas fa-angle-double-left"></i>
+      </button>
+      <button class="prev-page" disabled>
+        <i class="fas fa-angle-left"></i>
+      </button>
+      <div id="pagination"></div>
+      <button class="next-page">
+        <i class="fas fa-angle-right"></i>
+      </button>
+      <button class="last-page">
+        <i class="fas fa-angle-double-right"></i>
+      </button>
+    </div>
+
+    <div class="settings">
+      <div class="form-input">
+        <label for="">Truncation</label>
+        <div class="wrapper-form-check">
+          <div class="form-check">
+            <input
+              class="check"
+              type="radio"
+              checked
+              name="enable"
+              id="enable"
+            />
+            <label for="enable">Enable</label>
+          </div>
+          <div class="form-check">
+            <input class="check" type="radio" name="enable" id="disable" />
+            <label for="disable">Disable</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-input">
+        <label for="pages">Number of pages:</label>
+        <input type="number" min="1" id="pages" value="10" />
+      </div>
+      <div class="form-input">
+        <label for="curpage">Current page:</label>
+        <input type="number" min="1" id="curpage" value="1" />
+      </div>
+
+      <div class="form-input">
+        <label for="delta">Number of links two side of current page</label>
+        <input type="number" id="delta" min="1" max="5" value="1" />
+      </div>
+    </div>
+
+    <script src="/paging/src/index.js"></script>
+  </body>
+</html>

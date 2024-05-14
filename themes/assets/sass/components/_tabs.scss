@@ -1,0 +1,49 @@
+.tabs {
+    $tabs: &;
+  
+    &__nav {
+        padding: 0px;
+        border: none;
+        margin-bottom: 1.875rem;
+        background: transparent;
+        @include border-radius(0);
+        flex-wrap: wrap;
+
+        > li {
+            padding: 0px;
+            margin-right: .25rem;
+            list-style-type: none;
+            background: transparent;
+            border: none;
+
+            &:nth-last-of-type(1) {
+                margin-right: 0px;
+            }
+
+            &.active {
+                a {
+                    color: $white;
+                    background-color: $primary;
+                    @include border-radius(22px);
+                }
+            }
+        }
+        
+        &-link {
+            display: block;
+            padding: 0.5rem 1rem;
+        }
+    }
+
+    &__content {
+        #{$tabs}__pane {
+            padding: 0px;
+            border: none;
+
+            .slick-arrow {
+                font-family: inherit;
+                font-size: 0;
+            }
+        }
+    }
+}
