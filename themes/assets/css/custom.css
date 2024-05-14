@@ -220,9 +220,21 @@
     background: #004ebd;
     color: #fff;
 }
-.filter-ajax{
-    padding:0px 10px 20px;
+.filted #filted {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10px;
 }
+    .filted #filted a {
+        background: #159bf38c;
+        font-size: 12px;
+        padding: 2px 5px;
+        border-radius: 7px;
+        margin:3px;
+    }
+    .filter-ajax {
+        padding: 0px 10px 20px;
+    }
     .filter-ajax .title-sidebar {
         font-size: 16px;
         line-height: 30px;
@@ -706,7 +718,7 @@
     width: 14px;
     height: 14px;
     margin-right: 5px;
-    accent-color: #b86966;
+    accent-color: #004ebd;
 }
 
 .sidebar__filters #filted
