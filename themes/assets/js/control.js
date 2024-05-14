@@ -109,10 +109,15 @@ function ShowMore(pageIndex, fistLoad) {
 
 
     //alert(leftProduct);
-    if (leftProduct < 1)
+    if (leftProduct < 1) {
         $(".show-more").hide();
-    else
+        $(".section-readmore-cate").hide();
+    }
+    else {
         $(".show-more").show();
+        $(".section-readmore-cate").show();
+    }
+       
     //alert(TotalProduct + ", " + pageIndex);
     $("#category_paging").text("Xem thêm (" + leftProduct + " sản phẩm)");
 }
