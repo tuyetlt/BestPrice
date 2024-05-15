@@ -160,11 +160,11 @@ function GetAttributeProduct() {
                         }
                         //console.log(categoryName + " - " + itemChild.Name);
 
-                        htmlContent += "<input" + selected + " type='checkbox' class='checkboxAttr' onclick='GetValueFromAttr()' id='checkboxAttr_" + itemChild.ID + "' data-url='" + itemChild.FriendlyUrl + "' data-url-parent='" + itemChild.FriendlyUrlParent + "' data-name='" + itemChild.Name + "' />";
+                        htmlContent += "<div class='item-filter'><input" + selected + " type='checkbox' class='checkboxAttr' onclick='GetValueFromAttr()' id='checkboxAttr_" + itemChild.ID + "' data-url='" + itemChild.FriendlyUrl + "' data-url-parent='" + itemChild.FriendlyUrlParent + "' data-name='" + itemChild.Name + "' />";
                         if (itemChild.Image != '')
-                            htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'><img src='" + itemChild.Image + "'></label><br />";
+                            htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'><img src='" + itemChild.Image + "'></label></div>";
                         else
-                            htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'>" + itemChild.Name + "</label><br />";
+                            htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'>" + itemChild.Name + "</label></div>";
 
 
                         //console.log(categoryName + " - " + itemChild.Name);

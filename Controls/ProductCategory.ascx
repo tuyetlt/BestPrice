@@ -184,10 +184,63 @@
                     <%} %>--%>
 
                     <div class="clear"></div>
-                    <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
-                        { %>
-                    <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêm <i class="fas fa-sort-down"></i></a></div>
-                    <%} %>
+                 
+                     <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
+                            { %>
+                        <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêmq</a></div>
+                        <%} %>
+                        </div>
+                        <div class="section-readmore-cate">
+                         <% if (!Utils.IsNullOrEmpty(drCat["LongDescription"].ToString()))
+                                { %>
+                            <%   string AddressFunction = ConfigWeb.AdressFunction;
+                                string ContentHtml = ConvertUtility.ToString(drCat["LongDescription"]);
+                                ContentHtml = ContentHtml.Replace("{Address}", AddressFunction);
+                            %>
+                            <div id="description_cate" class="description_cate">
+                                <%= ContentHtml %>
+                            </div>
+                            <div class="bg-article"></div>
+                            <p class="show-more">
+                                    <a id="readmore" href="javascript:;" class="readmore">Đọc thêm</a>
+                                </p>
+
+                            <%} %>
+
+
+
+
+                            <%
+                                string TagsList = drCat["TagIDList"].ToString().Trim(',');
+                                if (!Utils.IsNullOrEmpty(TagsList))
+                                {
+                                    DataTable dtTag = SqlHelper.SQLToDataTable("tblCategories", "Name,FriendlyUrl", string.Format("ID IN ({0})", TagsList));
+                                    if (dtTag != null && dtTag.Rows.Count > 0)
+                                    {
+                            %>
+                            <div class="clear"></div>
+                            <div class="entry-tags">
+                                <ul>
+
+                                    <%
+                                        foreach (DataRow drTag in dtTag.Rows)
+                                        {
+                                            string link = TextChanger.GetLinkRewrite_Category(drTag["FriendlyUrl"].ToString());
+                                            string tagName = drTag["Name"].ToString();
+                                    %>
+                                    <li class="entry-tag-item"><a href="<%= link %>" title="<%= tagName %>"><%= tagName %></a></li>
+                                    <%
+                                        }
+                                    %>
+                                </ul>
+                            </div>
+                            <div class="clear"></div>
+                            <%
+                                    }
+                                }
+                            %>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
