@@ -229,7 +229,7 @@
                     <div id="description" class="product__description mb-5">
                         <div class="productReadMore readMore">
                             <%= dr["Tab1"].ToString() %>
-                            <%= dr["LongDescription"].ToString() %>
+                            <%= longDescription %>
                         </div>
                     </div>
 
