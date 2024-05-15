@@ -824,6 +824,23 @@
 .product__price .me-2 {
     font-weight: 700;
 }
+.icon-bar {
+    position: fixed;
+    top: 80%;
+    transform: translateY(-50%);
+    z-index: 999;
+}
+.icon-bar a {
+    display: block;
+    text-align: center;
+    padding: 6px;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 20px;
+}
+.icon-bar a:hover {
+    transform: scale(1.1);
+}
 @media only screen and (min-width: 1024px) {
     .navigation__categories .navigation__menu > .nav-item .btn {
             line-height: 24px;

@@ -11,7 +11,17 @@
     <div></div>
     <div></div>
 </div>
-
+<div class="icon-bar">
+<a target="_blank" rel="noopener noreferrer" href="#" class="float-shadow">
+    <img src="/themes/images/face-icon.png" alt="Facebook" title="Facebook" width="48" height="48">
+</a>
+<a target="_blank" rel="noopener noreferrer" href="#" class="float-shadow">
+    <img src="/themes/images/zalo-icon.png" width="48" height="48" alt="Zalo" title="Zalo">
+</a>
+<a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@dienmaygiakhangs" class="float-shadow">
+    <img src="/themes/images/tiktok-icon.png" width="48" height="48" alt="youtube" title="youtube">
+</a>
+</div>
 <script type="application/ld+json">{
 "@context": "https://schema.org",
 "@type": "LocalBusiness",
