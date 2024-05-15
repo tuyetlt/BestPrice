@@ -27,7 +27,7 @@
         </div>
         <div class="product__info">
             <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
-            <div class="product__price d-flex align-items-center justify-content-center">
+            <div class="product__price d-flex mb-d-flex align-items-center justify-content-center">
                 <div class="price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></div>
                 <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
             </div>
