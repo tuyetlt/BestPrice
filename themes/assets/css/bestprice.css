@@ -1,0 +1,15 @@
+﻿.product__special-topPage__inner .heading .heading__title span {
+    color:#fff;
+}
+.btn.tag.more{
+    font-weight:bold;
+}
+
+.product__special-topPage__inner {
+    background-color: #d30000;
+}
+
+.header__logo {
+    flex: 0 0 280px;
+    max-width: 280px;
+}
