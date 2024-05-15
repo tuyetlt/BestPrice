@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Web;
@@ -10,7 +11,7 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
     public DataRow dr, drCat;
     public DataTable dtNews, dtBannerRight;
     public int ID, CategoryID;
-    public string purl, caturl, image;
+    public string purl, caturl, image, longDescription;
     protected void Page_Load(object sender, EventArgs e)
     {
         ProccessParameter();
@@ -41,6 +42,9 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
         if (Utils.CheckExist_DataTable(dt))
         {
             dr = dt.Rows[0];
+            string domain = "https://dienmayhoanghai.vn";
+            longDescription = AddDomainToRelativeUrls(dr["LongDescription"].ToString(), domain);
+
             ProductViewed();
             image = Utils.GetFirstImageInGallery_Json(ConvertUtility.ToString(dr["gallery"]));
 
@@ -48,10 +52,6 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
             if (cateList != null && cateList.Length > 0)
             {
                 PageInfo.CategoryID = ConvertUtility.ToInt32(ConvertUtility.ToInt32(cateList[0]));
-                //foreach (string categoryid in cateList)
-                //{
-                //    CategoryID = ConvertUtility.ToInt32(categoryid);
-                //}
             }
 
             PageInfo.LinkEdit = "/admin/product/productupdate?id=" + dr["ID"];
@@ -75,6 +75,28 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
         stringCookieList = Utils.AddTitemToArrayString(stringCookieList, ConvertUtility.ToString(dr["ID"]));
         currentCookie = Utils.ConvertArrayToString(stringCookieList);
         CookieUtility.SetValueToCookie("product_viewed", currentCookie);
+    }
+
+    static string AddDomainToRelativeUrls(string html, string domain)
+    {
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+
+        var imgNodes = doc.DocumentNode.SelectNodes("//img[@src]");
+
+        if (imgNodes != null)
+        {
+            foreach (var imgNode in imgNodes)
+            {
+                var srcValue = imgNode.GetAttributeValue("src", "");
+                if (!string.IsNullOrEmpty(srcValue) && Uri.IsWellFormedUriString(srcValue, UriKind.Relative))
+                {
+                    imgNode.SetAttributeValue("src", domain + srcValue);
+                }
+            }
+        }
+
+        return doc.DocumentNode.OuterHtml;
     }
 
 

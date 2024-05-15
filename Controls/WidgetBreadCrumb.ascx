@@ -20,7 +20,7 @@
     DataTable dt;
 %>
  <ul class="breadcrumb mb-0">
-
+     <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
     <%
         Response.Write(slash);
         int CategoryID = ConvertUtility.ToInt32(PageInfo.CategoryID);
