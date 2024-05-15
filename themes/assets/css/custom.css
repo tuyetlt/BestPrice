@@ -841,6 +841,221 @@
 .icon-bar a:hover {
     transform: scale(1.1);
 }
+.navs-container a:focus {
+    outline: none;
+}
+
+.navs-container .tc {
+    text-align: center;
+}
+
+.navs-container .arc-menu {
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.8;
+    z-index: 896;
+    transition: all 0.2s;
+}
+
+    .navs-container .arc-menu > li,
+    .navs-container .arc-menu:after {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+        background-color: #da251c;
+        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1), 0 0 3px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .navs-container .arc-menu > li {
+        -webkit-transition: all 0.6s;
+        -moz-transition: 0.6s;
+        -o-transition: all 0.6s;
+        transition: all 0.6s;
+    }
+
+    .navs-container .arc-menu:after {
+        content: "";
+        background-image: url(https://meta.vn/Data/image/2023/11/16/chat-phone.png);
+        background-repeat: no-repeat;
+        z-index: 50;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+        background-size: 32px 26px;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .navs-container .arc-menu.active {
+        opacity: 1;
+    }
+
+        .navs-container .arc-menu.active ~ .navs-bg {
+            display: block;
+        }
+
+        .navs-container .arc-menu.active li.call {
+            width: auto;
+            -webkit-border-radius: 20px;
+            border-radius: 20px;
+        }
+
+            .navs-container .arc-menu.active li.call.active a,
+            .navs-container .arc-menu.active li.call.active .nav-hotline-wrap {
+                width: auto;
+                display: inline-flex;
+                -webkit-border-radius: 20px;
+                border-radius: 20px;
+                align-items: center;
+                min-width: 40px;
+            }
+
+            .navs-container .arc-menu.active li.call.active .nav-hotline-wrap {
+                padding: 0 8px;
+            }
+
+            .navs-container .arc-menu.active li.call.active .nav-hotline {
+                display: block;
+                white-space: nowrap;
+            }
+
+        .navs-container .arc-menu.active:after {
+            background-image: url(https://meta.vn/Data/image/2023/11/16/close-icon.png);
+            background-size: 18px 18px;
+        }
+
+        .navs-container .arc-menu.active:before {
+            content: "";
+            display: block;
+            width: 120px;
+            height: 120px;
+            bottom: 0;
+            right: 0;
+            background: transparent;
+            position: absolute;
+            border-radius: 100% 0 0 0;
+        }
+
+    .navs-container .arc-menu.pc-mode.active:before {
+        width: 160px;
+        height: 200px;
+    }
+
+    .navs-container .arc-menu a,
+    .navs-container .arc-menu .nav-hotline-wrap {
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #fff;
+        font-size: 1em;
+        line-height: 40px;
+        overflow: hidden;
+    }
+
+    .navs-container .arc-menu > li.gotop {
+        background-color: #c2c2c2;
+        z-index: 8;
+    }
+
+    .navs-container .arc-menu > li.zalo {
+        background-color: transparent;
+        z-index: 10;
+    }
+
+    .navs-container .arc-menu > li.call {
+        z-index: 9;
+        background-color: #0fa80f;
+    }
+
+        .navs-container .arc-menu > li.call a,
+        .navs-container .arc-menu > li.call .nav-hotline-wrap {
+            font-size: 1.7em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+.navs-container .icon-cps-chat-zalo {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.navs-container .icon-cps-call {
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    background-image: url(https://meta.vn/Data/image/2023/11/16/phone-icon.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.navs-container .icon-cps-gotop {
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    background-image: url(https://meta.vn/Data/image/2021/05/10/up-icon.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.navs-container .navs-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 895;
+    display: none;
+}
+
+.navs-container .nav-hotline {
+    padding-right: 5px;
+    transition-delay: 0.2s;
+    -webkit-transition-delay: 0.2s;
+    display: none;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 979px) {
+    .stickyheader-wrapper.active ~ .navs-container .arc-menu {
+        bottom: 80px;
+    }
+}
+
+#scrolltop {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
 @media only screen and (min-width: 1024px) {
     .navigation__categories .navigation__menu > .nav-item .btn {
             line-height: 24px;
@@ -856,10 +1071,7 @@
     .header .header__logo {
         max-width: 200px;
     }
-    .filter-ajax .item-filter{
-        width:50%;
-        float:left;
-    }
+    
     .header .btnNavigationMenu {
         color: #6c757d;
         font-size: 2rem;
@@ -945,5 +1157,19 @@
     }
     .mb-d-flex{
         display:block!important;
+    }
+    .list-cate-side {
+        display: table;
+    }
+    .filter-ajax .item-filter {
+        width: 50%;
+        float: left;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+    .filter-ajax .item-filter label{
+        font-size:14px;
+        line-height:16px;
     }
 }

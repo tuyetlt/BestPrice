@@ -143,10 +143,11 @@ function GetAttributeProduct() {
                 else {
                     count++;
 
-                    htmlContent += "<div>"
+                    htmlContent += "<div class='box-cate-side'>"
                     htmlContent += "<div class='title-sidebar'>" + item.Name + "</div>";
-
+                    htmlContent += "<div class='list-cate-side'>"
                     var jsonChild = JSON.parse(JSON.stringify(item.attributeProductChild));
+
                     for (var j = 0; j < jsonChild.length; j++) {
                         var itemChild = jsonChild[j];
                         var selected = "";
@@ -170,7 +171,7 @@ function GetAttributeProduct() {
                         //console.log(categoryName + " - " + itemChild.Name);
 
                     }
-                    htmlContent += "</div>"
+                    htmlContent += "</div></div>"
                 }
             }
             if (data.length) {
@@ -323,4 +324,91 @@ $('#readmore').click(function () {
     } else {
         $(this).text("Đọc thêm")
     }
+});
+(function () {
+    var screenWidth = $(window).width();
+    var isTouch = !!('ontouchstart' in window) || !!('onmsgesturechange' in window);
+    var isPhone = isTouch || screenWidth <= 600;
+    var alwayShow = "0";
+    var hoz = "1";
+
+    var timer = null;
+
+    var icon = {};
+    icon.top = "&#11165;";
+    icon.phone = "&phone;";
+    icon.cart = "&#128722;";
+    var $ul = $("#navs"), li = $("li", ul), length = li.length, n = length - 1, r = 70;
+
+    function navAnimate($ul) {
+        $ul.toggleClass('active');
+        if ($ul.hasClass('active')) {
+            for (var i = 0; i < length; i++) {
+                var _li = li.eq(i);
+                _li.css({
+                    'transition-delay': "" + (50 * i) + "ms",
+                    '-webkit-transition-delay': "" + (50 * i) + "ms",
+                    //'left': -1 * (r * Math.cos(90 / n * i * (Math.PI / 180))),
+                    //'top': (-r * Math.sin(90 / n * i * (Math.PI / 180)))
+                    //'left': alwayShow == "1" ? 0 : -1 * (r * Math.cos(90 / n * i * (Math.PI / 180))),
+                    'right': hoz == "1" ? 0 : 1 * (r * Math.cos(90 / n * i * (Math.PI / 180))),
+                    'top': hoz == "1" ? -50 * (i + 1) : (-r * Math.sin(90 / n * i * (Math.PI / 180)))
+                });
+
+            }
+            setTimeout(function () { $('li.call').addClass('active'); }, 500);
+        } else {
+            li.removeAttr('style');
+            $('li.call').removeClass('active');
+        }
+    }
+
+    ul.on('switchArc', function () {
+        navAnimate($(this));
+    });
+
+    if (isPhone) {
+        ul.on('click touch', function () {
+            $(this).trigger('switchArc');
+        });
+    } else {
+        ul.hover(function () {
+            if (timer)
+                clearTimeout(timer);
+            if (!$(this).hasClass('active'))
+                $(this).trigger('switchArc');
+        },
+            function () {
+                timer = setTimeout(function () {
+                    if (ul.hasClass('active'))
+                        ul.trigger('switchArc');
+                }, 250);
+            });
+    }
+
+    $(".arc-item-3.gotop a").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if ($('html, body').scrollTop() == 0) return;
+        $('html, body').animate({
+            scrollTop: 0
+        }, 1000, function () {
+            if (ul.hasClass('active')) {
+                ul.trigger('switchArc');
+            }
+        });
+    });
+
+    $(".nav-hotline-wrap").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+    $('.navs-bg').on('click touch', function (e) {
+        if (isPhone)
+            ul.trigger('switchArc');
+    })
+
+    if (alwayShow == "1")
+        navAnimate(ul);
 });
