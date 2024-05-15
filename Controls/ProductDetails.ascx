@@ -234,7 +234,7 @@
                     </div>
 
                     <div class="product__related mb-5">
-                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Tiêu đề", "", "", 0, false, false) %>
+                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Tiêu đề", "", "", 0, false, false, 0) %>
                     </div>
 
                 </div>

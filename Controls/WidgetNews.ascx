@@ -10,7 +10,7 @@
                 <div class="news__section-inner">
                     <div class="news__grid row createModuleNewSlideshow slider" module="newsEvent">
                         <%
-                            string filterNews = "";
+                            string filterNews = "Flags=1";
                             DataTable dtNews = SqlHelper.SQLToDataTable("tblArticle", "Name,Gallery,Description,FriendlyUrl", filterNews, ConfigWeb.SortArticle, 1, 4);
                             if (Utils.CheckExist_DataTable(dtNews))
                             {

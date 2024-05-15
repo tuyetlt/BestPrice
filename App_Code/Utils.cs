@@ -1971,7 +1971,7 @@ public class Utils
         }
     }
 
-    public static string LoadUserControl(string url, string Title, string ReadMore, string Filter, int CategoryID, bool IsHome, bool HightLight)
+    public static string LoadUserControl(string url, string Title, string ReadMore, string Filter, int CategoryID, bool IsHome, bool HightLight, int Index)
     {
         try
         {
@@ -1984,6 +1984,7 @@ public class Utils
                 userControl.GetType().GetProperty("CategoryID").SetValue(userControl, CategoryID);
                 userControl.GetType().GetProperty("IsHome").SetValue(userControl, IsHome);
                 userControl.GetType().GetProperty("HightLight").SetValue(userControl, HightLight);
+                userControl.GetType().GetProperty("Index").SetValue(userControl, Index);
 
                 page.Controls.Add(userControl);
                 using (StringWriter writer = new StringWriter())
@@ -2966,7 +2967,7 @@ public class Utils
         List<GalleryImage> galleryList = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<GalleryImage>>(jSon);
         if (galleryList != null && galleryList.Count > 0)
         {
-            imgPath = C.ROOT_URL + galleryList[0].Path;
+            imgPath = C.MAIN_URL + galleryList[0].Path;
         }
 
         return imgPath;
