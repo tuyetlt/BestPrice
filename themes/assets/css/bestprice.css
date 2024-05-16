@@ -39,3 +39,8 @@
 .heading{
     margin-bottom:10px !important;
 }
+
+.filter-ajax img {
+    height: 14px;
+    max-width: 76px;
+}
