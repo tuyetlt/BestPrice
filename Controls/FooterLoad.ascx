@@ -11,17 +11,23 @@
     <div></div>
     <div></div>
 </div>
-<div class="icon-bar">
-<a target="_blank" rel="noopener noreferrer" href="#" class="float-shadow">
-    <img src="/themes/images/face-icon.png" alt="Facebook" title="Facebook" width="48" height="48">
-</a>
-<a target="_blank" rel="noopener noreferrer" href="#" class="float-shadow">
-    <img src="/themes/images/zalo-icon.png" width="48" height="48" alt="Zalo" title="Zalo">
-</a>
-<a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@dienmaygiakhangs" class="float-shadow">
-    <img src="/themes/images/tiktok-icon.png" width="48" height="48" alt="youtube" title="youtube">
-</a>
-</div>
+<div class="navs-container home-zone">
+        <style>
+            .navs-container .arc-menu.active ~ .navs-bg {
+                background-color: transparent;
+            }
+        </style>
+        <ul id="navs" data-open="-" data-close="+" class="arc-menu">
+            <li class="arc-item-1 zalo"><a href="#" target="_blank" rel="nofollow"><i class="icon-cps-chat-zalo"></i></a></li>
+            <li class="arc-item-2 call">
+                <div class="nav-hotline-wrap"><span class="nav-hotline">0909.587.796</span> <i class="icon-cps-call"></i></div>
+            </li>
+        </ul>
+        
+        <div class="navs-bg"></div>
+        
+    </div>
+
 <script type="application/ld+json">{
 "@context": "https://schema.org",
 "@type": "LocalBusiness",

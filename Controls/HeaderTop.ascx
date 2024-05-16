@@ -8,52 +8,103 @@
                 <a href="<%= C.ROOT_URL %>" class="header__logo-link">
                     <img src="<%= C.ROOT_URL %><%= ConfigWeb.Logo %>" alt="<%= ConfigWeb.MetaTitle %>" class="img-responsive"></a>
             </div>
-            <div class="header__right col pr-0">
+            <div class="header__right col pr-0 search_ac">
                 <div class="header__right-inner d-md-flex align-items-center justify-content-end">
                     <div class="header__search col">
                         <div class="header__search-inner">
-                            <form method="GET" action="<%=C.ROOT_URL %>/tim-kiem.html" data-search="internal">
-                                <div class="header__search-field dropdown">
-                                    <input type="text" name="search" id="input-search" data-bs-toggle="dropdown" aria-expanded="false" autocomplete="off" value="" placeholder="Tìm kiếm" class="form-control" />
-                                    <div class="dropdown-menu">
-                                        <div class="dropdown-inner">
-                                            <div id="#search-suggestions">
-                                                <ul></ul>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="col d-flex align-items-center">
-                                                            <div class="img">
-                                                                <img src="https://meta.vn/api/cateico.aspx?id=1015" />
-                                                            </div>
-                                                            <div class="product__name">Tủ lạnh Samsung</div>
-                                                        </div>
-                                                        <a href="#" class="btn-remove-search"><i class="icon-close"></i></a>
-                                                    </div>
-                                                </li>
-                                              
-                                            </ul>
-                                            <hr>
-                                            <div class="category__latest">
-                                                <p class="fs-14"><strong>Danh mục nổi bật</strong></p>
-                                                <div class="search-cat-list d-grid">
-                                                    <div class="search-cat-item">
-                                                        <a href="#">
-                                                            <div class="img">
-                                                                <img src="https://meta.vn/icons/cateico/c3256-168x168.jpg" />
-                                                            </div>
-                                                            <div class="search-cat__name">Tivi</div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="text-center mt-3"><a href="#" class="fs-14 text-primary">Xem thêm</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="header__search-field dropdown search">
+                                <form method="GET" action="<%=C.ROOT_URL %>/tim-kiem.html" data-search="internal">
+                                    <input type="text" name="key" class="search_input" id="searchbox" autocomplete="off" placeholder="Tìm kiếm" />
+
+                                    <div class="loading-search"></div>
+                                    <button type="button" class="btn btn-primary btn-top-search"><i class="icon-search"></i></button>
+                                </form>
+                                <div class="over-lay-search">
                                 </div>
-                                <button type="button" class="btn btn-primary btn-top-search"><i class="icon-search"></i></button>
-                            </form>
+                               <div class="dropdown-menu">
+                                     <div class="dropdown-inner">
+                                         <ul>
+                                             <li>
+                                                 <div class="d-flex align-items-center">
+                                                     <div class="col d-flex align-items-center">
+                                                         <div class="img">
+                                                             <img src="https://meta.vn/api/cateico.aspx?id=1015" />
+                                                         </div>
+                                                         <div class="product__name">Tủ lạnh Samsung</div>
+                                                     </div>
+                                                     <a href="#" class="btn-remove-search"><i class="icon-close"></i></a>
+                                                 </div>
+                                             </li>
+                   
+                                         </ul>
+                                         <div class="category__latest">
+                                             <p class="fs-14 title-box">Danh mục nổi bật</p>
+                                             <div class="search-cat-list d-grid">
+                                                 
+                                                  <%
+                                                     string filter = string.Format("{0} AND {1}", Utils.CreateFilterHide, Utils.CreateFilterFlags(PositionMenuFlag.Main, "PositionMenuFlag"));
+                                                     DataTable dt_1 = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, Name, FriendlyUrl, Link, LinkTypeMenuFlag, PositionMenuFlag, ParentID,Icon", string.Format("ParentID=0 AND {0}", filter), "Sort", 1, C.MAX_ITEM_MENU);
+                                                     if (Utils.CheckExist_DataTable(dt_1))
+                                                     {
+                                                         foreach (DataRow dr_1 in dt_1.Rows)
+                                                         {
+                                                             string link_1 = Utils.CreateCategoryLink(dr_1["LinkTypeMenuFlag"], dr_1["FriendlyUrl"], dr_1["Link"]);
+                                                             int subMenu = (int)PositionMenuFlag.Main;
+                                                             string filter2 = string.Format("(Hide is null OR Hide=0) AND PositionMenuFlag & {0} <> 0", subMenu);
+                                                             DataTable dt_2 = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, Name, FriendlyUrl, Link, LinkTypeMenuFlag, PositionMenuFlag, ParentID, Icon", string.Format("ParentID={0} AND {1}", dr_1["ID"], filter2), "Sort");
+
+                                                 %>
+                                                                                                  
+                                                     <%
+                                                    int count2 = 0;
+
+                                                    if (Utils.CheckExist_DataTable(dt_2))
+                                                    {
+                                                        foreach (DataRow dr_sub in dt_2.Rows)
+                                                        {
+                                                                 string icon = "";
+                                                            count2++;
+                                                                 if (!string.IsNullOrEmpty(dr_sub["Icon"].ToString()))
+                                                                  icon = dr_sub["Icon"].ToString();
+                                                            string link_2 = Utils.CreateCategoryLink(dr_sub["LinkTypeMenuFlag"], dr_sub["FriendlyUrl"], dr_sub["Link"]);
+                                                        %>
+                                                        <div class="search-cat-item"><a href="<%= link_2 %>" class="nav-link">
+                                                             <% if (!string.IsNullOrEmpty(icon))
+                                                                    { %>
+                                                                <div class="img">
+                                                                      <img src="<%= icon %>" alt="<%= dr_sub["Name"].ToString() %>" />                                                     
+                                                                      <%--  <img src="https://meta.vn/icons/cateico/c3256-168x168.jpg" />--%>
+                                                                 </div>
+                                                                <% } %>
+                                                            <div class="search-cat__name"> <%= dr_sub["Name"].ToString() %></div>
+                                                        </a></div>
+                                                        <% 
+                                                    }
+                                                  } %>
+                                               <%}
+                                                 } %>
+                                             
+                                             <div class="text-center mt-3"><a href="#" class="fs-14 text-primary">Xem thêm</a></div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                   </div>
+
+                                <div class="show_search_content">
+                                    <label>Đang tải sản phẩm gợi ý...</label>
+                                    <%--  <div class="box-loading">
+                                        <div class="box-thumbnail"></div>
+
+                                        <div class="box-line-sm"></div>
+                                        <div class="box-line-xs"></div>
+
+                                        <div class="box-line-df"></div>
+                                        <div class="box-line-lgx"></div>
+                                        <div class="box-line-lg"></div>
+                                    </div>--%>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="header__col header__nav">
