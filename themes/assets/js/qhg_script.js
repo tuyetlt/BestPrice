@@ -385,14 +385,14 @@ $(document).ready(function () {
         window.location = url;
     });
 
-    $("#input-search").focusin(function (e) {
+    $("#searchbox").focusin(function (e) {
         e.stopPropagation();
-        $(this).parent().dropdown('toggle');
+        $(this).parent().parent().dropdown('toggle');
     });
 
-    $('#input-search').on('click', function (e) {
+    $('#searchbox').on('click', function (e) {
         e.stopPropagation();
-        $(this).parents('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('toggle');
+        $(this).parent().parents('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('toggle');
     });
     /* End Header Search */
 
