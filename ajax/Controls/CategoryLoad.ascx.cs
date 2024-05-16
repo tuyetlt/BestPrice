@@ -55,7 +55,6 @@ public partial class ajax_Controls_CategoryLoad : System.Web.UI.UserControl
                 string filterAttrParent = "";
 
                 DataTable dtAttr = SqlHelper.SQLToDataTable("tblAttributes", "ID, ParentID", "ID in (" + attributeIDList.Trim(',') + ")", "ParentID");
-                //DataTable dtAttr = SqlHelper.SQLToDataTable("tblAttributes", "ID, ParentID", "ID in (29,39,2,3)", "ParentID");
 
 
                 if (Utils.CheckExist_DataTable(dtAttr))
@@ -94,7 +93,11 @@ public partial class ajax_Controls_CategoryLoad : System.Web.UI.UserControl
                         filterAttrParent += ")";
                 }
 
-                string filterProduct = string.Format(@"(Hide is null OR Hide=0) AND (CategoryIDParentList LIKE '%,{0},%' OR CategoryIDList LIKE '%,{0},%' OR TagIDList Like N'%,{0},%') AND ({1})", categoryID, filterAttrParent);
+                if (!string.IsNullOrEmpty(filterAttrParent))
+                    filterAttrParent = string.Format(" AND {0}", filterAttrParent);
+
+
+                string filterProduct = string.Format(@"(Hide is null OR Hide=0) AND (CategoryIDParentList LIKE '%,{0},%' OR CategoryIDList LIKE '%,{0},%' OR TagIDList Like N'%,{0},%'){1}", categoryID, filterAttrParent);
                 dtProduct = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,HashTagUrlList", filterProduct, ConfigWeb.SortProduct, pageIndex, C.ROWS_PRODUCTCATEGORY, out _totalProduct);
 
                 //if (Utils.CheckExist_DataTable(dtProduct))

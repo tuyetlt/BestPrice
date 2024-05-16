@@ -64,20 +64,26 @@ public partial class ajax_Controls_AttributeProduct : System.Web.UI.UserControl
             }  
         }
 
-
-        // ADD thêm ID Root
-        List<AttributeProduct> attrList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<AttributeProduct>>(jsonString);
-
-        if (attrList != null && attrList.Count > 0)
+        try
         {
-            AttributeProduct attrRoot = new AttributeProduct();
-            attrRoot.ID = ConvertUtility.ToString(RootID);
-            attrRoot.Name = "RootID";
-            attrList.Add(attrRoot);
-        }
 
-        jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(attrList, Newtonsoft.Json.Formatting.Indented);
-        Response.Write(jsonString);
+            // ADD thêm ID Root
+            List<AttributeProduct> attrList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<AttributeProduct>>(jsonString);
+
+            if (attrList != null && attrList.Count > 0)
+            {
+                AttributeProduct attrRoot = new AttributeProduct();
+                attrRoot.ID = ConvertUtility.ToString(RootID);
+                attrRoot.Name = "RootID";
+                attrList.Add(attrRoot);
+            }
+
+            jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(attrList, Newtonsoft.Json.Formatting.Indented);
+            Response.Write(jsonString);
+        }
+        catch { }
+
+       
     }
 
     protected void BindData()
