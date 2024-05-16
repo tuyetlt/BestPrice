@@ -234,7 +234,10 @@
                     </div>
 
                     <div class="product__related mb-5">
-                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Tiêu đề", "", "", 0, false, false, 0) %>
+                        <% string filterProduct = string.Format(@"(Hide is null OR Hide=0) AND (CategoryIDList Like N'%,{0},%' OR CategoryIDParentList Like N'%,{0},%' OR TagIDList Like N'%,{0},%')", PageInfo.CategoryID);
+                        %>
+
+                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Sản phẩm cùng danh mục", "", filterProduct, 0, false, false, 0) %>
                     </div>
 
                 </div>
@@ -282,11 +285,10 @@
 </div>--%>
 
 
-<%--
 <input type="hidden" value="product" id="GG_Page" />
 <input type="hidden" value="<%= ConvertUtility.ToString(dr["ID"]) %>" id="GG_ID" />
 <input type="hidden" value="<%= ConvertUtility.ToString(dr["Name"]) %>" id="GG_ProductName" />
-<input type="hidden" value="<%= Utils.PriceConversion_Product(price) %>" id="GG_Price" />
+<input type="hidden" value="<%= Utils.PriceConversion_Product(dr["Price"]) %>" id="GG_Price" />
 <input type="hidden" value="<%= Utils.PriceConversion_Product(dr["Price1"]) %>" id="GG_Price1" />
 
 
@@ -364,6 +366,6 @@
         }
     });
 
-</script>--%>
+</script>
 
 
