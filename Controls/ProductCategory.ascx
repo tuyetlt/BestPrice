@@ -12,25 +12,16 @@
 <input type="hidden" id="thuonghieu" value="<%= thuonghieu %>" />
 
 <input type="hidden" id="AttributesIDList" value="<%= Utils.CommaSQLRemove(drCat["AttributesIDList"].ToString()) %>" />
-
 <div class="main main__wrapper">
     <div class="container">
         <div class="heading d-md-flex align-items-end">
             <div class="col mb-3 mb-md-0">
                 <h1 class="page__title"><%= categoryTitle %></h1>
-               <%-- <nav aria-label="breadcrumb">
-                    <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="#">Điện tử</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Loa - Âm thanh</li>
-                    </ul>
-                </nav>--%>
                 <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
             </div>
-            <div class="col">
+           <%-- <div class="col">
                 <div class="d-flex justify-content-between justify-content-end align-items-center">
                     <button type="button" class="btn btn-primary btn-sidebar-filter hidden-md"><i class="fa fa-filter"></i>LỌC</button>
-                   <%-- <span class="me-3 hidden-xs-sm">Hiển thị 1–24 của 129 kết quả</span>--%>
                     <form class="ms-sm-auto" method="get">
                         <select name="orderby" class="form-select" aria-label="Đơn hàng của cửa hàng">
                             <option value="date" selected="selected">Mới nhất</option>
@@ -41,16 +32,59 @@
                         </select>
                     </form>
                 </div>
+            </div>--%>
+        </div>
+    </div>
+    <section class="category category__topPage">
+        <div class="container">
+          <%--  <div class="heading">
+                <h2 class="heading__title"><span><%= categoryTitle %></span></h2>
+            </div>--%>
+            <div class="category__inner">
+                <div class="category-list row">
+                    <%
+                        int flagStyle2 = (int)PositionMenuFlag.Style2;
+
+                        string filter_style2 = string.Format("(Hide is null OR Hide=0) AND PositionMenuFlag & {0} <> 0", flagStyle2);
+                        DataTable dt_style2 = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID,Name,FriendlyUrl,Link,LinkTypeMenuFlag,ParentID,PositionMenuFlag,LinkTypeMenuFlag,Icon,HashTagUrlList", string.Format("ParentID={0} AND {1}", RootID, filter_style2), "Sort");
+                        if (Utils.CheckExist_DataTable(dt_style2))
+                        {
+                            foreach (DataRow dr_3 in dt_style2.Rows)
+                            {
+                                string icon = C.NO_IMG_PATH;
+                                if (!string.IsNullOrEmpty(dr_3["Icon"].ToString()))
+                                    icon = dr_3["Icon"].ToString();
+                                string link = Utils.CreateCategoryLink(dr_3["LinkTypeMenuFlag"], dr_3["FriendlyUrl"], dr_3["Link"]);
+                                string selected = string.Empty;
+                                if (ConvertUtility.ToInt32(drCat["ID"]) == ConvertUtility.ToInt32(dr_3["ID"]))
+                                    selected = " selected";
+                    %>
+                    <div class="category__item col-3 col-sm-2">
+                        <div class="category__item-inner<%= selected %>">
+                            <a href="<%= link %>" class="category__image">
+                                <div class="img-thumb">
+                                    <img src="<%= icon %>" alt="<%= dr_3["Name"].ToString() %>" />
+                                </div>
+                            </a>
+                            <h2 class="category__name"><a href="<%= link %>" class="category__link"><%= dr_3["Name"].ToString() %></a></h2>
+                        </div>
+                    </div>
+                    <% }
+                        } %>
+                   
+                </div>
             </div>
         </div>
+    </section>
+
+    <div class="container">
+
         <div class="row two-column">
             <div class="column__left col-12 col-md-3">
                 <div class="sidebar">
                     <button class="btn-close btn-close-sidebar hidden-md"></button>
-
-
                     <%
-                        string filter3 = string.Format("(Hide is null OR Hide=0) AND PositionMenuFlag & {0} = 0  AND PositionMenuFlag & {1} = 0 AND ParentID={2}", (int)PositionMenuFlag.MenuSubMainHome, (int)PositionMenuFlag.MenuSubMainHome2, drCat["ID"]);
+                        string filter3 = string.Format("(Hide is null OR Hide=0) AND ParentID={0}", drCat["ID"]);
                         DataTable dt_3 = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "LinkTypeMenuFlag,FriendlyUrl,Link,ID,Icon,Name", filter3, "Sort");
                         if (Utils.CheckExist_DataTable(dt_3))
                         {
@@ -158,89 +192,62 @@
                         <%}
                             } %>
                     </div>
-
-                    <%--                    <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
-                        { %>
-                    <div class="paging-out">
-                        <div class="paging">
-                            <button class="first-page" disabled>
-                                <i></i>
-                            </button>
-                            <button class="prev-page" disabled>
-                                <i></i>
-                            </button>
-                            <div id="pagination"></div>
-                            <button class="next-page">
-                                <i></i>
-                            </button>
-                            <button class="last-page">
-                                <i></i>
-                            </button>
-                        </div>
-                    </div>
-                    <input type="hidden" min="1" id="pages" value="<%= _totalPage %>" />
-                    <input type="hidden" min="1" id="curpage" value="1" />
-                    <input type="hidden" id="delta" min="1" max="5" value="2" />
-                    <%} %>--%>
-
                     <div class="clear"></div>
-                 
-                     <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
-                            { %>
-                        <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêmq</a></div>
-                        <%} %>
-                        </div>
-                        <div class="section-readmore-cate">
-                         <% if (!Utils.IsNullOrEmpty(drCat["LongDescription"].ToString()))
-                                { %>
-                            <%   string AddressFunction = ConfigWeb.AdressFunction;
-                                string ContentHtml = ConvertUtility.ToString(drCat["LongDescription"]);
-                                ContentHtml = ContentHtml.Replace("{Address}", AddressFunction);
-                            %>
-                            <div id="description_cate" class="description_cate">
-                                <%= ContentHtml %>
-                            </div>
-                            <div class="bg-article"></div>
-                            <p class="show-more">
-                                    <a id="readmore" href="javascript:;" class="readmore">Đọc thêm</a>
-                                </p>
 
-                            <%} %>
+                    <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
+                        { %>
+                    <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêmq</a></div>
+                    <%} %>
+                </div>
+                <div class="section-readmore-cate">
+                    <% if (!Utils.IsNullOrEmpty(drCat["LongDescription"].ToString()))
+                        { %>
+                    <%   string AddressFunction = ConfigWeb.AdressFunction;
+                        string ContentHtml = ConvertUtility.ToString(drCat["LongDescription"]);
+                        ContentHtml = ContentHtml.Replace("{Address}", AddressFunction);
+                    %>
+                    <div id="description_cate" class="description_cate">
+                        <%= ContentHtml %>
+                    </div>
+                    <div class="bg-article"></div>
+                    <p class="show-more">
+                        <a id="readmore" href="javascript:;" class="readmore">Đọc thêm</a>
+                    </p>
+
+                    <%} %>
 
 
 
+
+                    <%
+                        string TagsList = drCat["TagIDList"].ToString().Trim(',');
+                        if (!Utils.IsNullOrEmpty(TagsList))
+                        {
+                            DataTable dtTag = SqlHelper.SQLToDataTable("tblCategories", "Name,FriendlyUrl", string.Format("ID IN ({0})", TagsList));
+                            if (dtTag != null && dtTag.Rows.Count > 0)
+                            {
+                    %>
+                    <div class="clear"></div>
+                    <div class="entry-tags">
+                        <ul>
 
                             <%
-                                string TagsList = drCat["TagIDList"].ToString().Trim(',');
-                                if (!Utils.IsNullOrEmpty(TagsList))
+                                foreach (DataRow drTag in dtTag.Rows)
                                 {
-                                    DataTable dtTag = SqlHelper.SQLToDataTable("tblCategories", "Name,FriendlyUrl", string.Format("ID IN ({0})", TagsList));
-                                    if (dtTag != null && dtTag.Rows.Count > 0)
-                                    {
+                                    string link = TextChanger.GetLinkRewrite_Category(drTag["FriendlyUrl"].ToString());
+                                    string tagName = drTag["Name"].ToString();
                             %>
-                            <div class="clear"></div>
-                            <div class="entry-tags">
-                                <ul>
-
-                                    <%
-                                        foreach (DataRow drTag in dtTag.Rows)
-                                        {
-                                            string link = TextChanger.GetLinkRewrite_Category(drTag["FriendlyUrl"].ToString());
-                                            string tagName = drTag["Name"].ToString();
-                                    %>
-                                    <li class="entry-tag-item"><a href="<%= link %>" title="<%= tagName %>"><%= tagName %></a></li>
-                                    <%
-                                        }
-                                    %>
-                                </ul>
-                            </div>
-                            <div class="clear"></div>
+                            <li class="entry-tag-item"><a href="<%= link %>" title="<%= tagName %>"><%= tagName %></a></li>
                             <%
-                                    }
                                 }
                             %>
+                        </ul>
                     </div>
-                </div>
+                    <div class="clear"></div>
+                    <%
+                            }
+                        }
+                    %>
                 </div>
             </div>
         </div>
