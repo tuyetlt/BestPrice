@@ -72,8 +72,8 @@
                                                              <% if (!string.IsNullOrEmpty(icon))
                                                                     { %>
                                                                 <div class="img">
-                                                                      <%--<img src="<%= icon %>" alt="<%= dr_sub["Name"].ToString() %>" />                                                     
-                                                                        <img src="https://meta.vn/icons/cateico/c3256-168x168.jpg" />--%>
+                                                                      <img src="<%= icon %>" alt="<%= dr_sub["Name"].ToString() %>" />                                                     
+                                                                      <%--  <img src="https://meta.vn/icons/cateico/c3256-168x168.jpg" />--%>
                                                                  </div>
                                                                 <% } %>
                                                             <div class="search-cat__name"> <%= dr_sub["Name"].ToString() %></div>
