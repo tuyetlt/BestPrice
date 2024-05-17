@@ -1245,16 +1245,19 @@ header .show_search_content {
     /* Track */
     header .show_search_content::-webkit-scrollbar-track {
         background: #f1f1f1;
+        border-radius:5px;
     }
 
     /* Handle */
     header .show_search_content::-webkit-scrollbar-thumb {
         background: #888;
+        border-radius: 5px;
     }
 
         /* Handle on hover */
         header .show_search_content::-webkit-scrollbar-thumb:hover {
             background: #555;
+            border-radius: 5px;
         }
 
     header .show_search_content ul li {
@@ -1295,8 +1298,8 @@ header .show_search_content {
     header .show_search_content .price {
         display: flex;
         align-items: center;
-        font-weight: 600;
-        font-size: 14px;
+        font-weight: 500;
+        font-size: 13px;
         margin-top: -10px;
     }
 
@@ -1322,7 +1325,96 @@ header .show_search_content {
     header .show_search_content .price .per {
         color: #960100;
     }
+/*Custom css blog*/
+.news__page .news__grid .news__item{
+    position:relative;
+}
 
+.news__page {
+    background: transparent;
+}
+    .news__page .page__title {
+        border-bottom: 1px solid #dbdbdb;
+        margin: 0 0 10px 0;
+        color: #004ebd;
+        text-transform: uppercase;
+        /* float: left; */
+        text-align: left;
+        font-weight: 600;
+        padding-bottom: 0;
+        padding-top: 20px;
+    }
+.page__heading .page__title::after{
+    display:none;
+}
+.news__page .news__grid .news__item {
+    border: 1px solid #f1f1f1;
+}
+.news__page .news__grid .news__inner:hover {
+    background-color: transparent;
+}
+.news__page .news__grid .news__inner {
+    background-color: transparent;
+    height:auto;
+    padding:0;
+}
+.news__page .news__grid .news__title {
+    text-transform: initial;
+    color: #000;
+    line-height: 1.4;
+}
+.news__page .news__grid .news__posted {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1;
+    text-align: center;
+    padding: 7px 10px;
+    transition: all 350ms ease-in-out;
+    background-color: #76a0da;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+}
+.news__page .news__grid .news__info{
+    padding:10px;
+}
+.news__page .news__grid .news__des{
+    font-size:14px;
+    height:45px;
+}
+.news__page .news__grid .news__title:hover {
+    color: #004ebd;
+}
+.news__page .show-more {
+    text-align: center;
+}
+.news__page .show-more .btn-see-more {
+    margin: 2em 0;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #5798e4;
+    cursor: pointer;
+    display: inline-block;
+    width: auto;
+    border-radius: 5px;
+}
+.main .news__detail .date {
+    text-align: right;
+    clear: both;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+    color: #212529;
+    font-size: 0.9em;
+    background: #f3f3f3;
+    display: table;
+    margin-right: 0;
+    margin-left: auto;
+}
+.product__description .productReadMore li:before {
+    display:none;
+}
 @media screen and (max-width: 979px) {
     .stickyheader-wrapper.active ~ .navs-container .arc-menu {
         bottom: 80px;
@@ -2668,7 +2760,7 @@ header .show_search_content {
     }
 
     header .show_search_content ul li img {
-        width: 60px;
+        width: 50px;
     }
 
     header .show_search_content ul li h3 {
@@ -2694,8 +2786,9 @@ header .show_search_content {
         display: flex;
         align-items: center;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 13px;
         margin-top: -10px;
+        justify-content:space-between;
     }
 
     header .show_search_content ul {
@@ -2754,6 +2847,28 @@ header .show_search_content {
         top: 0px;
         left: 0px;
     }
+.content-new .border-css {
+    border-bottom: 1px solid #f1f1f1;
+}
+.content-new a:after {
+    background: url(../images/101.png) no-repeat;
+    content: "";
+    background-size: 22px;
+    width: 22px;
+    height: 21px;
+    position: absolute;
+    top: 12px;
+    left: 5px;
+}
+.content-new a{
+    padding-left:16px;
+    font-size:13px;
+}
+    @media (min-width: 1400px) {
+        .header__logo {
+        margin-right: 1.5rem;
+    }
+}
 @media only screen and (min-width: 1024px) {
     .navigation__categories .navigation__menu > .nav-item .btn {
         line-height: 24px;

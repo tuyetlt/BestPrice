@@ -25,19 +25,23 @@
                                      <div class="dropdown-inner">
                                          <div class="content-new">
                                                <%
-                                                    string filterNews = "Flags=1";
-                                                    DataTable dtNews = SqlHelper.SQLToDataTable("tblArticle", "Name,Gallery,Description,FriendlyUrl", filterNews, ConfigWeb.SortArticle, 1, 4);
-                                                    if (Utils.CheckExist_DataTable(dtNews))
-                                                    {
-                                                        foreach (DataRow drNews in dtNews.Rows)
-                                                        {
-                                                            string linkDetail = TextChanger.GetLinkRewrite_Article(drNews["FriendlyUrl"].ToString());
+                                                   string filterNews = "Flags=1";
+                                                   DataTable dtNews = SqlHelper.SQLToDataTable("tblArticle", "Name,Gallery,Description,FriendlyUrl", filterNews, ConfigWeb.SortArticle, 1, 4);
+                                                   if (Utils.CheckExist_DataTable(dtNews))
+                                                   {
+                                                       int count = 0;
+
+                                                       /*foreach (DataRow drNews in dtNews.Rows)
+                                                       {*/
+                                                       for (int i = 0; i < 1 && i < dtNews.Rows.Count; i++)
+                                                       {
+                                                           string linkDetail = TextChanger.GetLinkRewrite_Article(dtNews.Rows[i]["FriendlyUrl"].ToString());
                                                 %>
-                                                    <div class="d-flex align-items-center">
+                                                    <div class="d-flex align-items-center px-3 border-css">
                                                         <div class="col d-flex align-items-center">
-                                                            <a href="<%= linkDetail %>" title="<%= drNews["Name"].ToString() %>"><%= drNews["Name"].ToString() %></a>
+                                                            <a href="<%= linkDetail %>" title="<%= dtNews.Rows[i]["Name"].ToString() %>"><%= dtNews.Rows[i]["Name"].ToString() %></a>
                                                         </div>
-                                                        <a href="#" class="btn-remove-search"><i class="icon-close"></i></a>
+                                                        
                                                     </div>
                                                 
                                                 <%

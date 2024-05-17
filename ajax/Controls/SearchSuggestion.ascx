@@ -14,8 +14,10 @@
         <div class="cont">
             <h3><%= dr["Name"].ToString() %></h3>
             <div class="price">
-                <ins><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price") %></ins>
-                <del><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price1") %></del>
+                <div class="cnt-price">
+                    <ins><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price") %></ins>
+                    <del><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price1") %></del>
+                </div>
                 <div class="per"><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(dr["ID"])) %></div>
             </div>
         </div>

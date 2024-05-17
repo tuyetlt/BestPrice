@@ -103,7 +103,7 @@ QHGraphic.Module = {
         if(bannerSliders.length > 0) {
             $(bannerSliders).not('.slick-initialized').slick({
                 dots: false,
-                arrows: true,
+                arrows: false,
                 infinite: true,
                 autoplay: true,
                 slidesToShow: 1,

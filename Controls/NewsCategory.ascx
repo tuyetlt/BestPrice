@@ -26,14 +26,13 @@
                         <div class="news__image">
                             <picture class="thumb">
                                 <a href="<%= linkDetail %>">
-                                    <img src="<%= Utils.GetFirstImageInGallery_Json(drNews["Gallery"].ToString(), 200, 150) %>" alt="<%= drNews["Name"].ToString() %>" width="600" height="400" /></a>
+                                    <img src="<%= Utils.GetFirstImageInGallery_Json(drNews["Gallery"].ToString(), 200, 150) %>" alt="<%= drNews["Name"].ToString() %>" width="600" height="350" /></a>
                             </picture>
                         </div>
                         <div class="news__info">
-                            <h3 class="news__title"><%= drNews["Name"].ToString() %></h3>
+                            <h3 class="news__title"><a href="<%= linkDetail %>"><%= drNews["Name"].ToString() %></a></h3>
                             <div class="news__des"><%= drNews["Description"].ToString() %></div>
                         </div>
-                        <div class="news__posted d-flex flex-column"><strong>11</strong><span>12-2022</span></div>
                     </a>
                 </div>
                 <%
@@ -45,7 +44,7 @@
              <% if (_totalArticle > C.ROWS_PRODUCTCATEGORY)
                 { %>
             <div class="container-btn show-more"><a id="category_paging_article" class="btn-see-more">Xem thêm <i class="fas fa-sort-down"></i></a></div>
-             <div class="block-pagination">
+               <%--<div class="block-pagination">
                 <ul class="pagination justify-content-center">
                     <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-prev"></i></a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -53,8 +52,8 @@
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-next"></i></a></li>
                 </ul>
-            </div>
-            <%} %>
+                </div>--%>
+            <%} %> 
         </div>
     </div>
 </div>
