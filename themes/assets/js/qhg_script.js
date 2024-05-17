@@ -107,10 +107,10 @@ QHGraphic.Module = {
                 infinite: true,
                 autoplay: true,
                 slidesToShow: 1,
-                slidesToScroll: 4,
+                slidesToScroll: 1,
                 autoplaySpeed: 5000,
                 speed: 800,
-                appendDots: '.banner__slideshow .banner__section-inner',
+               /* appendDots: '.banner__slideshow .banner__section-inner',
                 appendArrows: 'banner__slideshow .banner__section-inner',
                 responsive: [
                     {
@@ -119,7 +119,7 @@ QHGraphic.Module = {
                             arrows: false
                         }
                     }
-                ]
+                ]*/
             });
         }
     },
