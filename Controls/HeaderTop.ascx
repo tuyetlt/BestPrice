@@ -39,6 +39,7 @@
                                          </ul>
                                          <div class="category__latest">
                                              <p class="fs-14 title-box">Danh mục nổi bật</p>
+                                             <div class="list-category-search">
                                              <div class="search-cat-list d-grid">
                                                  
                                                   <%
@@ -83,9 +84,9 @@
                                                   } %>
                                                <%}
                                                  } %>
-                                             
-                                             <div class="text-center mt-3"><a href="#" class="fs-14 text-primary">Xem thêm</a></div>
                                          </div>
+                                             
+                                             </div>
                                      </div>
                                  </div>
                                    </div>
