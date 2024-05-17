@@ -316,8 +316,8 @@
     "@type": "Offer",
     "url": "<%= SEO_Schema.Url %>",
     "priceCurrency": "VND",
-    "price": "<%= Utils.RemoveNonDigits(SEO_Schema.Price) %>",
-    "priceValidUntil": "2050-04-12",
+    "price": "<%= SEO_Schema.Price %>",
+    "priceValidUntil": "2040-04-12",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition"
   },
@@ -327,8 +327,8 @@
     "ratingValue": "<%= SEO_Schema.RatingValue %>",
     "ratingCount": "<%= SEO_Schema.RatingCount %>"
   }, 
-    "sku": "<%= dr["ID"].ToString() %>",
-            "mpn": "<%= dr["ID"].ToString() %>",
+    "sku": "<%= TextChanger.Translate(ConfigWeb.SiteName, "_") %><%= dr["ID"].ToString() %>",
+            "mpn": "<%= TextChanger.Translate(ConfigWeb.SiteName, "_") %><%= dr["ID"].ToString() %>",
     "review": {
                 "@type": "Review",
                 "reviewRating": {
@@ -350,6 +350,7 @@
 
 
 
+
 <script type="text/javascript">
     window.dataLayer = window.dataLayer || [];
     dataLayer.push({
@@ -359,13 +360,10 @@
                 'item_name': '<%= Utils.QuoteRemove(dr["Name"].ToString()) %>',
                 'item_id': '<%= dr["ID"].ToString() %>',
                 'item_category': '<%= dr["ProductType"] %>',
-                'price': <%= Utils.RemoveNonDigits(SEO_Schema.Price) %>,
+                'price': <%= SEO_Schema.Price %>,
                 'currency': 'VND',
                 'quantity': 1
             }]
         }
     });
-
 </script>
-
-

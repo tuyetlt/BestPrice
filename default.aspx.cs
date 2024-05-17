@@ -58,6 +58,15 @@ public partial class _default : System.Web.UI.Page
                 else
                 {
                     mainControl = LoadControl("~/controls/Home.ascx");
+                    PageInfo.CategoryID = 0;
+                    string url = C.ROOT_URL;
+                    PageUtility.AddTitle(this.Page, ConfigWeb.MetaTitle);
+                    PageUtility.AddMetaTag(this.Page, "keywords", ConfigWeb.MetaKeyword);
+                    PageUtility.AddMetaTag(this.Page, "description", ConfigWeb.MetaDescription);
+                    PageUtility.OpenGraph(this.Page, ConfigWeb.MetaTitle, "website", url, C.ROOT_URL + ConfigWeb.Image, ConfigWeb.SiteName, ConfigWeb.MetaDescription);
+                    PageUtility.AddCanonicalLink(this.Page, url);
+                    PageUtility.SetIndex(this.Page);
+                    PageUtility.AddDefaultMetaTag(this.Page);
                 }
 
             }

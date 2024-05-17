@@ -175,7 +175,7 @@
 
 
 
-                                    <a href="<%= linkDetail %>" title="Máy nước nóng Panasonic DH-4RP1" class="product__image">
+                                    <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                         <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" /></a>
                                 </div>
                                 <div class="product__info">
@@ -196,7 +196,7 @@
 
                     <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
                         { %>
-                    <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêmq</a></div>
+                    <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêm</a></div>
                     <%} %>
                 </div>
                 <div class="section-readmore-cate">

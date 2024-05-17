@@ -1213,7 +1213,9 @@ img.bg {
     padding: 20px;
 }
 
-    .popup-table #searchbox {
+    .popup-table 
+    
+    {
         margin-bottom: 10px;
         width: 350px;
     }

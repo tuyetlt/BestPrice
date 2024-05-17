@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using HtmlAgilityPack;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Web.UI;
 public class Utilities
 {
     public Utilities()
@@ -2426,4 +2427,272 @@ public class ShoppingCart
     //    }
     //    return jsonObjList;
     //}
+}
+
+
+public static class PageUtility
+{
+    public static void AddTitle(Page page, string title)
+    {
+        LiteralControl metaTag = new LiteralControl();
+        metaTag.Text = string.Format("\n<title>{0}</title>", title);
+        page.Header.Controls.Add(metaTag);
+    }
+
+    public static void AddMetaTag(Page page, string name, string content)
+    {
+        LiteralControl metaTag = new LiteralControl();
+        metaTag.Text = string.Format("\n<meta name=\"{0}\" content=\"{1}\" />", name, content);
+        page.Header.Controls.Add(metaTag);
+    }
+
+    public static void AddCssLink(Page page, string href, bool checkVersion)
+    {
+        string versionedHref = checkVersion ? CheckVersion(href) : href;
+
+        if (!string.IsNullOrEmpty(versionedHref))
+        {
+            string cssLinkTag = string.Format("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\" />", versionedHref);
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(cssLinkTag));
+        }
+    }
+
+    public static void AddScriptLink(Page page, string src, bool checkVersion)
+    {
+        string versionedSrc = checkVersion ? CheckVersion(src) : src;
+
+        if (!string.IsNullOrEmpty(versionedSrc))
+        {
+            string scriptTag = string.Format("<script type=\"text/javascript\" src=\"{0}\"></script>", versionedSrc);
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(scriptTag));
+        }
+    }
+
+    public static void Charset(Page page)
+    {
+        string metaCharsetTag = "<meta charset=\"utf-8\" />";
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(metaCharsetTag));
+    }
+
+    public static void X_UA_Compatible(Page page)
+    {
+        string metaCompatibleTag = "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />";
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(metaCompatibleTag));
+    }
+
+    public static void Viewport(Page page)
+    {
+        string metaViewportTag = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />";
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(metaViewportTag));
+    }
+
+    public static void OpenGraph(Page page, string title, string type, string url, string image, string site_name, string description)
+    {
+        string ogTitleTag = string.Format("<meta property=\"og:title\" content=\"{0}\" />", title);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(ogTitleTag));
+
+        string ogImageTag = string.Format("<meta property=\"og:image\" content=\"{0}\" />", image);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(ogImageTag));
+
+        string ogDescriptionTag = string.Format("<meta property=\"og:description\" content=\"{0}\" />", description);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(ogDescriptionTag));
+
+        string ogUrlTag = string.Format("<meta property=\"og:url\" content=\"{0}\" />", url);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(ogUrlTag));
+
+        string ogTypeTag = string.Format("<meta property=\"og:type\" content=\"{0}\" />", type);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(ogTypeTag));
+
+        string ogSiteNameTag = string.Format("<meta property=\"og:site_name\" content=\"{0}\" />", site_name);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(ogSiteNameTag));
+
+        // Twitter
+
+        string twitter_card = string.Format("<meta name=\"twitter:card\" content=\"summary_large_image\">");
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(twitter_card));
+
+        string twitter_TitleTag = string.Format("<meta name=\"twitter:title\" content=\"{0}\" />", title);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(twitter_TitleTag));
+
+        string twitter_ImageTag = string.Format("<meta name=\"twitter:image\" content=\"{0}\" />", image);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(twitter_ImageTag));
+
+        string twitter_DescriptionTag = string.Format("<meta name=\"twitter:description\" content=\"{0}\" />", description);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(twitter_DescriptionTag));
+
+        // Itemprop
+
+        string Itemprop_TitleTag = string.Format("<meta itemprop=\"name\" content=\"{0}\" />", title);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(Itemprop_TitleTag));
+
+        string Itemprop_ImageTag = string.Format("<meta itemprop=\"image\" content=\"{0}\" />", image);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(Itemprop_ImageTag));
+
+        string Itemprop_DescriptionTag = string.Format("<meta itemprop=\"description\" content=\"{0}\" />", description);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(Itemprop_DescriptionTag));
+    }
+
+    public static void AddCanonicalLink(Page page, string href)
+    {
+        string canonicalLinkTag = string.Format("<link rel=\"canonical\" href=\"{0}\" />", href);
+        page.Header.Controls.Add(new LiteralControl("\n"));
+        page.Header.Controls.Add(new LiteralControl(canonicalLinkTag));
+    }
+
+    public static void AddIconLink(Page page, string href)
+    {
+        if (Utils.IS_LOCAL)
+        {
+            string iconLinkTag = string.Format("<link rel=\"shortcut icon\" href=\"{0}\" />", C.ROOT_URL + "/themes/image/code.svg");
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(iconLinkTag));
+        }
+        else
+        {
+            string ico = ConfigWeb.Icon;
+            string xType = string.Empty;
+            string regexPattern = @"\.([^.]+)$";
+            System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(ico, regexPattern);
+            if (match.Success)
+            {
+                string extension = match.Groups[1].Value;
+                if (extension == "png")
+                    xType = " type=\"image/png\"";
+                else if (extension == "jpg")
+                    xType = " type=\"image/jpg\"";
+                else if (extension == "ico")
+                    xType = " type=\"image/x-icon\"";
+            }
+
+            string iconLinkTag = string.Format("<link rel=\"shortcut icon\" href=\"{0}\"{1} />", C.ROOT_URL + ConfigWeb.Icon, xType);
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(iconLinkTag));
+
+            iconLinkTag = string.Format("<link rel=\"icon\" href=\"{0}\"{1} />", C.ROOT_URL + ConfigWeb.Icon, xType);
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(iconLinkTag));
+
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"57x57\" href=\"{0}apple-icon-57x57.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"60x60\" href=\"{0}apple-icon-60x60.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"72x72\" href=\"{0}apple-icon-72x72.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"{0}apple-icon-76x76.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"114x114\" href=\"{0}apple-icon-114x114.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"{0}apple-icon-120x120.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"144x144\" href=\"{0}apple-icon-144x144.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"{0}apple-icon-152x152.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"{0}apple-icon-180x180.png\">", href)));
+
+            // Tạo các dòng cho biểu tượng favicon và manifest
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"{0}android-icon-192x192.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"{0}favicon-32x32.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"{0}favicon-96x96.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"{0}favicon-16x16.png\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl(string.Format("<link rel=\"mask-icon\" href=\"{0}safari-pinned-tab.svg\" color=\"#5bbad5\">", href)));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl("<link rel=\"manifest\" href=\"/manifest.json\">"));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl("<meta name=\"msapplication-TileColor\" content=\"#ffffff\">"));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl("<meta name=\"msapplication-TileImage\" content=\"/ms-icon-144x144.png\">"));
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(new LiteralControl("<meta name=\"theme-color\" content=\"#ffffff\">"));
+
+            // kết hợp https://www.favicon-generator.org/ và https://realfavicongenerator.net/
+        }
+    }
+
+
+    public static void AddAlternateLink(Page page)
+    {
+        string alternateTag = string.Format("<link rel=\"alternate\" href=\"{0}\" hreflang=\"{1}\" />", C.ROOT_URL, "vi-vn");
+        LiteralControl alternateLink = new LiteralControl(alternateTag);
+        if (page.Header != null && page.Header.Controls != null)
+        {
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(alternateLink);
+        }
+    }
+
+    public static string CheckVersion(string path)
+    {
+        if (!String.IsNullOrEmpty(path.Trim()))
+        {
+            string link = HttpContext.Current.Server.MapPath(path.Trim());
+            if (System.IO.File.Exists(link))
+            {
+                string version = System.IO.File.GetLastWriteTime(link).Ticks.ToString();
+                return path.Trim() + "?v=" + version;
+            }
+        }
+        return "";
+    }
+
+    public static void SetIndex(Page page)
+    {
+        AddMetaTag(page, "robots", "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large");
+    }
+    public static void SetNoIndex(Page page)
+    {
+        AddMetaTag(page, "robots", "noindex");
+    }
+
+    public static void SetScriptHeaderContent(Page page, string scriptContent)
+    {
+        LiteralControl ltrContent = new LiteralControl(scriptContent);
+        if (page.Header != null && page.Header.Controls != null)
+        {
+            page.Header.Controls.Add(new LiteralControl("\n"));
+            page.Header.Controls.Add(ltrContent);
+        }
+    }
+
+
+    public static void AddDefaultMetaTag(Page page)
+    {
+        PageUtility.AddIconLink(page, "/");
+        PageUtility.Charset(page);
+        PageUtility.X_UA_Compatible(page);
+        PageUtility.Viewport(page);
+        PageUtility.AddCssLink(page, "/themes/assets/css/bootstrap.min.css", false);
+        PageUtility.AddCssLink(page, "/themes/assets/css/custom.css", true);
+        if (!string.IsNullOrEmpty(ConfigWeb.Style))
+            PageUtility.AddCssLink(page, "/themes/assets/css/" + ConfigWeb.Style, false);
+        PageUtility.AddScriptLink(page, "/themes/assets/js/jquery/jquery-3.6.3.min.js", false);
+        PageUtility.AddScriptLink(page, "/themes/assets/js/jquery/jquery-ui.min.js", false);
+        PageUtility.AddScriptLink(page, "/themes/assets/js/bootstrap/popper.min.js", false);
+        PageUtility.AddScriptLink(page, "/themes/assets/js/bootstrap/bootstrap.min.js", false);
+        PageUtility.SetScriptHeaderContent(page, ConfigWeb.CodeHeader);
+    }
 }

@@ -41,35 +41,76 @@ public partial class Controls_NewsCategory : System.Web.UI.UserControl
     }
 
 
+
     protected void SetSeo()
     {
         if (Utils.CheckExist_DataTable(dtCat))
         {
-            SEO.meta_title = ConvertUtility.ToString(drCat["MetaTitle"]);
-            SEO.meta_keyword = ConvertUtility.ToString(drCat["MetaKeyword"]);
-            SEO.meta_description = ConvertUtility.ToString(drCat["MetaDescription"]);
 
-            SEO.url_current = TextChanger.GetLinkRewrite_Category(ConvertUtility.ToString(drCat["FriendlyUrl"]));
-            SEO.canonical = TextChanger.GetLinkRewrite_Category(ConvertUtility.ToString(drCat["FriendlyUrl"]));
-            if (SEO.meta_title.Length < 3)
-                SEO.meta_title = ConvertUtility.ToString(drCat["Name"]);
-            if (SEO.meta_keyword.Length < 3)
-                SEO.meta_keyword = ConvertUtility.ToString(drCat["Name"]) + ", " + ConfigWeb.MetaKeyword;
+            string MetaTitle = ConvertUtility.ToString(drCat["MetaTitle"]);
+            string MetaKeyword = ConvertUtility.ToString(drCat["MetaKeyword"]);
+            string MetaDescription = ConvertUtility.ToString(drCat["MetaDescription"]);
 
-            if (SEO.meta_description.Length < 3)
-                SEO.meta_description = ConvertUtility.ToString(drCat["Name"]) + ", " + ConfigWeb.MetaDescription;
+            if (MetaTitle.Length < 3)
+                MetaTitle = ConvertUtility.ToString(drCat["Name"]);
+            if (MetaKeyword.Length < 3)
+                MetaKeyword = MetaTitle + ", " + ConfigWeb.MetaKeyword;
+            if (MetaDescription.Length < 3)
+                MetaDescription = MetaTitle + ", " + ConfigWeb.MetaDescription;
 
-            SEO.content_share_facebook = "<meta property='og:title' content='" + SEO.meta_title + "'/>";
-            SEO.content_share_facebook += "<meta property='og:type' content='website'/>";
-            SEO.content_share_facebook += "<meta property='og:url' content='" + SEO.url_current + "'/>";
-
+            string url = TextChanger.GetLinkRewrite_Category(ConvertUtility.ToString(drCat["FriendlyUrl"]));
+ 
+            PageUtility.AddTitle(this.Page, MetaTitle);
+            PageUtility.AddMetaTag(this.Page, "keywords", MetaKeyword);
+            PageUtility.AddMetaTag(this.Page, "description", MetaDescription);
             string image = ConvertUtility.ToString(drCat["Image_1"]);
             if (string.IsNullOrEmpty(image))
                 image = ConfigWeb.Image;
-            SEO.content_share_facebook += "<meta property='og:image' content='" + C.ROOT_URL + image + "'/>";
-            SEO.content_share_facebook += "<meta property='og:site_name' content='" + SEO.url_current + "'/> ";
-            SEO.content_share_facebook += "<meta property='og:description' content='" + SEO.meta_description + "'/>";
-        }
-    }
+            PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, C.ROOT_URL + image, ConfigWeb.SiteName, MetaDescription);
+            PageUtility.AddCanonicalLink(this.Page, url);
 
+            SEO_Schema.Type = "WebSite";
+            SEO_Schema.Title = SEO.meta_title;
+            SEO_Schema.Description = SEO.meta_description;
+            SEO_Schema.Image = image;
+            SEO_Schema.Url = SEO.canonical;
+            SEO_Schema.AuthorName = C.SITE_NAME;
+            SEO_Schema.Publisher_Type = "Organization";
+            SEO_Schema.Publisher_Name = C.ROOT_URL.Replace("https://", "");
+            SEO_Schema.Publisher_Logo = ConfigWeb.LogoAdmin;
+            SEO_Schema.RatingCount = ConvertUtility.ToInt32(drCat["SchemaRatingCount"]);
+            SEO_Schema.RatingValue = ConvertUtility.ToInt32(drCat["SchemaRatingValue"]);
+            if (SEO_Schema.RatingValue > 93)
+                SEO_Schema.ReviewRatingValue = 5;
+            else
+                SEO_Schema.ReviewRatingValue = 4;
+
+            PageInfo.CurrentControl = ControlCurrent.NewsCategory.ToString();
+        }
+        else
+        {
+            string MetaTitle = "";
+            string MetaKeyword = "";
+            string MetaDescription = "";
+
+            if (MetaTitle.Length < 3)
+                MetaTitle = "Tin tức";
+            if (MetaKeyword.Length < 3)
+                MetaKeyword = MetaTitle + ", " + ConfigWeb.MetaKeyword;
+            if (MetaDescription.Length < 3)
+                MetaDescription = MetaTitle + ", " + ConfigWeb.MetaDescription;
+
+            string url = C.ROOT_URL + "/tin-tuc/";
+            PageUtility.AddTitle(this.Page, MetaTitle);
+            PageUtility.AddMetaTag(this.Page, "keywords", MetaKeyword);
+            PageUtility.AddMetaTag(this.Page, "description", MetaDescription);
+            string image = ConfigWeb.Image;
+            PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, image, ConfigWeb.SiteName, MetaDescription);
+            PageUtility.AddCanonicalLink(this.Page, url);
+            PageUtility.SetIndex(this.Page);
+
+        }
+
+        PageUtility.AddDefaultMetaTag(this.Page);
+    }
 }
