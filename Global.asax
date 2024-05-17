@@ -94,7 +94,7 @@
         //Admin
         routes.MapPageRoute("admin_dashboard", "admin/{folder}/{control}", "~/admin/default.aspx");
         routes.MapPageRoute("websosanh", "websosanh/{page}/", "~/Websosanh/datafeed.aspx");
-        routes.MapPageRoute("flashsale", "flash-sale/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "flashsale" } });
+        //routes.MapPageRoute("flashsale", "flash-sale/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "flashsale" } });
 
         routes.MapPageRoute("search", "tim-kiem.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "searchresult" } });
         routes.MapPageRoute("sitemap", "sitemap.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "categoryall" } });
