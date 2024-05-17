@@ -1,0 +1,25 @@
+﻿.product__special-topPage__inner .heading .heading__title span {
+    color:#fff;
+}
+.btn.tag.more{
+    font-weight:bold;
+}
+
+.product__special-topPage__inner {
+    background-color: #d30000;
+}
+
+.header__logo {
+    flex: 0 0 280px;
+    max-width: 280px;
+}
+
+.breadcrumb .edit {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    border: 1px solid #dbdbdb;
+    padding: 5px 10px;
+    color: #000;
+    background: #f5f5f5;
+}

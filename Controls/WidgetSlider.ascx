@@ -39,7 +39,7 @@
                     {
                         string link = ConvertUtility.ToString(dr["Link"]);
             %>
-            <div class="col-12 col-sm-4 mb-3 mb-sm-0">
+            <div class="col-12 col-sm-4 mb-3 mb-sm-0 item-banner">
                 <a href="<%= link %>" class="banner__image">
                     <img src="<%= dr["Image_1"] %>" alt="<%= dr["Alt"] %>"></a>
             </div>

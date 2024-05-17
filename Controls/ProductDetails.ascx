@@ -229,12 +229,12 @@
                     <div id="description" class="product__description mb-5">
                         <div class="productReadMore readMore">
                             <%= dr["Tab1"].ToString() %>
-                            <%= dr["LongDescription"].ToString() %>
+                            <%= longDescription %>
                         </div>
                     </div>
 
                     <div class="product__related mb-5">
-                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Tiêu đề", "", "", 0, false, false) %>
+                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Tiêu đề", "", "", 0, false, false, 0) %>
                     </div>
 
                 </div>
