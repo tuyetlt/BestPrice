@@ -2780,6 +2780,7 @@ header .show_search_content {
 
     header .show_search_content .cont {
         margin-left: 10px;
+        width: calc(100% - 50px);
     }
 
     header .show_search_content .price {
@@ -2787,7 +2788,7 @@ header .show_search_content {
         align-items: center;
         font-weight: 600;
         font-size: 13px;
-        margin-top: -10px;
+        margin-top: -5px;
         justify-content:space-between;
     }
 
