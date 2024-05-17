@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="banner__productAdvert-section d-md-flex">
-        <% if (count % 2 == 0)
+        <% if (count % 2 == 0 || Utils.isMobileBrowser)
             {  %>
         <div class="col-12 col-md-6">
             <div class="slider createBannerProductAdvertSliders">
@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <% if (count % 2 != 0)
+        <% if (count % 2 != 0 && !Utils.isMobileBrowser)
             {  %>
         <div class="col-12 col-md-6">
             <div class="slider createBannerProductAdvertSliders">
