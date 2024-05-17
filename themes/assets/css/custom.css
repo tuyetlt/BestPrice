@@ -726,6 +726,10 @@
 
 .header__search .dropdown-menu {
     padding-top: 0;
+    padding-top: 0;
+    transform: initial !important;
+    top: 100% !important;
+    left: 0 !important;
 }
 
     .header__search .dropdown-menu ul .img {
@@ -1310,7 +1314,7 @@ header .show_search_content {
     }
 
     header .show_search_content .price del {
-        text-decoration: none;
+        text-decoration: revert;
         color: #878787;
         margin-right: 10px;
     }
@@ -1439,7 +1443,7 @@ header .show_search_content {
         }
 
     .item-banner {
-        width: 33.33%;
+        width: 100%;
         padding: 0;
         margin-bottom: 0 !important;
     }

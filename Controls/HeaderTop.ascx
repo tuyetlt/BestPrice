@@ -23,21 +23,31 @@
                                 </div>
                                <div class="dropdown-menu">
                                      <div class="dropdown-inner">
-                                         <ul>
-                                             <li>
-                                                 <div class="d-flex align-items-center">
-                                                     <div class="col d-flex align-items-center">
-                                                         <div class="img">
-                                                             <img src="https://meta.vn/api/cateico.aspx?id=1015" />
-                                                         </div>
-                                                         <div class="product__name">Tủ lạnh Samsung</div>
-                                                     </div>
-                                                     <a href="#" class="btn-remove-search"><i class="icon-close"></i></a>
-                                                 </div>
-                                             </li>
-                   
-                                         </ul>
-                                         <div class="category__latest">
+                                         <div class="content-new">
+                                               <%
+                                                    string filterNews = "Flags=1";
+                                                    DataTable dtNews = SqlHelper.SQLToDataTable("tblArticle", "Name,Gallery,Description,FriendlyUrl", filterNews, ConfigWeb.SortArticle, 1, 4);
+                                                    if (Utils.CheckExist_DataTable(dtNews))
+                                                    {
+                                                        foreach (DataRow drNews in dtNews.Rows)
+                                                        {
+                                                            string linkDetail = TextChanger.GetLinkRewrite_Article(drNews["FriendlyUrl"].ToString());
+                                                %>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="col d-flex align-items-center">
+                                                            <a href="<%= linkDetail %>" title="<%= drNews["Name"].ToString() %>"><%= drNews["Name"].ToString() %></a>
+                                                        </div>
+                                                        <a href="#" class="btn-remove-search"><i class="icon-close"></i></a>
+                                                    </div>
+                                                
+                                                <%
+                                                        }
+                                                    }
+                                                %>
+                                            
+                                         </div>
+                                         
+                                         <div class="category__latest ">
                                              <p class="fs-14 title-box">Danh mục nổi bật</p>
                                              <div class="list-category-search">
                                              <div class="search-cat-list d-grid">

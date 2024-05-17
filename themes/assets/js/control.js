@@ -1,8 +1,35 @@
 ﻿$(document).ready(function () {
     var arr_scroll = [];
     //search header
+    /* Header Search */
+    $('.header__search input[name="search"]').on('keydown', function (e) {
+        if (e.keyCode == 13) {
+            $('.header__search .btn-top-search').trigger('click');
+        }
+    });
+
+    $('.btn-top-search').on('click', function () {
+        let url = '/tim-kiem.html';
+        let value = $('.header__search input[name="search"]').val();
+        if (value != '') {
+            url += '?key=' + encodeURIComponent(value);
+        }
+        window.location = url;
+    });
+
+    $("#searchbox").focusin(function (e) {
+        e.stopPropagation();
+       /* $(this).parent().parent().dropdown('toggle');*/
+        $('.header__search  .dropdown-menu').show();
+    });
+
+   /* $('#searchbox').on('click', function (e) {
+        e.stopPropagation();
+        $(this).parent().parents('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('toggle');
+    });*/
+    /* End Header Search */
     $('header .search').on('click', function () {
-        $('header').addClass('search_ac');
+        $('header .header__right').addClass('search_ac');
         $('header .over-lay').css({
             display: 'block',
         });
@@ -25,10 +52,10 @@
         return false;
     });
 
-    $('main').on('click', function () {
-        $('header').removeClass('search_ac');
+    $('.main').on('click', function () {
         $('.show_search_content').hide();
         $(".over-lay-search").hide();
+        $('.dropdown-menu').hide();
         $(".loading-search").hide();
         $('.search_toggle_show').removeClass('ac');
         $('header .over-lay').css({
@@ -61,6 +88,7 @@
         $('.show_search_content').hide();
         $(".over-lay-search").hide();
         $(".loading-search").hide();
+        $('.dropdown-menu').hide();
         $('.search_toggle_show').removeClass('ac');
         $('header .over-lay').css({
             display: 'none',

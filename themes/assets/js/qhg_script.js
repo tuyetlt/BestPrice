@@ -369,33 +369,6 @@ $(document).ready(function () {
     QHGraphic.Module.winWidth = $(window).width();
     QHGraphic.Module.init();
 
-    /* Header Search */
-    $('.header__search input[name="search"]').on('keydown', function(e) {
-        if (e.keyCode == 13) {
-            $('.header__search .btn-top-search').trigger('click');
-        }
-    });
-
-    $('.btn-top-search').on('click', function() {
-        let url = '/tim-kiem.html';
-        let value = $('.header__search input[name="search"]').val();
-        if (value != '') {
-            url += '?key=' + encodeURIComponent(value);
-        }
-        window.location = url;
-    });
-
-    $("#searchbox").focusin(function (e) {
-        e.stopPropagation();
-        $(this).parent().parent().dropdown('toggle');
-    });
-
-    $('#searchbox').on('click', function (e) {
-        e.stopPropagation();
-        $(this).parent().parents('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('toggle');
-    });
-    /* End Header Search */
-
     // Update Qty
     if ($('.btn-touchspin-down').length || $('.btn-touchspin-up').length) {
         $(document).on('click', '.btn-touchspin-up', function (e) {
