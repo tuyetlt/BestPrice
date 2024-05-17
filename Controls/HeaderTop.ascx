@@ -87,8 +87,7 @@
                                                              <% if (!string.IsNullOrEmpty(icon))
                                                                     { %>
                                                                 <div class="img">
-                                                                      <img src="<%= icon %>" alt="<%= dr_sub["Name"].ToString() %>" />                                                     
-                                                                      <%--  <img src="https://meta.vn/icons/cateico/c3256-168x168.jpg" />--%>
+                                                                      <img src="<%= icon %>" alt="<%= dr_sub["Name"].ToString() %>" />
                                                                  </div>
                                                                 <% } %>
                                                             <div class="search-cat__name"> <%= dr_sub["Name"].ToString() %></div>
@@ -146,7 +145,7 @@
                         </div>
                     </div>
                     <div class="header__cart block-top-cart" id="cart">
-                        <a href="/gio-hang.html" data-loading-text="text_loading" class="btn btn-cart">
+                        <a href="/gio-hang/" data-loading-text="text_loading" class="btn btn-cart">
                             <i class="icon-shipping-cart"></i>
                             <span id="cart-total">0</span>
                         </a>
@@ -158,7 +157,7 @@
                                     <p class="text-center">text_success</p>
                                 </div>
                                 <div class="buttons-set">
-                                    <a href="#" class="btn btn-primary">Xem giỏ hàng</a>
+                                    <a href="/gio-hang/" class="btn btn-primary">Xem giỏ hàng</a>
                                 </div>
                             </li>
                         </ul>
