@@ -102,7 +102,7 @@
         routes.MapPageRoute("checkout", "checkout/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "checkout" } });
 
         routes.MapPageRoute("gio hang", "gio-hang/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "shoppingcart" } });
-        routes.MapPageRoute("hoan tat don hang", "thong-tin-don-hang/{token}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "orderinfo" } });
+        routes.MapPageRoute("hoan tat don hang", "thong-tin-don-hang/{token}/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "orderinfo" } });
 
         routes.MapPageRoute("content", "{caturl}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "contentdetail" } });
         routes.MapPageRoute("sp", "{caturl}/{purl}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "productdetails" } });

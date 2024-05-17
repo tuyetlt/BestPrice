@@ -116,7 +116,7 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
 
             ShoppingCart.AddToCart(pid, quantity);
 
-            Response.Redirect(C.ROOT_URL + "/gio-hang.html");
+            Response.Redirect(C.ROOT_URL + "/gio-hang/");
         }
     }
 

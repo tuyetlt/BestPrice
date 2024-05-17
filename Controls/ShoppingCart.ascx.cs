@@ -25,109 +25,6 @@ public partial class Controls_ShoppingCart : System.Web.UI.UserControl
         {
             string option_payment = Request.Form["option_payment"].ToString();
 
-
-            if (option_payment == "vnpay")
-            {
-                //////// VN Pay
-
-                List<Valid> objsValid = new List<Valid>();
-
-
-                /*if (Utils.Vaild_Field(objsValid))
-                {
-
-                    if (option_payment == "IB")
-                    {
-                        payment_method_mail = "Thanh toán bằng Internet Banking";
-                        str_bankcode = option_payment;
-                    }
-                    else if (option_payment == "ATM")
-                    {
-                        payment_method_mail = "Thanh toán Online bằng thẻ ngân hàng nội địa ATM";
-                        str_bankcode = Request.Form["bankcode"];
-                    }
-                    else if (option_payment == "VNPAYQR")
-                    {
-                        payment_method_mail = "Thanh toán qua QR CODE";
-                        str_bankcode = option_payment;
-                    }
-                    else if (option_payment == "NL")
-                        payment_method_mail = "Thanh toán bằng số dư Ví Ngân Lượng";
-                    else if (option_payment == "VNMART")
-                    {
-                        payment_method_mail = "Thanh toán bằng số dư Ví VNMART";
-                        str_bankcode = option_payment;
-                        paymentHistory.BankCode = str_bankcode;
-                        paymentHistory.BankName = Utils.GetBankNameByID(str_bankcode);
-                    }
-                    else if (option_payment == "INTCARD")
-                    {
-                        payment_method_mail = "Thanh toán bằng thẻ thanh toán quốc tế";
-                        str_bankcode = option_payment;
-                    } */
-
-
-                //logger.Info("Chọn phương thức thanh toán =======>" + payment_method_mail);
-                //string payment_method = "IB";
-                //random = Utils.RandomString(50);
-
-                //RequestInfo info = new RequestInfo();
-                //info.Merchant_id = C.NganLuong_Merchant_id;
-                //info.Merchant_password = C.NganLuong_Merchant_password;
-                //info.Receiver_email = C.NganLuong_Receiver_email;
-                //info.Buyer_address = "Email: " + customer.EmailAddress;
-                //info.cur_code = "vnd";
-                //info.bank_code = str_bankcode;
-
-                //info.Total_amount = Utils.KillChars(Request.Form["totalamount"]);
-                //info.fee_shipping = "0";
-                //info.Discount_amount = "0";
-
-                ////if (!string.IsNullOrEmpty(option_payment))
-                ////{
-                //info.return_url = C.ROOT_URL + "/hoan-tat-vnpay.html?payment-method=vnp";
-                //info.cancel_url = C.ROOT_URL + "/hoan-tat-vnpay.html?mytoken=" + random;
-
-                //info.Buyer_fullname = Utils.KillChars(customer.FullName);
-                //info.Buyer_email = Utils.KillCharEmail(customer.EmailAddress);
-                //info.Buyer_mobile = Utils.KillChars(customer.Phone);
-
-                //saveTransactionHistory(info, payment_method);
-
-                //info.order_description = "Nạp tiền số: " + info.Order_code.Replace("napxeng_", "");
-
-                ////Get Config Info
-                //string vnp_Returnurl = C.VNP_RETURN_URL; //URL nhan ket qua tra ve
-                //string vnp_TmnCode = C.VNP_TMNCODE; //Ma website
-                //string vnp_HashSecret = C.VNP_HASHSECRET; //Chuoi bi mat
-
-                ////Build URL for VNPAY
-                //VnPayLibrary vnpay = new VnPayLibrary();
-
-                //vnpay.AddRequestData("vnp_Version", "2.0.0");
-                //vnpay.AddRequestData("vnp_Command", "pay");
-                //vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
-                //vnpay.AddRequestData("vnp_Locale", "vn");
-                //vnpay.AddRequestData("vnp_CurrCode", "VND");
-                //vnpay.AddRequestData("vnp_TxnRef", info.Order_code);
-                //vnpay.AddRequestData("vnp_OrderInfo", info.order_description);
-                //vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
-                //vnpay.AddRequestData("vnp_Amount", (ConvertUtility.ToInt32(info.Total_amount) * 100).ToString());
-                //vnpay.AddRequestData("vnp_ReturnUrl", info.return_url);
-                //vnpay.AddRequestData("vnp_IpAddr", VnpUtils.GetIpAddress());
-                //vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
-                //vnpay.AddRequestData("vnp_BankCode", payment_method);
-
-                //string paymentUrl = vnpay.CreateRequestUrl(vnp_HashSecret);
-                //logger.InfoFormat("VNPAY URL: {0}", paymentUrl);
-                //Response.Redirect(paymentUrl);
-                //}
-                //}
-                //}
-
-            }
-            else
-            {
                 hashtable["Name"] = Request.Form["name"];
                 hashtable["Status"] = (int)OrderStatus.ProcessingInProgress;
                 hashtable["Address"] = Request.Form["address"];
@@ -140,10 +37,8 @@ public partial class Controls_ShoppingCart : System.Web.UI.UserControl
                 hashtable["MailTemplate"] = mail_body();
                 UpdateDatabase();
                 SendMail();
-                Response.Redirect(string.Format("thong-tin-don-hang/{0}.html", hashtable["OrderID"]));
-            }
+                Response.Redirect(string.Format("/thong-tin-don-hang/{0}/", hashtable["OrderID"]));
         }
-
         SetSEO();
     }
 

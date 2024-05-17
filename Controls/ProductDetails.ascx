@@ -156,7 +156,7 @@
                                     </form>
 
                                     <p>
-                                        <a class="btn btn-outline-primary btn-lg d-block buy_payment" href="tel:0919535935">Gọi đặt mua: <strong><%= ConfigWeb.Hotline %></strong> </a>
+                                        <a class="btn btn-outline-primary btn-lg d-block buy_payment" href="tel:<%= ConfigWeb.Hotline %>">Gọi đặt mua: <strong><%= ConfigWeb.Hotline %></strong> </a>
                                     </p>
                                     <%-- <ul class="product__commit list-unstyled row">
                                         <%

@@ -57,6 +57,8 @@ public partial class Controls_OrderInfo : System.Web.UI.UserControl
     }
     protected string GetProductList()
     {
+        PageInfo.ControlName = string.Format("Thông tin đơn hàng số <b>{0}</b>", token);
+
         string strProductList = string.Empty;
         orderInfoList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<OrderInfo>>(ConvertUtility.ToString(dr["Json"]));
         if (orderInfoList.Count > 0)

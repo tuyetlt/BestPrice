@@ -7,8 +7,13 @@
     if (Utils.CheckExist_DataTable(dt))
     {
 %>
-<div class="order-info">
+<div class="main main__wrapper">
     <div class="container">
+        <div class="heading d-flex align-items-end">
+            <div class="col">
+                <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
+            </div>
+        </div>
         <%= content %>
     </div>
 </div>
@@ -23,7 +28,7 @@
 </script>
 
 <%
-       int count = 0;
+    int count = 0;
     string Items = "[";
     if (orderInfoList.Count > 0)
     {
@@ -40,11 +45,11 @@
     Items += "]";
 
 %>
- <input type="hidden" value="purchase" id="GG_Page" />
- <input type="hidden" value="<%= token %>" id="GG_ID" />
- <input type="hidden" value="<%= Utils.PriceConversion_Product(totalValue) %>" id="GG_Price" />
- <input type="hidden" value='<%= Items %>' id="GG_Items" />
- <input type="hidden" value="<%= countProduct %>" id="GG_CountItems" />
+<input type="hidden" value="purchase" id="GG_Page" />
+<input type="hidden" value="<%= token %>" id="GG_ID" />
+<input type="hidden" value="<%= Utils.PriceConversion_Product(totalValue) %>" id="GG_Price" />
+<input type="hidden" value='<%= Items %>' id="GG_Items" />
+<input type="hidden" value="<%= countProduct %>" id="GG_CountItems" />
 
 <% }
     else
@@ -52,39 +57,8 @@
 <div class="cart-empty">
     <div class="container">
         <h2>Đơn hàng không tồn tại!</h2>
-        <img src="/themes/img/cart-empty.png" />
+        <img src="/themes/assets/images/cart-empty.png" />
     </div>
 </div>
 <% } %>
 
-
-
-<%--<script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        fbq('track', 'Purchase',
-            {
-                value: <%= totalValue %>,
-            currency: 'VND',
-            contents: [
-<%
-    int count = 0;
-    if (orderInfoList.Count > 0)
-    {
-        foreach (OrderInfo orderInfo in orderInfoList)
-        {
-            count++;
-            string dau_phay = ",";
-            if (count == orderInfoList.Count)
-                dau_phay = string.Empty;
-
-            Response.Write(string.Format(@"{{id: '{0}',quantity: {1}}}{2}", orderInfo.ProductID, orderInfo.Quantity, dau_phay));
-        }
-    }
-
-%>
-            ],
-            content_type: 'product'
-        }
-    );
-    });
-</script>--%>

@@ -775,17 +775,20 @@
             cart_total_price.html(jsonContent.finalPriceVND);
             hdfTotalPrice.val(jsonContent.finalPriceVND);
 
-            var item_rows_delete = $(".shopping-cart .item.item" + id);
+            var item_rows_delete = $(".cart__list .item" + id);
             item_rows_delete.fadeOut("slow");
 
+            $(".cart_count").html("(" + cartCount + " sản phẩm)");
+            $("#cart-total").html(cartCount);
+
+
             if (parseInt(cartCount) > 0) {
-                $("a.cart").show();
+                $("cart__page").show();
                 $("#header-cart-count").html(cartCount);
             } else {
                 console.log("cart empty");
-                $("a.cart").hide();
                 $(".cart-empty").show();
-                $(".cart-info").hide();
+                $(".cart__page").hide();
             }
         });
 
@@ -793,36 +796,10 @@
     });
 
 
-    //$(function () {
-    //    $('.increment').click(function () {
-    //        var id = $(this).siblings('input').attr('id');
-    //        var valueElement = $('#' + id);
-    //        if ($(this).hasClass('plus')) {
-    //            valueElement.val(Math.max(parseInt(valueElement.val()) + 1));
-    //        } else if (valueElement.val() > 1) {
-    //            valueElement.val(Math.max(parseInt(valueElement.val()) - 1));
-    //        }
-    //        Loading(true);
-    //        $.getJSON('/ajax/ajax.aspx', { control: "dynamic", services: "cart_update", id: id, quantity: valueElement.val() }, function (data) {
-    //            var jsonContent = JSON.parse(JSON.stringify(data));
-    //            $("#GG_Items").val(jsonContent.jsonProduct);
-    //            $("#GG_Price").val(jsonContent.finalPrice);
-    //            $(".cart_total_price").html(jsonContent.finalPriceVND);
-
-
-
-
-
-    //        });
-    //        Loading(false);
-    //        return false;
-    //    });
-    //});
-
 
     $(function () {
         $('.increment').click(function () {
-            var id = $(this).siblings('input').attr('id');
+            var id = $(this).closest('.block-qty-cart').find('input.quantity_cart').attr('id');
             var valueElement = $('#' + id);
             if ($(this).hasClass('plus')) {
                 valueElement.val(Math.max(parseInt(valueElement.val()) + 1));
@@ -832,26 +809,25 @@
             Loading(true);
 
             $.getJSON('/ajax/ajax.aspx', { control: "dynamic", services: "cart_update", id: id, quantity: valueElement.val() }, function (data) {
-                // Parse lại chuỗi JSON bên trong jsonProduct
                 data.jsonProduct = JSON.parse(data.jsonProduct);
-
                 var jsonContent = data;
-
-                // Cập nhật thông tin sản phẩm
+                //console.log(jsonContent);
                 for (var i = 0; i < jsonContent.jsonProduct.length; i++) {
                     var product = jsonContent.jsonProduct[i];
-                    var productElement = $(".item" + product.id); // Sửa thành $(".item.item" + product.id)
+                    //console.log(product);
+                    var productElement = $(".item" + product.id);
 
                     if (productElement.length > 0) {
                         productElement.find(".quantity_cart").val(product.quantity);
 
-                        // Kiểm tra kiểu dữ liệu của giá và chuyển đổi sang số nếu cần
-                        var price = typeof product.price === 'string' ? parseFloat(product.price) : product.price;
+                        
 
+                        var price = typeof product.price === 'string' ? parseFloat(product.price) : product.price;
+                        
                         // Thêm dấu chấm ngăn cách hàng nghìn bằng cách sử dụng hàm tự định nghĩa
                         var formattedPrice = formatNumberWithDot(price);
-                        productElement.find(".price_item_" + product.id + " span").text(formattedPrice + " VNĐ");
-
+                        productElement.find(".price_item_" + product.id + " strong").text(formattedPrice + " VNĐ");
+                        //alert(formattedPrice);
                         productElement.find(".coupon_quantity_apply").text(product.voucher_quantity);
                         productElement.find(".hdfPrice_" + product.id).val(price);
 

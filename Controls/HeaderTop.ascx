@@ -147,7 +147,7 @@
                     <div class="header__cart block-top-cart" id="cart">
                         <a href="/gio-hang/" data-loading-text="text_loading" class="btn btn-cart">
                             <i class="icon-shipping-cart"></i>
-                            <span id="cart-total">0</span>
+                            <span id="cart-total"><%= ShoppingCart.CartCount %></span>
                         </a>
                         <ul id="loadCart" class="dropdown-menu list-item-cart">
                             <li class="item">
