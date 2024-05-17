@@ -2083,6 +2083,37 @@ public class SqlHelper
 
         return Return;
     }
+
+
+    public static void Update_Url_Table(bool IsUpdate, string modul, int ID, string Name, string FriendlyUrl)
+    {
+        using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
+        {
+            string sqlQuery = string.Empty;
+            if (IsUpdate)
+                sqlQuery = @"UPDATE[dbo].[tblUrl] SET [Name]=@Name,[FriendlyUrl]=@FriendlyUrl,[Moduls]=@Moduls,[ContentID]=@ContentID,[EditedDate]=@EditedDate,[EditedBy]=@EditedBy WHERE [ContentID] = @ID";
+            else
+                sqlQuery = @"INSERT INTO [dbo].[tblUrl]([Name],[FriendlyUrl],[Moduls],[ContentID],[CreatedDate],[EditedDate],[CreatedBy],[EditedBy]) OUTPUT INSERTED.ID VALUES (@Name,@FriendlyUrl,@Moduls,@ContentID,@CreatedDate,@EditedDate,@CreatedBy,@EditedBy)";
+
+            db.AddParameter("@Name", System.Data.SqlDbType.NVarChar, Name);
+            db.AddParameter("@FriendlyUrl", System.Data.SqlDbType.NVarChar, FriendlyUrl);
+            db.AddParameter("@Moduls", System.Data.SqlDbType.NVarChar, modul);
+            db.AddParameter("@ContentID", System.Data.SqlDbType.Int, ID);
+            db.AddParameter("@EditedDate", System.Data.SqlDbType.DateTime, DateTime.Now);
+            db.AddParameter("@EditedBy", System.Data.SqlDbType.Int, HttpContext.Current.User.Identity.Name);
+
+            if (IsUpdate)
+            {
+                db.AddParameter("@ID", System.Data.SqlDbType.Int, ID);
+            }
+            else
+            {
+                db.AddParameter("@CreatedDate", System.Data.SqlDbType.DateTime, DateTime.Now);
+                db.AddParameter("@CreatedBy", System.Data.SqlDbType.Int, HttpContext.Current.User.Identity.Name);
+            }
+            db.ExecuteSql(sqlQuery);
+        }
+    }
 }
 
 public class ShoppingCart

@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 public partial class Controls_NewsDetail : System.Web.UI.UserControl
 {
     public DataRow dr, drCategory;
-    public DataTable dt;
+    public DataTable dt, dtRef;
     public int ID;
     public string seo_title, caturl, image, longDescription;
     protected void Page_Load(object sender, EventArgs e)
@@ -30,7 +30,12 @@ public partial class Controls_NewsDetail : System.Web.UI.UserControl
 
     protected void BindData()
     {
-        dt = SqlHelper.SQLToDataTable(C.ARTICLE_TABLE, "", string.Format("FriendlyUrl=N'{0}'", seo_title));
+        DataTable dt = new DataTable();
+        if (Utils.CheckExist_DataTable(dtRef))
+            dt = dtRef;
+        else
+            dt = SqlHelper.SQLToDataTable(C.ARTICLE_TABLE, "", string.Format("FriendlyUrl=N'{0}'", seo_title));
+
         if (Utils.CheckExist_DataTable(dt))
         {
             dr = dt.Rows[0];

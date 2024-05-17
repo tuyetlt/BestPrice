@@ -54,7 +54,7 @@
             HttpContext.Current.Response.End();
         }
         else
-             Save(requestCountForIp, "");
+            Save(requestCountForIp, "");
 
     }
 
@@ -96,35 +96,24 @@
         routes.MapPageRoute("websosanh", "websosanh/{page}/", "~/Websosanh/datafeed.aspx");
         //routes.MapPageRoute("flashsale", "flash-sale/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "flashsale" } });
 
-        routes.MapPageRoute("search", "tim-kiem.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "searchresult" } });
-        routes.MapPageRoute("sitemap", "sitemap.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "categoryall" } });
-        routes.MapPageRoute("review", "review.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "customerreview" } });
-        routes.MapPageRoute("loi 404", "404.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "404" } });
-        routes.MapPageRoute("rss", "feed", "~/Default.aspx", true, new RouteValueDictionary { { "m", "rss" } });
-        routes.MapPageRoute("tragop", "tragop", "~/Default.aspx", true, new RouteValueDictionary { { "m", "tragop" } });
-        routes.MapPageRoute("tragopquanganhang", "tragopquanganhang", "~/Default.aspx", true, new RouteValueDictionary { { "m", "tragopquanganhang" } });
+        routes.MapPageRoute("search", "tim-kiem/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "searchresult" } });
+        routes.MapPageRoute("loi 404", "404/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "404" } });
 
+        routes.MapPageRoute("checkout", "checkout/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "checkout" } });
 
-        //blog
-        routes.MapPageRoute("tin", "tin/{seo_title}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "newsdetail" } });
-        routes.MapPageRoute("tin1", "tin/{caturl}/{seo_title}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "newsdetail" } });
-        routes.MapPageRoute("danh muc tin", "tin/{caturl}/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "newscategory" } });
-        routes.MapPageRoute("tinindex", "tin/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "newscategory" } });
-
-        routes.MapPageRoute("checkout", "checkout.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "checkout" } });
-
-
-        routes.MapPageRoute("gio hang", "gio-hang.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "shoppingcart" } });
+        routes.MapPageRoute("gio hang", "gio-hang/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "shoppingcart" } });
         routes.MapPageRoute("hoan tat don hang", "thong-tin-don-hang/{token}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "orderinfo" } });
 
         routes.MapPageRoute("content", "{caturl}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "contentdetail" } });
-
-        routes.MapPageRoute("dm sp", "{caturl}/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "productcategory" } });
         routes.MapPageRoute("sp", "{caturl}/{purl}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "productdetails" } });
 
         routes.MapPageRoute("ajax_shoppingcart", "ajax/shoppingcart", "~/Default.aspx", true, new RouteValueDictionary { { "ajax", "shoppingcart" } });
         routes.MapPageRoute("ajax_search", "ajax/search", "~/Default.aspx", true, new RouteValueDictionary { { "ajax", "product_search" } });
         routes.MapPageRoute("ajax", "ajax/{control}/", "~/Default.aspx");
+
+
+        routes.MapPageRoute("url chung", "{url}/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "urlchung" } });
+
 
 
     }
