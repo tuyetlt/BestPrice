@@ -6,18 +6,17 @@
 <input type="hidden" id="pageSize" value="<%= C.ROWS_PRODUCTCATEGORY %>" />
 <input type="hidden" id="totalProduct" value="<%= _totalProduct %>" />
 
-
-<main class="products">
+<div class="main main__wrapper">
     <div class="container">
-        <div class="content">
-            <div class="container-product">
-                <div class="heading">
-                    <h2 class="title">
-                        <span><%= keyword %></span>
-                    </h2>
+        <div class="heading d-flex align-items-end">
+            <div class="col">
+                 <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
+            </div>
+        </div>
+        <div class="column__main col-12 col-md-9">
+            <div class="product__wrapper">
+                <div class="product__grid row mb-5 product-list" id="products-container">
 
-                </div>
-                <div class="product-list">
                     <% 
                         if (Utils.CheckExist_DataTable(dtProduct))
                         {
@@ -26,32 +25,42 @@
                                 string linkDetail = TextChanger.GetLinkRewrite_Products(ConvertUtility.ToString(drProduct["FriendlyUrlCategory"]), ConvertUtility.ToString(drProduct["FriendlyUrl"]));
 
                     %>
-                    <div class="product-item">
-                        <a href="<%= linkDetail %>">
-                            <div class="img">
-                                <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 200, 200) %>" alt="<%= drProduct["Name"].ToString() %>" />
+
+
+                    <div class="product__item col-6 col-sm-4 col-md-4 col-lg-3">
+                        <div class="product__inner">
+                            <div class="product__thumb">
+
+                                <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
+                                    { %>
+                                <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
+                                <% } %>
+
+
+
+                                <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
+                                    <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" /></a>
                             </div>
-                            <%--<span class="sale">50%</span>--%>
-                            <div class="cont">
-                                <h4 class="name"><%= drProduct["Name"].ToString() %></h4>
-                                <div class="info">
+                            <div class="product__info">
+                                <h3 class="product__name"><a href="<%= linkDetail %>"><%= drProduct["Name"].ToString() %></a></h3>
 
-                                    <ins><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></ins>
-                                    <del><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></del>
-
+                                <div class="product__price d-flex align-items-center">
+                                    <div class="price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></div>
+                                    <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
+
                     <%}
                         } %>
                 </div>
                 <div class="clear"></div>
-                <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
-                    { %>
-                <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêm <i class="fas fa-sort-down"></i></a></div>
-                <%} %>
             </div>
         </div>
     </div>
-</main>
+</div>
+
+
+
+

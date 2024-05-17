@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Web;
@@ -10,7 +11,7 @@ public partial class Controls_NewsDetail : System.Web.UI.UserControl
     public DataRow dr, drCategory;
     public DataTable dt;
     public int ID;
-    public string seo_title, caturl, image;
+    public string seo_title, caturl, image, longDescription;
     protected void Page_Load(object sender, EventArgs e)
     {
         ProccessParameter();
@@ -33,6 +34,11 @@ public partial class Controls_NewsDetail : System.Web.UI.UserControl
         if (Utils.CheckExist_DataTable(dt))
         {
             dr = dt.Rows[0];
+
+            string domain = "https://dienmayhoanghai.vn";
+            longDescription = AddDomainToRelativeUrls(dr["LongDescription"].ToString(), domain);
+
+
             image = Utils.GetFirstImageInGallery_Json(ConvertUtility.ToString(dr["gallery"]));
             string[] cateList = ConvertUtility.ToString(dr["CategoryIDList"]).Trim(',').Split(',');
             foreach (string categoryid in cateList)
@@ -58,55 +64,56 @@ public partial class Controls_NewsDetail : System.Web.UI.UserControl
         }
         
     }
-    
-    protected void SetSEO()
+
+    static string AddDomainToRelativeUrls(string html, string domain)
     {
-        SEO.meta_title = ConvertUtility.ToString(dr["MetaTitle"]);
-        SEO.meta_keyword = ConvertUtility.ToString(dr["MetaKeyword"]);
-        SEO.meta_description = ConvertUtility.ToString(dr["MetaDescription"]);
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
 
-        if (SEO.meta_title.Length < 3)
-            SEO.meta_title = ConvertUtility.ToString(dr["Name"]);
-        if (SEO.meta_keyword.Length < 3)
+        var imgNodes = doc.DocumentNode.SelectNodes("//img[@src]");
+
+        if (imgNodes != null)
         {
-            string Meta_Keyword = "";
-            //if (CategoryTagList != null && CategoryTagList.Count > 0)
-            //{
-            //    foreach (Category cat in CategoryTagList)
-            //    {
-            //        if (cat.Moduls != "Hashtag")
-            //        {
-            //            if (!string.IsNullOrEmpty(Meta_Keyword))
-            //                Meta_Keyword += ",";
-            //            Meta_Keyword += cat.CategoryName;
-            //        }
-            //    }
-            //}
-
-            if (Meta_Keyword.Length > 0)
-                SEO.meta_keyword = Meta_Keyword;
-            else
-                SEO.meta_keyword = SEO.meta_title + ", " + ConfigWeb.MetaKeyword;
+            foreach (var imgNode in imgNodes)
+            {
+                var srcValue = imgNode.GetAttributeValue("src", "");
+                if (!string.IsNullOrEmpty(srcValue) && Uri.IsWellFormedUriString(srcValue, UriKind.Relative))
+                {
+                    imgNode.SetAttributeValue("src", domain + srcValue);
+                }
+            }
         }
 
-        if (SEO.meta_description.Length < 3)
-            SEO.meta_description = ConvertUtility.ToString(dr["Name"]) + ", " + ConfigWeb.MetaDescription;
+        return doc.DocumentNode.OuterHtml;
+    }
 
-        string linkDetail = TextChanger.GetLinkRewrite_Article(dr["FriendlyUrl"].ToString());
-        SEO.url_current = linkDetail;
-        SEO.canonical = linkDetail;
-        SEO.content_share_facebook = "<meta property='og:title' content='" + SEO.meta_title + "'/>";
-        SEO.content_share_facebook += "<meta property='og:type' content='website'/>";
-        SEO.content_share_facebook += "<meta property='og:url' content='" + SEO.url_current + "'/>";
-        SEO.content_share_facebook += "<meta property='og:image' content='" + image + "'/>";
-        SEO.content_share_facebook += "<meta property='og:site_name' content='" + SEO.url_current + "'/> ";
-        SEO.content_share_facebook += "<meta property='og:description' content='" + SEO.meta_description + "'/>";
+    protected void SetSEO()
+    {
+        string MetaTitle = ConvertUtility.ToString(dr["MetaTitle"]);
+        string MetaKeyword = ConvertUtility.ToString(dr["MetaKeyword"]);
+        string MetaDescription = ConvertUtility.ToString(dr["MetaDescription"]);
 
+        if (MetaTitle.Length < 3)
+            MetaTitle = ConvertUtility.ToString(dr["Name"]);
+        if (MetaKeyword.Length < 3)
+            MetaKeyword = MetaTitle + ", " + ConfigWeb.MetaKeyword;
+        if (MetaDescription.Length < 3)
+            MetaDescription = MetaTitle + ", " + ConfigWeb.MetaDescription;
+
+        string url = TextChanger.GetLinkRewrite_Article(ConvertUtility.ToString(dr["FriendlyUrl"]));
+
+        PageUtility.AddTitle(this.Page, MetaTitle);
+        PageUtility.AddMetaTag(this.Page, "keywords", MetaKeyword);
+        PageUtility.AddMetaTag(this.Page, "description", MetaDescription);
+        PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, image, ConfigWeb.SiteName, MetaDescription);
+        PageUtility.AddCanonicalLink(this.Page, url);
+
+        PageUtility.AddDefaultMetaTag(this.Page);
 
         SEO_Schema.Type = "NewsArticle";
         SEO_Schema.Url = SEO.canonical;
         SEO_Schema.Title = SEO.meta_title;
-        SEO_Schema.Description = SEO.meta_description;
+        SEO_Schema.Description = Utils.QuoteRemove(SEO.meta_description);
         SEO_Schema.Image = image;
         SEO_Schema.AuthorType = "Organization";
         SEO_Schema.AuthorName = C.SITE_NAME;
@@ -116,8 +123,14 @@ public partial class Controls_NewsDetail : System.Web.UI.UserControl
         SEO_Schema.PublisherDate = ConvertUtility.ToDateTime(dr["StartDate"]).ToString("yyyy-MM-dd");
         SEO_Schema.PublisherModify = ConvertUtility.ToDateTime(dr["EditedDate"]).ToString("yyyy-MM-dd");
 
-        //SEO_Schema.RatingCount = Product.UnLikeVote;
-        //SEO_Schema.RatingValue = Product.LikeVote;
+        //SEO_Schema.RatingCount = ConvertUtility.ToInt32(dr["SchemaRatingCount"]);
+        //SEO_Schema.RatingValue = ConvertUtility.ToInt32(dr["SchemaRatingValue"]);
+        //if (SEO_Schema.RatingValue > 93)
+        //    SEO_Schema.ReviewRatingValue = 5;
+        //else
+        //    SEO_Schema.ReviewRatingValue = 4;
+
+        PageInfo.CurrentControl = ControlCurrent.NewsDetail.ToString();
     }
 
 }

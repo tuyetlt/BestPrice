@@ -19,8 +19,8 @@
     DataRow dr;
     DataTable dt;
 %>
- <ul class="breadcrumb mb-0">
-     <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<ul class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
     <%
         Response.Write(slash);
         int CategoryID = ConvertUtility.ToInt32(PageInfo.CategoryID);
@@ -127,22 +127,19 @@
         }
         else if (!string.IsNullOrEmpty(PageInfo.ControlName))
         {
-            Response.Write(@"<div class=""link-map-item"">");
+            Response.Write(@"<li class=""breadcrumb-item"">");
             Response.Write(string.Format(@"<a href=""{0}"">{1}</a>", Request.RawUrl, PageInfo.ControlName));
-            Response.Write(@"</div>");
+            Response.Write(@"</li>");
         }
         else
         {
-            Response.Write(@"<div class=""link-map-item"">");
+            Response.Write(@"<li class=""breadcrumb-item"">");
+          
             if (Utils.CheckIsHomePage)
                 Response.Write(string.Format(@"<h1><a href=""{0}"">{1}</a></h1>", C.ROOT_URL, ConfigWeb.Slogan));
             else
                 Response.Write(string.Format(@"<a href=""{0}"">{1}</a>", C.ROOT_URL, ConfigWeb.Slogan));
-            Response.Write(@"</div>");
+            Response.Write(@"</li>");
         }
     %>
-
-
-
-
 </ul>

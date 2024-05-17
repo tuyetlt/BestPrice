@@ -14,7 +14,7 @@
         if ($('header .search input').val() == '') {
             $('.show_search_content').fadeOut();
             $(".over-lay-search").hide();
-           
+
         }
         return false;
     });
@@ -211,7 +211,7 @@
                     success: function (html) {
                         $(".loading-search").hide();
                         //alert(html.length);
-                        
+
                         if (html.length > 10) {
                             $('.show_search_content').show();
                             $(".dropdown .dropdown-menu").hide();
@@ -1061,7 +1061,7 @@ function ShowMore(pageIndex, fistLoad) {
         $(".show-more").show();
         $(".section-readmore-cate").show();
     }
-       
+
     //alert(TotalProduct + ", " + pageIndex);
     $("#category_paging").text("Xem thêm (" + leftProduct + " sản phẩm)");
 }

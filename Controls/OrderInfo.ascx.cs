@@ -22,6 +22,7 @@ public partial class Controls_OrderInfo : System.Web.UI.UserControl
             dr = dt.Rows[0];
             totalValue = Utils.RemoveNonDigits(dr["PriceFinal"].ToString());
             content = mail_body();
+            SetSEO();
         }
     }
 
@@ -98,4 +99,21 @@ public partial class Controls_OrderInfo : System.Web.UI.UserControl
 
         return strProductList;
     }
+
+    protected void SetSEO()
+    {
+        PageInfo.CategoryID = 0;
+        string Title = "Thông tin đơn hàng";
+        string MetaTitle = Title + " - " + ConfigWeb.SiteName;
+        string MetaKeyword = Title + ", " + ConfigWeb.MetaKeyword;
+        string MetaDescription = Title + ", " + ConfigWeb.MetaDescription;
+        string url = C.ROOT_URL + Request.RawUrl;
+        PageUtility.AddTitle(this.Page, MetaTitle);
+        PageUtility.AddMetaTag(this.Page, "keywords", MetaKeyword);
+        PageUtility.AddMetaTag(this.Page, "description", MetaDescription);
+        PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, ConfigWeb.Image, ConfigWeb.SiteName, MetaDescription);
+        PageUtility.SetIndex(this.Page);
+        PageUtility.AddDefaultMetaTag(this.Page);
+    }
+
 }

@@ -107,20 +107,30 @@ public partial class Controls_SearchResult : System.Web.UI.UserControl
             dtProduct = Utils.SearchProduct(keyword);
             if (dtProduct.Rows.Count > 0)
             {
-                SetSeo();
+                
                 PageInfo.ControlName = string.Format("Kết quả tìm kiếm <b>'{0}'</b>", keyword);
             }
 
             CookieUtility.SetValueToCookie("pageIndex_Category", "2");
         }
+
+        SetSEO();
     }
 
 
-    protected void SetSeo()
+    protected void SetSEO()
     {
-        SEO.meta_title = keyword + " - " + ConfigWeb.MetaTitle;
-        SEO.meta_keyword = keyword + ", " + ConfigWeb.MetaKeyword;
-        SEO.meta_description = keyword + ", " + ConfigWeb.MetaDescription;
+        PageInfo.CategoryID = 0;
+        string Title = "Kết quả tìm kiếm: " + keyword;
+        string MetaTitle = Title + " - " + ConfigWeb.SiteName;
+        string MetaKeyword = Title + ", " + ConfigWeb.MetaKeyword;
+        string MetaDescription = Title + ", " + ConfigWeb.MetaDescription;
+        string url = C.ROOT_URL + Request.RawUrl;
+        PageUtility.AddTitle(this.Page, MetaTitle);
+        PageUtility.AddMetaTag(this.Page, "keywords", MetaKeyword);
+        PageUtility.AddMetaTag(this.Page, "description", "Trang không tìm thấy. Vui lòng kiểm tra lại URL hoặc quay lại trang chính.");
+        PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, C.ROOT_URL + ConfigWeb.Image, ConfigWeb.SiteName, MetaDescription);
+        PageUtility.SetIndex(this.Page);
+        PageUtility.AddDefaultMetaTag(this.Page);
     }
-
 }

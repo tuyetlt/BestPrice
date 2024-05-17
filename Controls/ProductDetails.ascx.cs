@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using Ebis.Utilities;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -113,67 +114,50 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
         }
     }
 
+
     protected void SetSEO()
     {
-        SEO.meta_title = ConvertUtility.ToString(dr["MetaTitle"]);
-        SEO.meta_keyword = ConvertUtility.ToString(dr["MetaKeyword"]);
-        SEO.meta_description = ConvertUtility.ToString(dr["MetaDescription"]);
-
-        if (SEO.meta_title.Length < 3)
-            SEO.meta_title = ConvertUtility.ToString(dr["Name"]);
-        if (SEO.meta_keyword.Length < 3)
+        if (dr != null)
         {
-            string Meta_Keyword = "";
-            //if (CategoryTagList != null && CategoryTagList.Count > 0)
-            //{
-            //    foreach (Category cat in CategoryTagList)
-            //    {
-            //        if (cat.Moduls != "Hashtag")
-            //        {
-            //            if (!string.IsNullOrEmpty(Meta_Keyword))
-            //                Meta_Keyword += ",";
-            //            Meta_Keyword += cat.CategoryName;
-            //        }
-            //    }
-            //}
+            string MetaTitle = ConvertUtility.ToString(dr["MetaTitle"]);
+            string MetaKeyword = ConvertUtility.ToString(dr["MetaKeyword"]);
+            string MetaDescription = ConvertUtility.ToString(dr["MetaDescription"]);
 
-            if (Meta_Keyword.Length > 0)
-                SEO.meta_keyword = Meta_Keyword;
+            if (MetaTitle.Length < 3)
+                MetaTitle = ConvertUtility.ToString(dr["Name"]);
+            if (MetaKeyword.Length < 3)
+                MetaKeyword = MetaTitle + ", " + ConfigWeb.MetaKeyword;
+            if (MetaDescription.Length < 3)
+                MetaDescription = MetaTitle + ", " + ConfigWeb.MetaDescription;
+
+            string url = TextChanger.GetLinkRewrite_Products(ConvertUtility.ToString(dr["FriendlyUrlCategory"]), ConvertUtility.ToString(dr["FriendlyUrl"]));
+            PageUtility.AddTitle(this.Page, MetaTitle);
+            PageUtility.AddMetaTag(this.Page, "keywords", MetaKeyword);
+            PageUtility.AddMetaTag(this.Page, "description", MetaDescription);
+            PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, image, ConfigWeb.SiteName, MetaDescription);
+            PageUtility.AddCanonicalLink(this.Page, url);
+            PageUtility.AddDefaultMetaTag(this.Page);
+
+            SEO_Schema.Type = "Product";
+            SEO_Schema.Title = MetaTitle;
+            SEO_Schema.SKU = ConvertUtility.ToString(dr["ID"]);
+            SEO_Schema.Description = MetaDescription;
+            SEO_Schema.Image = image;
+            decimal MinPrice = SqlHelper.GetPrice_Decimal(ConvertUtility.ToInt32(dr["ID"]), "Price", true);
+            SEO_Schema.Url = url;
+            SEO_Schema.Price = string.Format("{0:N0}", MinPrice).Replace(".", "");
+            SEO_Schema.AuthorName = C.SITE_NAME;
+            SEO_Schema.Publisher_Type = "Organization";
+            SEO_Schema.Publisher_Name = C.SITE_NAME;
+            SEO_Schema.Publisher_Logo = ConfigWeb.Logo;
+            SEO_Schema.RatingCount = ConvertUtility.ToInt32(dr["SchemaRatingCount"]);
+            SEO_Schema.RatingValue = ConvertUtility.ToInt32(dr["SchemaRatingValue"]);
+            SEO_Schema.Brand = ConvertUtility.ToString(dr["Brand"]);
+            if (SEO_Schema.RatingValue > 93)
+                SEO_Schema.ReviewRatingValue = 5;
             else
-                SEO.meta_keyword = SEO.meta_title + ", " + ConfigWeb.MetaKeyword;
+                SEO_Schema.ReviewRatingValue = 4;
         }
-
-        if (SEO.meta_description.Length < 3)
-            SEO.meta_description = ConvertUtility.ToString(dr["Name"]) + ", " + ConfigWeb.MetaDescription;
-
-        SEO.url_current = TextChanger.GetLinkRewrite_Products(ConvertUtility.ToString(dr["FriendlyUrlCategory"]), ConvertUtility.ToString(dr["FriendlyUrl"]));
-        SEO.canonical = TextChanger.GetLinkRewrite_Products(ConvertUtility.ToString(dr["FriendlyUrlCategory"]), ConvertUtility.ToString(dr["FriendlyUrl"]));
-        SEO.content_share_facebook = "<meta property='og:title' content='" + SEO.meta_title + "'/>";
-        SEO.content_share_facebook += "<meta property='og:type' content='website'/>";
-        SEO.content_share_facebook += "<meta property='og:url' content='" + SEO.url_current + "'/>";
-        SEO.content_share_facebook += "<meta property='og:image' content='" + image + "'/>";
-        SEO.content_share_facebook += "<meta property='og:site_name' content='" + SEO.url_current + "'/> ";
-        SEO.content_share_facebook += "<meta property='og:description' content='" + SEO.meta_description + "'/>";
-
-        SEO_Schema.Type = "Product";
-        SEO_Schema.Title = SEO.meta_title;
-        SEO_Schema.SKU = ConvertUtility.ToString(dr["ID"]);
-        SEO_Schema.Description = SEO.meta_description;
-        SEO_Schema.Image = image;
-        decimal MinPrice = SqlHelper.GetPrice_Decimal(ConvertUtility.ToInt32(dr["ID"]), "Price", true);
-        SEO_Schema.Url = SEO.canonical;
-        SEO_Schema.Price = MinPrice.ToString();
-        SEO_Schema.AuthorName = C.SITE_NAME;
-        SEO_Schema.Publisher_Type = "Organization";
-        SEO_Schema.Publisher_Name = C.SITE_NAME;
-        SEO_Schema.Publisher_Logo = ConfigWeb.Logo;
-        SEO_Schema.RatingCount = ConvertUtility.ToInt32(dr["SchemaRatingCount"]);
-        SEO_Schema.RatingValue = ConvertUtility.ToInt32(dr["SchemaRatingValue"]);
-        SEO_Schema.Brand = ConvertUtility.ToString(dr["Brand"]);
-        if (SEO_Schema.RatingValue > 93)
-            SEO_Schema.ReviewRatingValue = 5;
-        else
-            SEO_Schema.ReviewRatingValue = 4;
 
         PageInfo.CurrentControl = ControlCurrent.ProductDetails.ToString();
     }

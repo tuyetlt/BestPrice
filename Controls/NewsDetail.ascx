@@ -32,11 +32,11 @@
                     <div class="news__detail-content">
                         <div class="news__meta-description"><%= ConvertUtility.ToString(dr["Description"]) %></div>
                         <div class="description">
-                            <%= ConvertUtility.ToString(dr["LongDescription"]) %>
+                            <%= ConvertUtility.ToString(longDescription) %>
                         </div>
-                        <%-- <div class="source d-flex justify-content-end">
+                         <div class="source d-flex justify-content-end">
                             <strong>Nguồn tin</strong><span class="px-2">|</span><a href="javascript:void(0);" class="btn-review"><span class="icon-envelope"></span></a>
-                        </div>--%>
+                        </div>
                     </div>
                     <%
                         if (!Utils.IsNullOrEmpty(dr["NewsRelatedIDList"].ToString().Trim()))

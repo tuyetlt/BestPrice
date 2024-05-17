@@ -25,6 +25,11 @@
 
 <div style="<%= displayFormInfo %>" class="main main__wrapper cart__page">
     <div class="container">
+         <div class="heading d-flex align-items-end">
+     <div class="col">
+         <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
+     </div>
+ </div>
         <div class="page__heading">
             <h1 class="page__title on-left">Giỏ hàng</h1>
         </div>

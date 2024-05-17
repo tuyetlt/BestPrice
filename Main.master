@@ -1,8 +1,10 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Main.master.cs" Inherits="Main" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <title><%=Utils.HtmlDecode(SEO.meta_title) %></title>
+<head runat="server">
+     <title runat="server" visible="false"></title>
+
+  <%--  <title><%=Utils.HtmlDecode(SEO.meta_title) %></title>
     <meta name="keywords" content="<%=Utils.HtmlDecode( SEO.meta_keyword) %>" />
     <meta name="description" content="<%= Utils.HtmlDecode(SEO.meta_description) %>" />
     <link rel="canonical" href="<%= SEO.canonical %>" />
@@ -12,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <% if (!Utils.IsNullOrEmpty(SEO.content_share_facebook))
             Response.Write(SEO.content_share_facebook);%>
-    <%=Utils.LoadUserControl("~/Controls/HeaderLoad.ascx") %>
+    <%=Utils.LoadUserControl("~/Controls/HeaderLoad.ascx") %>--%>
 </head>
 <body>
      <%= ConfigWeb.CodeBody %>
