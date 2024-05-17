@@ -7,7 +7,7 @@ using log4net;
 public partial class Controls_ProductCategory : System.Web.UI.UserControl
 {
     public DataRow drCat, drProduct, drAttribute;
-    public DataTable dtCat, dtProduct, dtAttribute;
+    public DataTable dtCat, dtProduct, dtAttribute, dtRef;
     public int ID, RootID, RootChild, _totalProduct, _pageSize= C.ROWS_PRODUCTCATEGORY, _totalPage;
     public string caturl, thuonghieu, categoryTitle = "", thuonghieuParam = "";
     public List<string> RootList = new List<string>();
@@ -43,7 +43,11 @@ public partial class Controls_ProductCategory : System.Web.UI.UserControl
 
     protected void BindData()
     {
-        dtCat = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "", string.Format("FriendlyUrl=N'{0}'", caturl));
+        if (Utils.CheckExist_DataTable(dtRef))
+            dtCat = dtRef;
+        else
+            dtCat = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID,Name,FriendlyUrl,Image_1,Hide,ParentID,AttributesIDList,LongDescription,TagIDList,MetaTitle,MetaKeyword,MetaDescription,SchemaRatingCount,SchemaRatingValue,Moduls", string.Format("{0} AND Moduls=N'{1}' AND FriendlyUrl=N'{2}'", Utils.CreateFilterHide, "category", caturl));
+
         if (Utils.CheckExist_DataTable(dtCat))
         {
             drCat = dtCat.Rows[0];
@@ -110,7 +114,6 @@ public partial class Controls_ProductCategory : System.Web.UI.UserControl
     {
         if (!Utils.IsNullOrEmpty(drCat))
         {
-            int SEOFlags = ConvertUtility.ToInt32(drCat["SeoFlags"]);
             string MetaTitle = ConvertUtility.ToString(drCat["MetaTitle"]);
             string MetaKeyword = ConvertUtility.ToString(drCat["MetaKeyword"]);
             string MetaDescription = ConvertUtility.ToString(drCat["MetaDescription"]);

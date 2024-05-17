@@ -128,8 +128,6 @@ public partial class Controls_ShoppingCart : System.Web.UI.UserControl
             }
             else
             {
-
-
                 hashtable["Name"] = Request.Form["name"];
                 hashtable["Status"] = (int)OrderStatus.ProcessingInProgress;
                 hashtable["Address"] = Request.Form["address"];
@@ -143,16 +141,26 @@ public partial class Controls_ShoppingCart : System.Web.UI.UserControl
                 UpdateDatabase();
                 SendMail();
                 Response.Redirect(string.Format("thong-tin-don-hang/{0}.html", hashtable["OrderID"]));
-
-
-
             }
-
-
-
         }
+
+        SetSEO();
     }
 
+    protected void SetSEO()
+    {
+        string Title = "Xem lại giỏ hàng và thanh toán";
+        string MetaTitle = Title + " - " + ConfigWeb.SiteName;
+        string MetaKeyword = Title + ", " + ConfigWeb.MetaKeyword;
+        string MetaDescription = Title + ", " + ConfigWeb.MetaDescription;
+        string url = C.ROOT_URL + Request.RawUrl;
+        PageUtility.AddTitle(this.Page, MetaTitle);
+        PageUtility.AddMetaTag(this.Page, "keywords", MetaKeyword);
+        PageUtility.AddMetaTag(this.Page, "description", "Xem lại và cập nhật giỏ hàng theo ý bạn. Nếu tất cả đã đúng bạn có thể đặt hàng ngay tại đây");
+        PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, C.ROOT_URL + ConfigWeb.Image, ConfigWeb.SiteName, MetaDescription);
+        PageUtility.SetIndex(this.Page);
+        PageUtility.AddDefaultMetaTag(this.Page);
+    }
 
     protected void UpdateDatabase()
     {

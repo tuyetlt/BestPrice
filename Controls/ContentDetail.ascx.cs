@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 public partial class Controls_ContentDetail : System.Web.UI.UserControl
 {
     public DataRow dr;
-    public DataTable dt;
+    public DataTable dt, dtRef;
     public int ID;
     public string seo_title, image;
     protected void Page_Load(object sender, EventArgs e)
@@ -29,7 +29,11 @@ public partial class Controls_ContentDetail : System.Web.UI.UserControl
 
     protected void BindData()
     {
-        dt = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "", string.Format("FriendlyUrl=N'{0}'", seo_title));
+        if (Utils.CheckExist_DataTable(dtRef))
+            dt = dtRef;
+        else
+            dt = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "", string.Format("FriendlyUrl=N'{0}'", seo_title));
+
         if (Utils.CheckExist_DataTable(dt))
         {
             dr = dt.Rows[0];

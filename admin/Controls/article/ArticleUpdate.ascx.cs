@@ -246,6 +246,8 @@ public partial class admin_Controls_ArticleUpdate : System.Web.UI.UserControl
                 SqlHelper.LogsToDatabase_ByID(ID, table, Utils.GetFolderControlAdmin(), ControlAdminInfo.ShortName, ConvertUtility.ToInt32(IsUpdate), Request.RawUrl);
 
             }
+
+            SqlHelper.Update_Url_Table(IsUpdate, "article_detail", ID, hashtable["Name"].ToString(), hashtable["FriendlyUrl"].ToString());
         }
 
         ActionAfterUpdate();

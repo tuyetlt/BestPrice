@@ -72,6 +72,7 @@
                         <img src="/themes/images/GR-X257MC-1024x512.jpg" alt="" />
                     </div>
                 </div>
+
             </div>
         </div>
         <%} %>

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 public partial class Controls_NewsCategory : System.Web.UI.UserControl
 {
     public DataRow drCat, drNews;
-    public DataTable dtCat, dtNews;
+    public DataTable dtCat, dtNews, dtRef;
     public int ID, RootID, _totalArticle;
     public string caturl;
 
@@ -29,7 +29,11 @@ public partial class Controls_NewsCategory : System.Web.UI.UserControl
 
     protected void BindData()
     {
-        dtCat = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "", string.Format("FriendlyUrl=N'{0}'", caturl));
+        if (Utils.CheckExist_DataTable(dtRef))
+            dtCat = dtRef;
+        else
+            dtCat = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, Name,FriendlyUrl,Image_1,MetaTitle,MetaKeyword,MetaDescription,SchemaRatingCount,SchemaRatingValue,SeoFlags,Canonical", string.Format("FriendlyUrl=N'{0}' AND {1}", caturl, Utils.CreateFilterHide));
+
         if (Utils.CheckExist_DataTable(dtCat))
         {
             drCat = dtCat.Rows[0];

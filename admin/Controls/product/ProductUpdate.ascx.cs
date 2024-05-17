@@ -427,6 +427,9 @@ public partial class admin_Controls_ProductUpdate : System.Web.UI.UserControl
                 UpdateBrand(hashtable["AttributesIDList"].ToString(), hashtable["CategoryNameList"].ToString(), ID.ToString());
                 UpdatePriceHistory(ID.ToString());
             }
+
+            SqlHelper.Update_Url_Table(IsUpdate, "product_detail", ID, hashtable["Name"].ToString(), hashtable["FriendlyUrl"].ToString());
+
         }
         else if (click_action == "delete")
         {

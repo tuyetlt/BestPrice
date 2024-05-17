@@ -421,6 +421,27 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
             }
 
             UpdateBreadCrumb();
+            string ModulsUrl = "category_product";
+            if (!string.IsNullOrEmpty(linktype))
+            {
+                if (linktype == LinkTypeMenuFlag.Product.ToString())
+                {
+                    ModulsUrl = "category_product";
+                }
+                if (linktype == LinkTypeMenuFlag.Article.ToString())
+                {
+                    ModulsUrl = "category_article";
+                }
+                if (linktype == LinkTypeMenuFlag.Content.ToString())
+                {
+                    ModulsUrl = "category_content";
+                }
+                if (linktype == LinkTypeMenuFlag.Link.ToString())
+                {
+                    ModulsUrl = "category_link";
+                }
+            }
+            SqlHelper.Update_Url_Table(IsUpdate, ModulsUrl, ID, hashtable["Name"].ToString(), hashtable["FriendlyUrl"].ToString());
         }
         else if (click_action == "delete")
         {
@@ -789,6 +810,7 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
     #endregion
 
 
+
     #region DeleteCategory
     protected void DeleteCategory()
     {
@@ -797,17 +819,23 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
         int old_id = ConvertUtility.ToInt32(Request.Form["id"]);
         //if (old_parent_id > 0)
         //{
-            using (var db = SqlService.GetSqlService())
-            {
-                //Chuyển tất cả bài viết sang mục cha
-                string sqlQuery = string.Format(@"Update tblArticle SET {0} = REPLACE({0}, ',{1},', ',{2},') Where {0} like N'%,{1},%'
+        using (var db = SqlService.GetSqlService())
+        {
+            //Chuyển tất cả bài viết sang mục cha
+            string sqlQuery = string.Format(@"Update tblArticle SET {0} = REPLACE({0}, ',{1},', ',{2},') Where {0} like N'%,{1},%'
                                               Update tblArticle SET {3} = REPLACE({3}, ',{1},', ',{2},') Where {3} like N'%,{1},%'", "CategoryIDList", old_id, old_parent_id, "CategoryIDParentList");
-                sqlQuery += string.Format(@"Update tblCategories set ParentID={0} where ParentID={1}
+            sqlQuery += string.Format(@"Update tblCategories set ParentID={0} where ParentID={1}
                                         ", old_parent_id, old_id);
-                sqlQuery += string.Format("Delete From tblCategories where ID={0}", old_id);
-                db.ExecuteSql(sqlQuery);
-                //Response.Write(sqlQuery);
-            }
+            sqlQuery += string.Format("Delete From tblCategories where ID={0}", old_id);
+            db.ExecuteSql(sqlQuery);
+
+            // xoá trong bảng Url
+
+            string filter = string.Format("ContentID='{0}' AND (Moduls=N'{1}' OR Moduls=N'{2}' OR Moduls=N'{3}')", old_id, "category_product", "category_article", "category_content");
+            string sqlQueryUrl = string.Format("DELETE FROM {0} WHERE {1}", "tblUrl", filter);
+            db.ExecuteSql(sqlQueryUrl);
+            //Response.Write(sqlQueryUrl);
+        }
         //}
     }
     #endregion

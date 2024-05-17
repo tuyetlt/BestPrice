@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 public partial class Controls_ProductDetails : System.Web.UI.UserControl
 {
     public DataRow dr, drCat;
-    public DataTable dtNews, dtBannerRight;
+    public DataTable dtNews, dtBannerRight, dtRef;
     public int ID, CategoryID;
     public string purl, caturl, image, longDescription;
     protected void Page_Load(object sender, EventArgs e)
@@ -33,13 +33,19 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
 
     protected void BindData()
     {
+        DataTable dt = new DataTable();
+        if (Utils.CheckExist_DataTable(dtRef))
+            dt = dtRef;
+        else
+            dt = SqlHelper.SQLToDataTable("tblProducts", "", string.Format("FriendlyUrl=N'{0}'", purl));
+
         DataTable dtCat = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ParentIDList,HashTagUrlList", string.Format("FriendlyUrl='{0}'", caturl));
         if (Utils.CheckExist_DataTable(dtCat))
         {
             drCat = dtCat.Rows[0];
         }
 
-        DataTable dt = SqlHelper.SQLToDataTable("tblProducts", "", string.Format("FriendlyUrl=N'{0}'", purl));
+        //DataTable dt = SqlHelper.SQLToDataTable("tblProducts", "", string.Format("FriendlyUrl=N'{0}'", purl));
         if (Utils.CheckExist_DataTable(dt))
         {
             dr = dt.Rows[0];
