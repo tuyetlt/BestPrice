@@ -1367,3 +1367,83 @@ function OpenSocial() {
 $(document).ready(function () {
     OpenSocial();
 });
+
+if ($("#frm_checkout").length) {
+    var buttonSubmit = $("#frm_checkout #btnSubmit");
+    buttonSubmit.click(function () {
+        $('#frm_checkout #done').val(1);
+        $(this).attr('disabled', 'disabled');
+        $(this).html('Loading...');
+
+        $.cookie('customer_name', $("#frm_checkout #name").val(), {
+            expires: 365,
+            path: '/'
+        });
+        $.cookie('customer_tel', $("#frm_checkout #tel").val(), {
+            expires: 365,
+            path: '/'
+        });
+        $.cookie('customer_address', $("#frm_checkout #address").val(), {
+            expires: 365,
+            path: '/'
+        });
+
+        $("#frm_checkout").submit();
+    });
+
+    $("#frm_checkout #name").val($.cookie("customer_name"));
+    $("#frm_checkout #tel").val($.cookie("customer_tel"));
+    $("#frm_checkout #address").val($.cookie("customer_address"));
+
+    $(document).ready(function () {
+        $("#frm_checkout").validate({
+            rules: {
+                name: "required",
+                address: "required",
+                name: {
+                    required: true,
+                    minlength: 1
+                },
+                address: {
+                    required: true,
+                    minlength: 5
+                },
+                tel: {
+                    required: true,
+                    minlength: 10
+                },
+                email: {
+                    required: false,
+                    email: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "Vui lòng nhập Họ và tên",
+                    minlength: "Tên quá ngắn"
+                },
+                address: {
+                    required: "Vui lòng nhập Địa chỉ",
+                    minlength: "Địa chỉ quá ngắn"
+                },
+                email: {
+                    email: "Vui lòng nhập email hợp lệ"
+
+                },
+                tel: {
+                    required: "Vui lòng nhập số điện thoại",
+                    minlength: "Điện thoại thiếu số"
+                }
+
+            }
+        });
+    });
+
+
+    $('#frm_checkout input[name="option_payment"]').bind('click', function () {
+        $('#frm_checkout .list-content-nganluong li').removeClass('active');
+        $(this).parent('li').addClass('active');
+    });
+
+
+}
