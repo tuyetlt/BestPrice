@@ -107,17 +107,17 @@
                         <form method="post" enctype="multipart/form-data" id="frm_checkout">
                             <div class="form-group row">
                                 <div class="col">
-                                    <input type="text" id="name" name="name" value="" placeholder="Nhập tên" class="form-control"><span class="required"></span>
+                                    <input type="text" id="name" name="name" value="" placeholder="Nhập tên" class="form-control" required><span class="required">*</span>
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="tel" name="tel" value="" placeholder="Số điện thoại" class="form-control"><span class="required"></span>
+                                    <input type="text" id="tel" name="tel" value="" placeholder="Số điện thoại" class="form-control" required><span class="required">*</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <input type="text" id="email" name="email" value="" placeholder="E-mail" class="form-control">
                             </div>
                             <div class="form-group">
-                                <input type="text" id="address" name="address" value="" placeholder="Địa chỉ (ví dụ: 70 Đông Hưng Thuận 5, Phường Tân Hưng Thuận, Quận 12, Tp.HCM)" class="form-control"><span class="required"></span>
+                                <input type="text" id="address" name="address" value="" placeholder="Địa chỉ (ví dụ: 70 Đông Hưng Thuận 5, Phường Tân Hưng Thuận, Quận 12, Tp.HCM)" class="form-control" required><span class="required">*</span>
                             </div>
                             <%-- <div class="row">
                             <div class="form-group col-12 col-sm-4">

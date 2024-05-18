@@ -5,6 +5,7 @@
 <script src="/themes/assets/js/menu.js" type="text/javascript"></script>
 <script src="/themes/assets/js/qhg_script.js" type="text/javascript"></script>
 <script src="/themes/assets/js/jquery/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.validate.min.js"></script>
 <script src="/themes/assets/js/control.js"></script>
 <div class="div-ajax-loading">
     <div></div>
