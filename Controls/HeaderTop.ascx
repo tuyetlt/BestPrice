@@ -23,7 +23,7 @@
                                 </div>
                                <div class="dropdown-menu">
                                      <div class="dropdown-inner">
-                                         <div class="content-new">
+                                        <%-- <div class="content-new">
                                                <%
                                                    string filterNews = "Flags=1";
                                                    DataTable dtNews = SqlHelper.SQLToDataTable("tblArticle", "Name,Gallery,Description,FriendlyUrl", filterNews, ConfigWeb.SortArticle, 1, 4);
@@ -49,7 +49,7 @@
                                                     }
                                                 %>
                                             
-                                         </div>
+                                         </div>--%>
                                          
                                          <div class="category__latest ">
                                              <p class="fs-14 title-box">Danh mục nổi bật</p>
