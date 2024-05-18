@@ -139,7 +139,7 @@ QHGraphic.Module = {
                     slidesToScroll: 4,
                     autoplaySpeed: 5000,
                     speed: 800,
-                    appendArrows: '.moduleProductSlideshow-' + module_id + ' .moduleProductSlideshow__wrap',
+                    /*appendArrows: '.moduleProductSlideshow-' + module_id + ' .moduleProductSlideshow__wrap',*/
                     responsive: [
                         {
                             breakpoint: 1200,

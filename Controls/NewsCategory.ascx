@@ -12,7 +12,7 @@
             <h2 class="page__title"><span><%= drCat["Name"] %></span></h2>
         </div>
         <div class="news__content">
-            <div class="news__grid d-grid">
+            <div class="article-list news__grid d-grid">
                 <%
                     if (Utils.CheckExist_DataTable(dtNews))
                     {
@@ -20,8 +20,7 @@
                         {
                             string linkDetail = TextChanger.GetLinkRewrite_Article(drNews["FriendlyUrl"].ToString());
                 %>
-
-                <div class="news__item">
+                <div class="item">
                     <a href="<%= linkDetail %>" title="<%= drNews["Name"].ToString() %>" class="news__inner">
                         <div class="news__image">
                             <picture class="thumb">
@@ -34,26 +33,20 @@
                             <div class="news__des"><%= drNews["Description"].ToString() %></div>
                         </div>
                     </a>
+                
                 </div>
                 <%
                         }
                     }
                 %>
             </div>
-
-             <% if (_totalArticle > C.ROWS_PRODUCTCATEGORY)
+            <div class="clear"></div>
+            <% if (_totalArticle > C.ROWS_PRODUCTCATEGORY)
                 { %>
             <div class="container-btn show-more"><a id="category_paging_article" class="btn-see-more">Xem thêm <i class="fas fa-sort-down"></i></a></div>
-               <%--<div class="block-pagination">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-prev"></i></a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#"><i class="icon-arrow-next"></i></a></li>
-                </ul>
-                </div>--%>
-            <%} %> 
+            <%} %>
+            <div class="clear"></div>
+
         </div>
     </div>
 </div>

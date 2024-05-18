@@ -52,12 +52,19 @@
 %>
 
 <div class="item">
-    <div class="img">
-        <a href="<%= linkDetail %>">
-            <img src="<%= Utils.GetFirstImageInGallery_Json(drNews["Gallery"].ToString(), 200, 150) %>" alt="<%= drNews["Name"].ToString() %>" /></a>
-    </div>
-    <h3><a href="<%= linkDetail %>"><%= drNews["Name"].ToString() %></a></h3>
-    <p><%= drNews["Description"].ToString() %></p>
+    <a href="<%= linkDetail %>" title="<%= drNews["Name"].ToString() %>" class="news__inner">
+        <div class="news__image">
+            <picture class="thumb">
+                <a href="<%= linkDetail %>">
+                    <img src="<%= Utils.GetFirstImageInGallery_Json(drNews["Gallery"].ToString(), 300, 150) %>" alt="<%= drNews["Name"].ToString() %>" width="600" height="350" /></a>
+            </picture>
+        </div>
+        <div class="news__info">
+            <h3 class="news__title"><a href="<%= linkDetail %>"><%= drNews["Name"].ToString() %></a></h3>
+            <div class="news__des"><%= drNews["Description"].ToString() %></div>
+        </div>
+    </a>
+
 </div>
 
 <%}

@@ -1351,10 +1351,10 @@ function OpenSocial() {
         });
     });
 
-    $(".nav-hotline-wrap").click(function (e) {
+ /*   $(".nav-hotline-wrap").click(function (e) {
         e.preventDefault();
         e.stopPropagation();
-    });
+    });*/
 
     $('.navs-bg').on('click touch', function (e) {
         if (isPhone)
