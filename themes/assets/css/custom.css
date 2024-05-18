@@ -1437,7 +1437,13 @@ header .show_search_content {
     top: 0;
     display: none;
 }
+.banner__productAdvert .slick-next{
+    right:-20px;
 
+}
+.banner__productAdvert .slick-prev{
+    left:-20px;
+}
 @media only screen and (min-width: 1024px) {
     .navigation__categories .navigation__menu > .nav-item .btn {
         line-height: 24px;

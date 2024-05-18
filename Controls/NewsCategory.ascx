@@ -26,7 +26,7 @@
                         <div class="news__image">
                             <picture class="thumb">
                                 <a href="<%= linkDetail %>">
-                                    <img src="<%= Utils.GetFirstImageInGallery_Json(drNews["Gallery"].ToString(), 200, 150) %>" alt="<%= drNews["Name"].ToString() %>" width="600" height="350" /></a>
+                                    <img src="<%= Utils.GetFirstImageInGallery_Json(drNews["Gallery"].ToString(), 300, 150) %>" alt="<%= drNews["Name"].ToString() %>" width="600" height="350" /></a>
                             </picture>
                         </div>
                         <div class="news__info">
