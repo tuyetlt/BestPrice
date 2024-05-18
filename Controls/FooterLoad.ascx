@@ -21,7 +21,7 @@
         <ul id="navs" data-open="-" data-close="+" class="arc-menu">
             <li class="arc-item-1 zalo"><a href="<%= ConfigWeb.OAZalo %>" target="_blank" rel="nofollow"><i class="icon-cps-chat-zalo"></i></a></li>
             <li class="arc-item-2 call">
-                <div class="nav-hotline-wrap"><span class="nav-hotline"><a href="<%= ConfigWeb.Hotline %>"><%= ConfigWeb.Hotline %></a></span><i class="icon-cps-call"></i></div>
+                <div class="nav-hotline-wrap"><span class="nav-hotline"><a href="tel:<%= ConfigWeb.Hotline.Replace(".", "").Replace(" ", "") %>"><%= ConfigWeb.Hotline %></a></span><i class="icon-cps-call"></i></div>
             </li>
         </ul>
         
