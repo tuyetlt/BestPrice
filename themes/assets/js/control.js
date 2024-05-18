@@ -265,7 +265,7 @@
                 }
             }
 
-            const debounceAjax = debounce(ajax, 1000);
+            const debounceAjax = debounce(ajax, 100);
 
             document.querySelector('#searchbox').addEventListener('keyup', e => {
                 //alert("ok");

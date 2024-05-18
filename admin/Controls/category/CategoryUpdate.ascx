@@ -208,7 +208,7 @@
                                             htmlContent += "<input onclick='childClick(" + itemChild.ID + ")' type='checkbox' class='attrChild' id='checkboxAttr_" + itemChild.ID + "' data-url='" + itemChild.FriendlyUrl + "' data-id='" + itemChild.ID + "' data-name='" + itemChild.Name + "' data-image='" + itemChild.Image + "' data-display='" + itemChild.NameDisplay + "' data-description='" + itemChild.Description + "' />";
 
                                             if (itemChild.Image != '')
-                                                htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'><img src='" + itemChild.Image + "' style='height:25px;vertical-align: middle;'></label><br />";
+                                                htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'><img src='" + itemChild.Image + "' style='height:12px;max-width:100px;vertical-align: middle;'></label><br />";
                                             else
                                                 htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'>" + itemChild.Name + "</label><br />";
                                         }

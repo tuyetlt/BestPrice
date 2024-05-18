@@ -13,7 +13,7 @@
                     <div class="header__search col">
                         <div class="header__search-inner">
                             <div class="header__search-field dropdown search">
-                                <form method="GET" action="<%=C.ROOT_URL %>/tim-kiem.html" data-search="internal">
+                                <form method="GET" action="<%=C.ROOT_URL %>/tim-kiem/" data-search="internal">
                                     <input type="text" name="key" class="search_input" id="searchbox" autocomplete="off" placeholder="Tìm kiếm" />
 
                                     <div class="loading-search"></div>

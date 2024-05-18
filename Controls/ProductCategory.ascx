@@ -19,10 +19,10 @@
                 <h1 class="page__title"><%= categoryTitle %></h1>
                 <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
             </div>
-           <%-- <div class="col">
+            <div class="col">
                 <div class="d-flex justify-content-between justify-content-end align-items-center">
                     <button type="button" class="btn btn-primary btn-sidebar-filter hidden-md"><i class="fa fa-filter"></i>LỌC</button>
-                    <form class="ms-sm-auto" method="get">
+                   <%-- <form class="ms-sm-auto" method="get">
                         <select name="orderby" class="form-select" aria-label="Đơn hàng của cửa hàng">
                             <option value="date" selected="selected">Mới nhất</option>
                             <option value="rating">Điểm đánh giá</option>
@@ -30,9 +30,9 @@
                             <option value="price">Giá từ thấp đến cao</option>
                             <option value="price-desc">Giá từ cao xuống thấp</option>
                         </select>
-                    </form>
+                    </form>--%>
                 </div>
-            </div>--%>
+            </div>
         </div>
     </div>
     <section class="category category__topPage">

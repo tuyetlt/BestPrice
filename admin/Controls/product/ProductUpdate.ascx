@@ -100,7 +100,7 @@
 
                                                 htmlContent += "<input type='checkbox' class='checkboxAttr' onclick='GetValueFromAttr()' id='checkboxAttr_" + itemChild.ID + "' name='home' />";
                                                 if (itemChild.Image != '')
-                                                    htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'><img src='" + itemChild.Image + "' style='height:25px;vertical-align: middle;'></label><br />";
+                                                    htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'><img src='" + itemChild.Image + "' style='height:12px;max-width:100px;vertical-align: middle;'></label><br />";
                                                 else
                                                     htmlContent += "<label style='cursor:pointer' for='checkboxAttr_" + itemChild.ID + "'>" + itemChild.Name + "</label><br />";
 
