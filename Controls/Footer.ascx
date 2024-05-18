@@ -7,8 +7,6 @@
                  <%
                      string filter = string.Format("ParentID=0 AND Flags & {0} <> 0", (int)BaseTableFlag.Service);
                      DataTable dtParent = SqlHelper.SQLToDataTable("tblBase", "", filter, "Sort");
-
-
                      if (Utils.CheckExist_DataTable(dtParent))
                      {
                          foreach (DataRow drParent in dtParent.Rows)
@@ -18,7 +16,6 @@
                 <div class="col-12 col-sm-3 mb-3 mb-sm-0">
                     <div class="d-flex align-items-center">
                         <span class="img-thumb">
-
                             <img src="<%= image %>" alt="<%= drParent["Name"].ToString() %>" /></span>
                         <div class="col">
                             <p class="title"><%= drParent["Name"].ToString() %></p>
