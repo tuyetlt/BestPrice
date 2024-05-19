@@ -285,7 +285,7 @@
     </div>
 </div>--%>
 
-
+<input type="hidden" value="1" id="productDetail" />
 <input type="hidden" value="product" id="GG_Page" />
 <input type="hidden" value="<%= ConvertUtility.ToString(dr["ID"]) %>" id="GG_ID" />
 <input type="hidden" value="<%= ConvertUtility.ToString(dr["Name"]) %>" id="GG_ProductName" />
