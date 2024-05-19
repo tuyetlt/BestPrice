@@ -1418,6 +1418,29 @@ header .show_search_content {
 .product__description .productReadMore li:before {
     display:none;
 }
+.navs-container .arc-menu > li.arc-item-3.mess {
+    background: transparent;
+}
+.icon-messenger {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    .icon-messenger:after {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 40px;
+        height: 40px;
+        background-image: url(../images/messenger.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
 @media (min-width: 1024px) {
     .news__page .news__grid {
         grid-template-columns: repeat(4, 1fr);
@@ -2876,5 +2899,11 @@ header .show_search_content {
         }
     .cart__list .cart__item.tbody .cart__action{
         position:relative;
+    }
+    .banner__productAdvert .slick-prev {
+        left: 0px;
+    }
+    .banner__productAdvert .slick-next{
+        right:0;
     }
 }
