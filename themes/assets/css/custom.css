@@ -1457,14 +1457,25 @@ header .show_search_content {
     overflow:inherit;
 }
 .moduleProductSlideshow__wrap .slick-prev {
-    left: -20px !important;
+    left: 0px !important;
     visibility: visible;
     opacity: 1;
 }
 .moduleProductSlideshow__wrap .slick-next {
     visibility: visible;
     opacity: 1;
-    right: -20px!important;
+    right: 0px!important;
+}
+.banner__productAdvert .banner__item-inner{
+    padding-top:42%;
+}
+.up-description>p{
+    font-size:20px;
+    font-weight:600;
+}
+.banner-cus-snow {
+    display: flex;
+    align-items: center;
 }
 @media only screen and (min-width: 1024px) {
     .navigation__categories .navigation__menu > .nav-item .btn {
