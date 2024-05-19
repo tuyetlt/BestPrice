@@ -24,7 +24,7 @@
     <div class="banner__productAdvert-section d-md-flex">
         <% if ((count % 2 == 0 || Utils.isMobileBrowser) && !string.IsNullOrEmpty(img_src))
             {  %>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 banner-cus-snow">
             <div class="slider createBannerProductAdvertSliders">
                 <div class="banner__item">
                     <div class="banner__item-inner">
@@ -62,7 +62,7 @@
         </div>
         <% if (count % 2 != 0 && !Utils.isMobileBrowser && !string.IsNullOrEmpty(img_src))
             {  %>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 banner-cus-snow">
             <div class="slider createBannerProductAdvertSliders">
                 <div class="banner__item">
                     <div class="banner__item-inner">

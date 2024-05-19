@@ -227,7 +227,7 @@
                     <hr class="hr-line mb-5" />
 
                     <div id="description" class="product__description mb-5">
-                        <div class="productReadMore readMore">
+                        <div class="productReadMore readMore up-description">
                             <%= dr["Tab1"].ToString() %>
                             <%= longDescription %>
                         </div>
