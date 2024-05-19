@@ -24,6 +24,10 @@ public partial class Controls_SearchResult : System.Web.UI.UserControl
     protected void ProccessParameter()
     {
         keyword = RequestHelper.GetString("key", string.Empty);
+        if(string.IsNullOrEmpty(keyword))
+        {
+            keyword = RequestHelper.GetString("keyword", string.Empty);
+        }
         keyword = Utils.KillCharEmail(Server.HtmlEncode(keyword));
     }
 
