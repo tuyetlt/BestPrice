@@ -23,6 +23,12 @@
             <li class="arc-item-2 call">
                 <div class="nav-hotline-wrap"><span class="nav-hotline"><a href="tel:<%= ConfigWeb.Hotline.Replace(".", "").Replace(" ", "") %>"><%= ConfigWeb.Hotline %></a></span><i class="icon-cps-call"></i></div>
             </li>
+            <li class="arc-item-3 face">
+                <a href="https://www.facebook.com/DienLanhThanhHaiXuanLoc" target="_blank" rel="nofollow"><i class="icon-facebook"></i></a>
+            </li>
+            <li class="arc-item-3 mess">
+                <a href="https://www.facebook.com/DienLanhThanhHaiXuanLoc" target="_blank" rel="nofollow"><i class="icon-messenger"></i></a>
+            </li>
         </ul>
         
         <div class="navs-bg"></div>

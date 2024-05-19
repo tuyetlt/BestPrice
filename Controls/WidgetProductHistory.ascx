@@ -17,13 +17,7 @@
                                     <div class="moduleProductSlideshow__section">
                                         <div class="moduleProductSlideshow__section-inner">
                                             <div class="product__grid productSliders createProductSlideshows_99999 slider" module="99999">
-
-
-
-
-
-                                                <div class="product__related mb-5">
-                                                    <% 
+                                               <% 
                                                         string filterP = string.Format("AttrProductFlag & {0} <> 0", (int)AttrProductFlag.Home);
                                                         if (Utils.CheckExist_DataTable(dtProduct))
                                                         {
@@ -53,9 +47,6 @@
                                                     </div>
                                                     <% }
                                                         } %>
-                                                </div>
-
-
                                             </div>
                                         </div>
                                     </div>
