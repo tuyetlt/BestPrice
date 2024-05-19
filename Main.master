@@ -23,6 +23,7 @@
     <div class="main">
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         </asp:ContentPlaceHolder>
+         <%=Utils.LoadUserControl("~/Controls/WidgetProductHistory.ascx") %>
         <%=Utils.LoadUserControl("~/Controls/Footer.ascx") %>
     </div>
     <%=Utils.LoadUserControl("~/Controls/FooterLoad.ascx") %>

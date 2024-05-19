@@ -4,8 +4,6 @@
     <div class="container">
         <div class="row">
             <div class="column__main col-12 col-sm-12">
-
-
                 <section class="product product__latest-top  moduleProductSlideshow-latest mb-5">
                     <div class="container">
                         <div class="heading">
@@ -55,9 +53,6 @@
                         </div>
                     </div>
                 </section>
-
-
-
             </div>
         </div>
     </div>

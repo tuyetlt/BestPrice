@@ -45,7 +45,7 @@ public partial class Controls_WidgetProductHistory : System.Web.UI.UserControl
 
         }
 
-        SetSEO();
+        //SetSEO();
     }
 
     protected void SetSEO()
