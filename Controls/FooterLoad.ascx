@@ -13,27 +13,29 @@
     <div></div>
 </div>
 <div class="navs-container home-zone">
-        <style>
-            .navs-container .arc-menu.active ~ .navs-bg {
-                background-color: transparent;
-            }
-        </style>
-        <ul id="navs" data-open="-" data-close="+" class="arc-menu">
-            <li class="arc-item-1 zalo"><a href="<%= ConfigWeb.OAZalo %>" target="_blank" rel="nofollow"><i class="icon-cps-chat-zalo"></i></a></li>
-            <li class="arc-item-2 call">
-                <div class="nav-hotline-wrap"><span class="nav-hotline"><a href="tel:<%= ConfigWeb.Hotline.Replace(".", "").Replace(" ", "") %>"><%= ConfigWeb.Hotline %></a></span><i class="icon-cps-call"></i></div>
-            </li>
-            <li class="arc-item-3 face">
-                <a href="https://www.facebook.com/DienLanhThanhHaiXuanLoc" target="_blank" rel="nofollow"><i class="icon-facebook"></i></a>
-            </li>
-            <li class="arc-item-3 mess">
-                <a href="https://www.facebook.com/DienLanhThanhHaiXuanLoc" target="_blank" rel="nofollow"><i class="icon-messenger"></i></a>
-            </li>
-        </ul>
-        
-        <div class="navs-bg"></div>
-        
-    </div>
+    <style>
+        .navs-container .arc-menu.active ~ .navs-bg {
+            background-color: transparent;
+        }
+    </style>
+    <ul id="navs" data-open="-" data-close="+" class="arc-menu">
+        <li class="arc-item-1 zalo">
+            <a href="<%= ConfigWeb.OAZalo %>" target="_blank" rel="nofollow">
+                <i class="icon-cps-chat-zalo"></i>
+            </a>
+        </li>
+        <li class="arc-item-2 call">
+            <div class="nav-hotline-wrap"><span class="nav-hotline"><a href="tel:<%= ConfigWeb.Hotline.Replace(".", "").Replace(" ", "") %>"><%= ConfigWeb.Hotline %></a></span><i class="icon-cps-call"></i></div>
+        </li>
+        <li class="arc-item-3 face">
+            <a href="https://www.facebook.com/<%= ConfigWeb.FacebookID %>" target="_blank" rel="nofollow"><i class="icon-facebook"></i></a>
+        </li>
+        <li class="arc-item-3 mess">
+            <a href="https://m.me/<%= ConfigWeb.FacebookID %>" target="_blank" rel="nofollow"><i class="icon-messenger"></i></a>
+        </li>
+    </ul>
+    <div class="navs-bg"></div>
+</div>
 
 <script type="application/ld+json">{
 "@context": "https://schema.org",
