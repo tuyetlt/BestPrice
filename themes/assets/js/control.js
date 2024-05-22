@@ -9,7 +9,7 @@
     });
 
     $('.btn-top-search').on('click', function () {
-        let url = '/tim-kiem.html';
+        let url = '/tim-kiem/';
         let value = $('.header__search input[name="search"]').val();
         if (value != '') {
             url += '?key=' + encodeURIComponent(value);

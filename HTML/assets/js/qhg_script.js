@@ -369,39 +369,39 @@ $(document).ready(function () {
     QHGraphic.Module.winWidth = $(window).width();
     QHGraphic.Module.init();
 
-    /* Header Search */
-    $('.header__search input[name="search"]').on('keydown', function(e) {
-        if (e.keyCode == 13) {
-            $('.header__search .btn-top-search').trigger('click');
-        }
-    });
+    ///* Header Search */
+    //$('.header__search input[name="search"]').on('keydown', function(e) {
+    //    if (e.keyCode == 13) {
+    //        $('.header__search .btn-top-search').trigger('click');
+    //    }
+    //});
 
-    $('.btn-top-search').on('click', function() {
-        let url = $('base').attr('href') + 'index.php?route=product/search';
-        let value = $('.header__search input[name="search"]').val();
-        /*let cate = $('.header__search select[name="category_id"]').val();*/
+    //$('.btn-top-search').on('click', function() {
+    //    let url = $('base').attr('href') + 'index.php?route=product/search';
+    //    let value = $('.header__search input[name="search"]').val();
+    //    /*let cate = $('.header__search select[name="category_id"]').val();*/
 
-        if (value != '') {
-            url += '&search=' + encodeURIComponent(value);
-        }
+    //    if (value != '') {
+    //        url += '&search=' + encodeURIComponent(value);
+    //    }
 
-        /*if (cate != '*') {
-            url += '&category_id=' + encodeURIComponent(cate);
-        }*/
+    //    /*if (cate != '*') {
+    //        url += '&category_id=' + encodeURIComponent(cate);
+    //    }*/
 
-        window.location = url;
-    });
+    //    window.location = url;
+    //});
 
-    $("#input-search").focusin(function (e) {
-        e.stopPropagation();
-        $(this).parent().dropdown('toggle');
-    });
+    //$("#input-search").focusin(function (e) {
+    //    e.stopPropagation();
+    //    $(this).parent().dropdown('toggle');
+    //});
 
-    $('#input-search').on('click', function (e) {
-        e.stopPropagation();
-        $(this).parents('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('toggle');
-    });
-    /* End Header Search */
+    //$('#input-search').on('click', function (e) {
+    //    e.stopPropagation();
+    //    $(this).parents('.dropdown').find('[data-bs-toggle="dropdown"]').dropdown('toggle');
+    //});
+    ///* End Header Search */
 
     // Update Qty
     if ($('.btn-touchspin-down').length || $('.btn-touchspin-up').length) {

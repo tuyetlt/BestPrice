@@ -46,13 +46,17 @@ public partial class _tool_UpdateUrl : System.Web.UI.Page
 
 
         //Product Category
-        //string filter = string.Format("(Hide is null OR Hide=0) AND LinkTypeMenuFlag & {0} <> 0", (int)LinkTypeMenuFlag.Product);
+        string filter = string.Format("(Hide is null OR Hide=0) AND (LinkTypeMenuFlag & {0} <> 0 or LinkTypeMenuFlag=0)", (int)LinkTypeMenuFlag.Product);
 
-        //DataTable dtProduct = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID,Name,FriendlyUrl", filter, "");
-        //foreach (DataRow drProduct in dtProduct.Rows)
-        //{
-        //    SqlHelper.Update_Url_Table(false, "category_product", ConvertUtility.ToInt32(drProduct["ID"]), drProduct["Name"].ToString(), drProduct["FriendlyUrl"].ToString());
-        //}
+        DataTable dtProduct = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID,Name,FriendlyUrl", filter, "");
+        foreach (DataRow drProduct in dtProduct.Rows)
+        {
+            DataTable dtU = SqlHelper.SQLToDataTable("tblUrl", "", string.Format("FriendlyUrl=N'{0}'", drProduct["FriendlyUrl"]));
+            if (!Utils.CheckExist_DataTable(dtU))
+            {
+                SqlHelper.Update_Url_Table(false, "category_product", ConvertUtility.ToInt32(drProduct["ID"]), drProduct["Name"].ToString(), drProduct["FriendlyUrl"].ToString());
+            }
+        }
 
         // Content Category
         //string filter = string.Format("(Hide is null OR Hide=0) AND LinkTypeMenuFlag & {0} <> 0", (int)LinkTypeMenuFlag.Content);
