@@ -42,11 +42,15 @@
 
 <%if (HightLight)
     {  %>
-<section class="product product__special-topPage moduleProductSlideshow-specials mb-5">
+<section class="product product__special-topPage moduleProductSlideshow-specials mb-5 xxx">
     <div class="container">
         <div class="product__special-topPage__inner">
-            <div class="heading">
-                <h2 class="heading__title justify-content-center text-center text-white"><span><%= Title %></span></h2>
+            <div class="heading heading-read-more">
+                <div id="countdown">
+                  <div id='tiles'></div>
+                </div>
+                <h2 class="heading__title justify-content-center text-center text-white"><span class="text-title"><%= Title %></span></h2>
+                <a href="" target="_self" class="btn-more">Xem Thêm</a>
             </div>
             <div class="product__special-topPage__content">
                 <div class="moduleProductSlideshow__wrap">
