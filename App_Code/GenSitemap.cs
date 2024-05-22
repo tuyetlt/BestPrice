@@ -128,7 +128,7 @@ public class GenSitemap
 
         string filter = string.Format("(Hide is null OR Hide=0) AND Len(FriendlyUrlCategory)>0 AND Price>0 AND " + filterCat); //(ID<= 14153 AND ID>=14180) AND 
 
-        DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,Price,Price1,Gallery, Hide,FriendlyUrlCategory,Brand,ProductType,AttributesIDList,CategoryNameList,CategoryIDList,CategoryIDParentList", filter, "ID DESC", 1, 5000);
+        DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,Price,Price1,Gallery, Hide,FriendlyUrlCategory,Brand,ProductType,AttributesIDList,CategoryNameList,CategoryIDList,CategoryIDParentList", filter, "ID DESC", 1, 10000);
         if (Utils.CheckExist_DataTable(dt))
         {
             if (web == "hoanghai")
