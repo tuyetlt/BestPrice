@@ -10,7 +10,7 @@
 
     $('.btn-top-search').on('click', function () {
         let url = '/tim-kiem/';
-        let value = $('.header__search input[name="search"]').val();
+        let value = $('.header__search input[name="key"]').val();
         if (value != '') {
             url += '?key=' + encodeURIComponent(value);
         }
