@@ -101,7 +101,6 @@
 
         routes.MapPageRoute("checkout", "checkout/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "checkout" } });
         routes.MapPageRoute("product history", "san-pham-da-xem/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "widgetproducthistory" } });
-        routes.MapPageRoute("flashsale", "flash-sale/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "flashsale" } });
 
         routes.MapPageRoute("gio hang", "gio-hang/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "shoppingcart" } });
         routes.MapPageRoute("hoan tat don hang", "thong-tin-don-hang/{token}/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "orderinfo" } });
