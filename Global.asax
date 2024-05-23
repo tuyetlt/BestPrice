@@ -94,13 +94,13 @@
         //Admin
         routes.MapPageRoute("admin_dashboard", "admin/{folder}/{control}", "~/admin/default.aspx");
         routes.MapPageRoute("websosanh", "websosanh/{page}/", "~/Websosanh/datafeed.aspx");
-        //routes.MapPageRoute("flashsale", "flash-sale/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "flashsale" } });
 
         routes.MapPageRoute("search", "tim-kiem/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "searchresult" } });
         routes.MapPageRoute("loi 404", "404/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "404" } });
 
         routes.MapPageRoute("checkout", "checkout/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "checkout" } });
         routes.MapPageRoute("product history", "san-pham-da-xem/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "widgetproducthistory" } });
+        routes.MapPageRoute("flashsale", "flash-sale/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "flashsale" } });
 
         routes.MapPageRoute("gio hang", "gio-hang/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "shoppingcart" } });
         routes.MapPageRoute("hoan tat don hang", "thong-tin-don-hang/{token}/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "orderinfo" } });
