@@ -1448,6 +1448,29 @@ if ($("#frm_checkout").length) {
 
 }
 
+function updateTimer() {
+  future = new Date().getTime() + (1000 * 3600 * 12);
+  now = new Date().getTime();;
+    diff = future - now;
+    console.log(diff)
+  hours = Math.floor( diff / (1000*60*60) );
+  mins  = Math.floor( diff / (1000*60) );
+  secs  = Math.floor( diff / 1000 );
+  h = hours;
+  m = mins  - hours * 60;
+  s = secs  - mins  * 60;
+
+  let timers = document.querySelectorAll('.timer')
+  timers.forEach((e)=>{ // array of timers
+    
+    e.innerHTML =
+      '<div>' + h + '</div>' +
+      '<div>' + m + '</div>' +
+      '<div>' + s + '</div>' ;
+  })
+}
+setInterval('updateTimer()', 1000 );
+
 var target_date = new Date().getTime() + (1000 * 3600 * 12); // set the countdown date
 var days, hours, minutes, seconds; // variables for time units
 

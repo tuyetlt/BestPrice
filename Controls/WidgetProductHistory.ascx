@@ -40,6 +40,7 @@
                                                                     <div class="price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></div>
                                                                     <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
