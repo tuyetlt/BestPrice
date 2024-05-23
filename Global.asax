@@ -93,6 +93,7 @@
 
         //Admin
         routes.MapPageRoute("admin_dashboard", "admin/{folder}/{control}", "~/admin/default.aspx");
+        routes.MapPageRoute("ajax1", "ajax/", "~/ajax/");
         routes.MapPageRoute("websosanh", "websosanh/{page}/", "~/Websosanh/datafeed.aspx");
         routes.MapPageRoute("flashsale", "flash-sale/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "flashsale" } });
 

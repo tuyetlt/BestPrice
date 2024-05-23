@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Xml;
 using System.IO;
 using System.Text;
+using System.Windows;
+using WebSoSanh;
 
 /// <summary>
 /// Summary description for GenSitemap
@@ -125,18 +127,16 @@ public class GenSitemap
     {
         string Uu_Tien = "NO";
         string filterCat = "1=1";
-
+        int countErr = 0;
+        int count = 0;
         string filter = string.Format("(Hide is null OR Hide=0) AND Len(FriendlyUrlCategory)>0 AND Price>0 AND " + filterCat); //(ID<= 14153 AND ID>=14180) AND 
 
         DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,Price,Price1,Gallery, Hide,FriendlyUrlCategory,Brand,ProductType,AttributesIDList,CategoryNameList,CategoryIDList,CategoryIDParentList", filter, "ID DESC", 1, 10000);
         if (Utils.CheckExist_DataTable(dt))
         {
-            if (web == "hoanghai")
+            if (web == "hoanghai" || web == "bestprice")
             {
-                string link = "/upload/gg-shopping-list.txt";
-                string savepath = HttpContext.Current.Request.MapPath("~" + link);
-                TextWriter writer = new StreamWriter(savepath);
-                writer.WriteLine("id\ttiêu đề\tmô tả\tliên kết\ttình trạng\tgiá\tcòn hàng\tliên kết hình ảnh\tnhãn hiệu\tloại sản phẩm\tcustom_label_0\tcustom_label_1\tcustom_label_2\tcustom_label_3", System.Text.Encoding.Unicode);
+                List<ProductFeed> products = new List<ProductFeed>();
 
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -198,18 +198,6 @@ public class GenSitemap
                                 if (!string.IsNullOrEmpty(CategoryNameList))
                                     categoryName = CategoryNameList;
 
-                                //int Price1 = ConvertUtility.ToInt32(dr["Price1"]);
-                                //if (Price1 > 0 && Price < Price1)
-                                //{
-                                //    Price = ConvertUtility.ToInt32(dr["Price1"]);
-                                //    Price1 = ConvertUtility.ToInt32(dr["Price"]);
-                                //}
-                                //else
-                                //{
-                                //    Price = ConvertUtility.ToInt32(dr["Price"]);
-                                //    Price1 = ConvertUtility.ToInt32(dr["Price"]);
-                                //}
-
                                 DateTime date = DateTime.Now;
                                 var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
                                 var lastDayOfMonth = firstDayOfMonth.AddMonths(2).AddDays(-1);
@@ -217,27 +205,97 @@ public class GenSitemap
                                 string NgayCuoi = lastDayOfMonth.ToString("yyyy-MM-dd") + "T23:00+0700";
                                 string NgayUuDai = NgayDau + "/" + NgayCuoi;
 
-                                writer.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}",
-                                    dr["ID"].ToString(),
-                                    Utils.FixCapitalization(dr["Name"].ToString()),
-                                    dr["Name"] + ", " + ConfigWeb.SiteName,
-                                    TextChanger.GetLinkRewrite_Products(dtCat.Rows[0]["FriendlyUrl"].ToString(), dr["FriendlyUrl"]),
-                                    "mới",
-                                    Price.ToString().Replace(",0000", "") + " VND",
-                                    "còn hàng",
-                                    imgPath,
-                                    brand, dr["ProductType"].ToString(), type, type + "_" + attr, categoryName, Uu_Tien),
-                                    System.Text.Encoding.Unicode);
+                                //writer.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}",
+                                //    dr["ID"].ToString(),
+                                //    Utils.FixCapitalization(dr["Name"].ToString()),
+                                //    dr["Name"] + ", " + ConfigWeb.SiteName,
+                                //    TextChanger.GetLinkRewrite_Products(dtCat.Rows[0]["FriendlyUrl"].ToString(), dr["FriendlyUrl"]),
+                                //    "mới",
+                                //    Price.ToString().Replace(",0000", "") + " VND",
+                                //    "còn hàng",
+                                //    imgPath,
+                                //    brand, dr["ProductType"].ToString(), type, type + "_" + attr, categoryName, Uu_Tien),
+                                //    System.Text.Encoding.Unicode);
+
+
+                                count++;
+                                ProductFeed product = new ProductFeed
+                                {
+                                    Id = ConvertUtility.ToInt32(dr["ID"]),
+                                    Title = Utils.FixCapitalization(dr["Name"].ToString()),
+                                    Description = dr["Name"] + ", " + ConfigWeb.SiteName,
+                                    Link = TextChanger.GetLinkRewrite_Products(dtCat.Rows[0]["FriendlyUrl"].ToString(), dr["FriendlyUrl"]),
+                                    ImageLink = imgPath,
+                                    Price = Price.ToString().Replace(",0000", "") + " VND",
+                                    Availability = "in stock",
+                                    Condition = "new",
+                                    Brand = brand,
+                                    Gtin = "",
+                                    Mpn = "",
+                                    ProductType = dr["ProductType"].ToString(),
+                                    CustomLabel0 = type,
+                                    CustomLabel1 = type + "_" + attr,
+                                    CustomLabel2 = categoryName,
+                                    CustomLabel3 = Uu_Tien
+                                };
+
+                                products.Add(product);
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        HttpResponse response = context.Response;
-                        response.Write(string.Format("Lỗi GG: {0} - {1} \n<br />", dr["ID"], dr["Name"]));
+                        countErr++;
+                        //HttpResponse response = context.Response;
+                        //response.Write(string.Format("Lỗi GG: {0} - {1} \n<br />", dr["ID"], dr["Name"]));
                     }
                 }
-                writer.Close();
+
+                HttpResponse res = context.Response;
+                res.Write(count +" sản phẩm, " + countErr + " lỗi!");
+
+
+                string filePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/ProductFeed.xml");
+                using (XmlWriter writer = XmlWriter.Create(filePath, new XmlWriterSettings { Indent = true }))
+                {
+                    writer.WriteStartDocument();
+                    writer.WriteStartElement("rss");
+                    writer.WriteAttributeString("version", "2.0");
+                    writer.WriteAttributeString("xmlns", "g", null, "http://base.google.com/ns/1.0");
+
+                    writer.WriteStartElement("channel");
+                    writer.WriteElementString("title", ConfigWeb.MetaTitle);
+                    writer.WriteElementString("link", C.ROOT_URL);
+                    writer.WriteElementString("description", ConfigWeb.MetaDescription);
+
+                    foreach (var product in products)
+                    {
+                        writer.WriteStartElement("item");
+
+                        writer.WriteElementString("g", "id", null, product.Id.ToString());
+                        writer.WriteElementString("g", "title", null, product.Title);
+                        writer.WriteElementString("g", "description", null, product.Description);
+                        writer.WriteElementString("g", "link", null, product.Link);
+                        writer.WriteElementString("g", "image_link", null, product.ImageLink);
+                        writer.WriteElementString("g", "price", null, product.Price);
+                        writer.WriteElementString("g", "availability", null, product.Availability);
+                        writer.WriteElementString("g", "condition", null, product.Condition);
+                        writer.WriteElementString("g", "brand", null, product.Brand);
+                        writer.WriteElementString("g", "gtin", null, product.Gtin);
+                        writer.WriteElementString("g", "mpn", null, product.Mpn);
+                        writer.WriteElementString("g", "product_type", null, product.ProductType);
+                        writer.WriteElementString("g", "custom_label_0", null, product.CustomLabel0);
+                        writer.WriteElementString("g", "custom_label_1", null, product.CustomLabel1);
+                        writer.WriteElementString("g", "custom_label_2", null, product.CustomLabel2);
+                        writer.WriteElementString("g", "custom_label_3", null, product.CustomLabel3);
+
+                        writer.WriteEndElement(); // item
+                    }
+
+                    writer.WriteEndElement(); // channel
+                    writer.WriteEndElement(); // rss
+                    writer.WriteEndDocument();
+                }
             }
 
             if (web == "duclong")
@@ -246,11 +304,13 @@ public class GenSitemap
                 string savepath_dl = HttpContext.Current.Request.MapPath("~" + link1);
                 TextWriter writer_dl = new StreamWriter(savepath_dl);
                 writer_dl.WriteLine("id\ttiêu đề\tmô tả\tliên kết\ttình trạng\tgiá\tcòn hàng\tliên kết hình ảnh\tnhãn hiệu\tloại sản phẩm\tcustom_label_0\tcustom_label_1\tcustom_label_2\tcustom_label_3", System.Text.Encoding.Unicode);
+                List<ProductFeed> products = new List<ProductFeed>();
 
                 foreach (DataRow dr in dt.Rows)
                 {
                     try
                     {
+
                         string dk1 = GenerateFriendlyUrlCondition(dr["CategoryIDList"].ToString());
                         string dk2 = GenerateFriendlyUrlCondition(dr["CategoryIDParentList"].ToString());
 
@@ -307,18 +367,6 @@ public class GenSitemap
                                 if (!string.IsNullOrEmpty(CategoryNameList))
                                     categoryName = CategoryNameList;
 
-                                //int Price1 = ConvertUtility.ToInt32(dr["Price1"]);
-                                //if (Price1 > 0 && Price < Price1)
-                                //{
-                                //    Price = ConvertUtility.ToInt32(dr["Price1"]);
-                                //    Price1 = ConvertUtility.ToInt32(dr["Price"]);
-                                //}
-                                //else
-                                //{
-                                //    Price = ConvertUtility.ToInt32(dr["Price"]);
-                                //    Price1 = ConvertUtility.ToInt32(dr["Price"]);
-                                //}
-
                                 DateTime date = DateTime.Now;
                                 var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
                                 var lastDayOfMonth = firstDayOfMonth.AddMonths(2).AddDays(-1);
@@ -327,27 +375,99 @@ public class GenSitemap
                                 string NgayUuDai = NgayDau + "/" + NgayCuoi;
 
 
-                                writer_dl.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}",
-                                    dr["ID"].ToString(),
-                                    Utils.FixCapitalization(dr["Name"].ToString()),
-                                    dr["Name"] + ", " + "Đức Long",
-                                    TextChanger.GetLinkRewrite_Products(dtCat.Rows[0]["FriendlyUrl"].ToString(), dr["FriendlyUrl"]).Replace("dienmayhoanghai.vn", "dienmayduclong.vn"),
-                                    "mới",
-                                    Price.ToString().Replace(",0000", "") + " VND",
-                                    "còn hàng",
-                                    imgPath.Replace("dienmayhoanghai.vn", "img.dienmayduclong.vn"),
-                                    brand, dr["ProductType"].ToString(), type, type + "_" + attr, categoryName, Uu_Tien),
-                                    System.Text.Encoding.Unicode);
+                                //writer_dl.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}",
+                                //    dr["ID"].ToString(),
+                                //    Utils.FixCapitalization(dr["Name"].ToString()),
+                                //    dr["Name"] + ", " + "Đức Long",
+                                //    TextChanger.GetLinkRewrite_Products(dtCat.Rows[0]["FriendlyUrl"].ToString(), dr["FriendlyUrl"]).Replace("dienmayhoanghai.vn", "dienmayduclong.vn"),
+                                //    "mới",
+                                //    Price.ToString().Replace(",0000", "") + " VND",
+                                //    "còn hàng",
+                                //    imgPath.Replace("dienmayhoanghai.vn", "img.dienmayduclong.vn"),
+                                //    brand, dr["ProductType"].ToString(), type, type + "_" + attr, categoryName, Uu_Tien),
+                                //    System.Text.Encoding.Unicode);
+
+
+
+                                ProductFeed product = new ProductFeed
+                                {
+                                    Id = ConvertUtility.ToInt32(dr["ID"]),
+                                    Title = Utils.FixCapitalization(dr["Name"].ToString()),
+                                    Description = dr["Name"] + ", " + "Đức Long",
+                                    Link = TextChanger.GetLinkRewrite_Products(dtCat.Rows[0]["FriendlyUrl"].ToString(), dr["FriendlyUrl"]).Replace("dienmayhoanghai.vn", "dienmayduclong.vn"),
+                                    ImageLink = imgPath.Replace("dienmayhoanghai.vn", "img.dienmayduclong.vn"),
+                                    Price = Price.ToString().Replace(",0000", "") + " VND",
+                                    Availability = "in stock",
+                                    Condition = "new",
+                                    Brand = brand,
+                                    Gtin = "",
+                                    Mpn = "",
+                                    ProductType = dr["ProductType"].ToString(),
+                                    CustomLabel0 = type,
+                                    CustomLabel1 = type + "_" + attr,
+                                    CustomLabel2 = categoryName,
+                                    CustomLabel3 = Uu_Tien
+                                };
+
+                                products.Add(product);
+
                             }
                         }
                     }
                     catch (Exception e)
                     {
+                        countErr++;
                         HttpResponse response = context.Response;
-                        response.Write(string.Format("Lỗi GG: {0} - {1} \n<br />", dr["ID"], dr["Name"]));
+                        //response.Write(string.Format("Lỗi GG: {0} - {1} \n<br />", dr["ID"], dr["Name"]));
                     }
                 }
-                writer_dl.Close();
+
+
+                HttpResponse res = context.Response;
+                res.Write(countErr);
+
+                string filePath = System.Web.HttpContext.Current.Server.MapPath("~/upload/ProductFeedDucLong.xml");
+                using (XmlWriter writer = XmlWriter.Create(filePath, new XmlWriterSettings { Indent = true }))
+                {
+                    writer.WriteStartDocument();
+                    writer.WriteStartElement("rss");
+                    writer.WriteAttributeString("version", "2.0");
+                    writer.WriteAttributeString("xmlns", "g", null, "http://base.google.com/ns/1.0");
+
+                    writer.WriteStartElement("channel");
+                    writer.WriteElementString("title", "Product Feed");
+                    writer.WriteElementString("link", "https://dienmayduclong.vn");
+                    writer.WriteElementString("description", "Điện máy Đức Long Data Feed");
+
+                    foreach (var product in products)
+                    {
+                        writer.WriteStartElement("item");
+
+                        writer.WriteElementString("g", "id", null, product.Id.ToString());
+                        writer.WriteElementString("g", "title", null, product.Title);
+                        writer.WriteElementString("g", "description", null, product.Description);
+                        writer.WriteElementString("g", "link", null, product.Link);
+                        writer.WriteElementString("g", "image_link", null, product.ImageLink);
+                        writer.WriteElementString("g", "price", null, product.Price);
+                        writer.WriteElementString("g", "availability", null, product.Availability);
+                        writer.WriteElementString("g", "condition", null, product.Condition);
+                        writer.WriteElementString("g", "brand", null, product.Brand);
+                        writer.WriteElementString("g", "gtin", null, product.Gtin);
+                        writer.WriteElementString("g", "mpn", null, product.Mpn);
+                        writer.WriteElementString("g", "product_type", null, product.ProductType);
+                        writer.WriteElementString("g", "custom_label_0", null, product.CustomLabel0);
+                        writer.WriteElementString("g", "custom_label_1", null, product.CustomLabel1);
+                        writer.WriteElementString("g", "custom_label_2", null, product.CustomLabel2);
+                        writer.WriteElementString("g", "custom_label_3", null, product.CustomLabel3);
+
+                        writer.WriteEndElement(); // item
+                    }
+
+                    writer.WriteEndElement(); // channel
+                    writer.WriteEndElement(); // rss
+                    writer.WriteEndDocument();
+                }
+
             }
 
 
@@ -604,6 +724,9 @@ public class GenSitemap
         }
     }
 
+
+
+
     public static string GenerateFriendlyUrlCondition(string inputString)
     {
         if (!string.IsNullOrEmpty(inputString))
@@ -673,4 +796,24 @@ public class SitemapPage
     public DateTime LastModificationDate;
     public string ChangeFrequency;
     public string Priority;
+}
+
+public class ProductFeed
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Link { get; set; }
+    public string ImageLink { get; set; }
+    public string Price { get; set; }
+    public string Availability { get; set; }
+    public string Condition { get; set; }
+    public string Brand { get; set; }
+    public string Gtin { get; set; }
+    public string Mpn { get; set; }
+    public string ProductType { get; set; }
+    public string CustomLabel0 { get; set; }
+    public string CustomLabel1 { get; set; }
+    public string CustomLabel2 { get; set; }
+    public string CustomLabel3 { get; set; }
 }

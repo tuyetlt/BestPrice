@@ -126,7 +126,10 @@ public partial class _default : System.Web.UI.Page
                 Response.Write(ex.Message);
 
             }
-            PlaceHolder.Controls.Add(mainControl);
+            try {
+                PlaceHolder.Controls.Add(mainControl);
+            } catch { }
+            
 
             //UpdateLogs();
         }
