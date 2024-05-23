@@ -2087,11 +2087,15 @@ public class SqlHelper
 
     public static void Update_Url_Table(bool IsUpdate, string modul, int ID, string Name, string FriendlyUrl)
     {
+        DataTable tblCheck = SQLToDataTable("tblUrl", "ID", string.Format("ContentID='{0}' AND Moduls='{1}'", ID, modul));
+        if (!Utils.CheckExist_DataTable(tblCheck))
+            IsUpdate = false;
+
         using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
         {
             string sqlQuery = string.Empty;
             if (IsUpdate)
-                sqlQuery = @"UPDATE[dbo].[tblUrl] SET [Name]=@Name,[FriendlyUrl]=@FriendlyUrl,[Moduls]=@Moduls,[ContentID]=@ContentID,[EditedDate]=@EditedDate,[EditedBy]=@EditedBy WHERE [ContentID] = @ID";
+                sqlQuery = @"UPDATE[dbo].[tblUrl] SET [Name]=@Name,[FriendlyUrl]=@FriendlyUrl,[EditedDate]=@EditedDate,[EditedBy]=@EditedBy WHERE [ContentID] = @ID AND [Moduls]=@Moduls";
             else
                 sqlQuery = @"INSERT INTO [dbo].[tblUrl]([Name],[FriendlyUrl],[Moduls],[ContentID],[CreatedDate],[EditedDate],[CreatedBy],[EditedBy]) OUTPUT INSERTED.ID VALUES (@Name,@FriendlyUrl,@Moduls,@ContentID,@CreatedDate,@EditedDate,@CreatedBy,@EditedBy)";
 

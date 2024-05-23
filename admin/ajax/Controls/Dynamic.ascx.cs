@@ -18,9 +18,8 @@ public partial class admin_ajax_Controls_Dynamic : System.Web.UI.UserControl
         {
             if (q.ContainsKey("key"))
             {
-                string table = "";
-                if (q.ContainsKey("table"))
-                    table = q["table"];
+                string table = "tblUrl";
+
                 string id = "0";
                 if (q.ContainsKey("id"))
                     id = q["id"];
@@ -33,11 +32,14 @@ public partial class admin_ajax_Controls_Dynamic : System.Web.UI.UserControl
                 {
                     if (!string.IsNullOrEmpty(table))
                     {
-                        string filter = string.Format("FriendlyUrl=N'{0}' AND ID<>{1}", key, id);
-                        DataTable dt = SqlHelper.SQLToDataTable(table, "ID", filter, "Sort", 1, 1);
+                        string filter = string.Format("FriendlyUrl=N'{0}' AND ContentID<>'{1}'", key, id);
+                        DataTable dt = SqlHelper.SQLToDataTable("tblUrl", "ID,Moduls", filter, "ID", 1, 1);
                         if (Utils.CheckExist_DataTable(dt))
                         {
-                            hashtable.Add("esixt", "1");
+                            if (dt.Rows[0]["Moduls"].ToString() == "category_link") // nếu dạng link thì bỏ qua
+                                hashtable.Add("esixt", "0");
+                            else
+                                hashtable.Add("esixt", "1");
                         }
                         else
                         {

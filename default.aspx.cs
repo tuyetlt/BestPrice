@@ -45,7 +45,7 @@ public partial class _default : System.Web.UI.Page
                 if (m == "urlchung")
                 {
                     string friendlyUrl = ConvertUtility.ToString(Page.RouteData.Values["url"]).Trim();
-                    DataTable dtUrl = SqlHelper.SQLToDataTable("tblUrl", "", string.Format("FriendlyUrl=N'{0}'", friendlyUrl));
+                    DataTable dtUrl = SqlHelper.SQLToDataTable("tblUrl", "Moduls,ContentID", string.Format("FriendlyUrl=N'{0}'", friendlyUrl), "ID DESC", 1, 1);
                     if (Utils.CheckExist_DataTable(dtUrl))
                     {
                         DataRow drUrl = dtUrl.Rows[0];

@@ -266,6 +266,19 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
 
                 string sqlQuery = string.Format(" DELETE FROM {0} WHERE ID={1}", tableSql, RemoveID);
                 db.ExecuteSql(sqlQuery);
+
+                if (tableSql == "tblCategories" || tableSql == "tblArticle" || tableSql == "tblProducts") // Xoá Trong Bảng URL
+                {
+                    string filter = "ContentID='blabla'";
+                    if (tableSql == "tblArticle")
+                        filter = string.Format("ContentID='{0}' AND Moduls=N'{1}'", RemoveID, "article_detail");
+                    else if (tableSql == "tblProducts")
+                        filter = string.Format("ContentID='{0}' AND Moduls=N'{1}'", RemoveID, "product_detail");
+                    else if (tableSql == "tblCategories")
+                        filter = string.Format("ContentID='{0}' AND (Moduls=N'{1}' OR Moduls=N'{2}' OR Moduls=N'{3}')", RemoveID, "category_product", "category_article", "category_content");
+                    string sqlQueryUrl = string.Format(" DELETE FROM {0} WHERE {1}", "tblUrl", filter);
+                    db.ExecuteSql(sqlQueryUrl);
+                }
             }
         }
         else
