@@ -1448,6 +1448,49 @@ if ($("#frm_checkout").length) {
 
 }
 
+document.addEventListener('readystatechange', event => {
+    if (event.target.readyState === "complete") {
+        var clockdiv = document.getElementsByClassName("timeCountdown");
+        var countDownDate = new Array();
+        for (var i = 0; i < clockdiv.length; i++) {
+            countDownDate[i] = new Array();
+            countDownDate[i]['el'] = clockdiv[i];
+            countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
+            countDownDate[i]['days'] = 0;
+            countDownDate[i]['hours'] = 0;
+            countDownDate[i]['seconds'] = 0;
+            countDownDate[i]['minutes'] = 0;
+        }
+
+        var countdownfunction = setInterval(function () {
+            for (var i = 0; i < countDownDate.length; i++) {
+                var now = new Date().getTime();
+                var distance = countDownDate[i]['time'] - now; 
+                countDownDate[i]['hours'] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (distance < 0) {
+                    
+                    countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
+                    countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
+                    countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
+                } else {
+                    
+                    countDownDate[i]['el'].querySelector('.hours').innerHTML = countDownDate[i]['hours'];
+                    countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[i]['minutes'];
+                    countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[i]['seconds'];
+                }
+
+            }
+        }, 1000);
+    }
+});
+
+
+
+
+
 var target_date = new Date().getTime() + (1000 * 3600 * 12); // set the countdown date
 var days, hours, minutes, seconds; // variables for time units
 
@@ -1470,9 +1513,14 @@ function getCountdown() {
     seconds = pad(parseInt(seconds_left % 60));
 
     // format countdown string + set tag value
-    countdown.innerHTML = "<span>" + hours + "</span><b> : </b><span>" + minutes + "</span> <b> : </b> <span>" + seconds + "</span>";
+    if (countdown) {
+        countdown.innerHTML = "<span>" + hours + "</span><b> : </b><span>" + minutes + "</span> <b> : </b> <span>" + seconds + "</span>";
+    }
+    
 }
 
 function pad(n) {
     return (n < 10 ? '0' : '') + n;
 }
+
+
