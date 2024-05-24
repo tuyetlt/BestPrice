@@ -38,7 +38,7 @@
             <div class="banner__productAdvert-inner d-flex align-items-center">
                 <div class="banner__productAdvert-slide__inner col-12">
                     <div class="slider product__grid createProductAdvertSlideshow mb-3" module="1">
-                        <%= Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "", linkDetail, "", ConvertUtility.ToInt32(dr_1["ID"]), true, false, -1) %>
+                        <%= Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "", linkDetail, "", ConvertUtility.ToInt32(dr_1["ID"]), true, "Home", -1) %>
                     </div>
                     <div class="tags d-flex flex-wrap justify-content-center">
                         <%

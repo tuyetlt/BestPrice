@@ -1971,7 +1971,7 @@ public class Utils
         }
     }
 
-    public static string LoadUserControl(string url, string Title, string ReadMore, string Filter, int CategoryID, bool IsHome, bool HightLight, int Index)
+    public static string LoadUserControl(string url, string Title, string ReadMore, string Filter, int CategoryID, bool IsHome, string Modul, int Index)
     {
         try
         {
@@ -1983,7 +1983,7 @@ public class Utils
                 userControl.GetType().GetProperty("Filter").SetValue(userControl, Filter);
                 userControl.GetType().GetProperty("CategoryID").SetValue(userControl, CategoryID);
                 userControl.GetType().GetProperty("IsHome").SetValue(userControl, IsHome);
-                userControl.GetType().GetProperty("HightLight").SetValue(userControl, HightLight);
+                userControl.GetType().GetProperty("Modul").SetValue(userControl, Modul);
                 userControl.GetType().GetProperty("Index").SetValue(userControl, Index);
 
                 page.Controls.Add(userControl);

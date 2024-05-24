@@ -2746,10 +2746,11 @@ header .show_search_content {
     grid-template-columns: repeat(4, 1fr);
     gap: 30px 20px;
 }
-.product-flash-sale .product__grid .product__item {
-    border: 1px solid #f1f1f1;
-    padding:10px;
-}
+    .product-flash-sale .product__grid .product__item {
+        border: 1px solid #f1f1f1;
+        padding: 10px;
+        background-color: #fff;
+    }
 .timeCountdown {
     display: flex;
     align-items:center;

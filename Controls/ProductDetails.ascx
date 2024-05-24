@@ -236,7 +236,7 @@
                     <div class="product__related mb-5">
                         <% string filterProduct = string.Format(@"(Hide is null OR Hide=0) AND (CategoryIDList Like N'%,{0},%' OR CategoryIDParentList Like N'%,{0},%' OR TagIDList Like N'%,{0},%')", PageInfo.CategoryID);
                         %>
-                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Sản phẩm cùng danh mục", "", filterProduct, 0, false, false, 0) %>
+                        <%=Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", "Sản phẩm cùng danh mục", "", filterProduct, 0, false, "Detail", 0) %>
                     </div>
                    
                 </div>

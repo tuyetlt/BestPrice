@@ -7,9 +7,9 @@
         if (dt != null && dt.Rows.Count > 0)
         {
             DataRow dr = dt.Rows[0];
-            bool HightLight = false;
+            string Modul = "Home";
             if (i == 1)
-                HightLight = true;
+                Modul = "Home1";
 
             AttrProductFlag result;
             int intValueFlag = 0;
@@ -23,7 +23,7 @@
             if (!string.IsNullOrEmpty(dr[string.Format("TextHome{0}", i)].ToString()))
             {
                 string filter = string.Format("AttrProductFlag & {0} <> 0", intValueFlag);
-                Response.Write(Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", dr[string.Format("TextHome{0}", i)].ToString(), ReadMore, filter, 0, true, HightLight, i));
+                Response.Write(Utils.LoadUserControl("~/Controls/UCHomeProduct.ascx", dr[string.Format("TextHome{0}", i)].ToString(), ReadMore, filter, 0, true, Modul, i));
             }
         }
     } %>

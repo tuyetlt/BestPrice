@@ -49,3 +49,7 @@
 .cart__list .cart__product {
     grid-template-columns: 1fr 150px 150px 20px;
 }
+
+.flash-sale-Breadcrumb .breadcrumb-item a, .flash-sale-Breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    color: #fff;
+}
