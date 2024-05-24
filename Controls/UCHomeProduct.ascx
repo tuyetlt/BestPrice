@@ -77,6 +77,16 @@
                                             <% } %>
                                             <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                                 <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" /></a>
+                                        <div class="frame-flash-sale">
+                                            <img src="/themes/images/summer.png" alt="Alternate Text" />
+                                        </div>
+                                        </div>
+                                        <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
+                                            <span class="hours"></span>
+                                            <b>:</b>
+                                            <span class="minutes"></span>
+                                            <b>:</b>
+                                            <span class="seconds"></span>
                                         </div>
                                         <div class="product__info">
                                             <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
@@ -131,6 +141,7 @@
                                             <% } %>
                                             <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                                 <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" /></a>
+                                            
                                         </div>
                                         <div class="product__info">
                                             <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
@@ -185,17 +196,19 @@
                                         <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                             <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
                                         </a>
-                                        <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
-                                            <span class="hours"></span>
-                                            <b>:</b>
-                                            <span class="minutes"></span>
-                                            <b>:</b>
-                                            <span class="seconds"></span>
+                                        <div class="frame-flash-sale">
+                                            <img src="/themes/images/summer.png" alt="Alternate Text" />
                                         </div>
-
                                          <div class="frame-label-sale">
                                              <img src="/themes/images/sale.webp" alt="Sale" />
                                          </div>
+                                    </div>
+                                    <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
+                                        <span class="hours"></span>
+                                        <b>:</b>
+                                        <span class="minutes"></span>
+                                        <b>:</b>
+                                        <span class="seconds"></span>
                                     </div>
                                     <div class="product__info">
                                         <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>

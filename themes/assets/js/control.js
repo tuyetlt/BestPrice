@@ -1367,7 +1367,7 @@ function OpenSocial() {
 $(document).ready(function () {
     OpenSocial();
 });
-
+/* Check Validate from*/
 if ($("#frm_checkout").length) {
     var buttonSubmit = $("#frm_checkout #btnSubmit");
     buttonSubmit.click(function () {
@@ -1456,7 +1456,6 @@ document.addEventListener('readystatechange', event => {
             countDownDate[i] = new Array();
             countDownDate[i]['el'] = clockdiv[i];
             countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
-            countDownDate[i]['days'] = 0;
             countDownDate[i]['hours'] = 0;
             countDownDate[i]['seconds'] = 0;
             countDownDate[i]['minutes'] = 0;
@@ -1465,23 +1464,37 @@ document.addEventListener('readystatechange', event => {
         var countdownfunction = setInterval(function () {
             for (var i = 0; i < countDownDate.length; i++) {
                 var now = new Date().getTime();
-                var distance = countDownDate[i]['time'] - now; 
+                var distance = countDownDate[i]['time'] - now;
                 countDownDate[i]['hours'] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
-
+                
                 if (distance < 0) {
                     
                     countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
                     countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
                     countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
                 } else {
-                    
-                    countDownDate[i]['el'].querySelector('.hours').innerHTML = countDownDate[i]['hours'];
-                    countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[i]['minutes'];
-                    countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[i]['seconds'];
+                    console.log(countDownDate[i]['hours'])
+                    if (countDownDate[i]['hours'] < 10) {
+                        countDownDate[i]['el'].querySelector('.hours').innerHTML = "0" + countDownDate[i]['hours'];
+                    }
+                    else {
+                        countDownDate[i]['el'].querySelector('.hours').innerHTML = countDownDate[i]['hours'];
+                    }
+                    if (countDownDate[i]['minutes'] < 10) {
+                        countDownDate[i]['el'].querySelector('.minutes').innerHTML ='0' + countDownDate[i]['minutes'];
+                    }
+                    else {
+                        countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[i]['minutes'];
+                    }
+                    if (countDownDate[i]['seconds'] < 10) {
+                        countDownDate[i]['el'].querySelector('.seconds').innerHTML ='0' + countDownDate[i]['seconds'];
+                    }
+                    else {
+                        countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[i]['seconds'];
+                    } 
                 }
-
             }
         }, 1000);
     }
@@ -1491,10 +1504,10 @@ document.addEventListener('readystatechange', event => {
 
 
 
-var target_date = new Date().getTime() + (1000 * 3600 * 12); // set the countdown date
-var days, hours, minutes, seconds; // variables for time units
+var target_date = new Date().getTime() + (1000 * 3600 * 12);
+var days, hours, minutes, seconds;
 
-var countdown = document.getElementById("tiles"); // get tag element
+var countdown = document.getElementById("tiles");
 
 getCountdown();
 
@@ -1502,7 +1515,7 @@ setInterval(function () { getCountdown(); }, 1000);
 
 function getCountdown() {
 
-    // find the amount of "seconds" between now and target
+
     var current_date = new Date().getTime();
     var seconds_left = (target_date - current_date) / 1000;
 
@@ -1512,7 +1525,6 @@ function getCountdown() {
     minutes = pad(parseInt(seconds_left / 60));
     seconds = pad(parseInt(seconds_left % 60));
 
-    // format countdown string + set tag value
     if (countdown) {
         countdown.innerHTML = "<span>" + hours + "</span><b> : </b><span>" + minutes + "</span> <b> : </b> <span>" + seconds + "</span>";
     }
@@ -1522,5 +1534,23 @@ function getCountdown() {
 function pad(n) {
     return (n < 10 ? '0' : '') + n;
 }
+/* Fixed slidebar */
 
+var $sidebar = $('.sidebar');
+var sidebarTop = $sidebar.position().top;
+var blogHeight = $('.product__wrapper').outerHeight() - 10;
+console.log($('.sidebar').offsetHeight)
+$(window).scroll(fixSidebarOnScroll);
 
+function fixSidebarOnScroll() {
+    var windowScrollTop = $(window).scrollTop();
+    if (windowScrollTop >= blogHeight || windowScrollTop <= sidebarTop) {
+        $sidebar.removeClass('sticky');
+    }
+
+    else if (windowScrollTop >= sidebarTop) {
+        if (!$sidebar.hasClass('sticky')) {
+            $sidebar.addClass('sticky');
+        }
+    }
+}
