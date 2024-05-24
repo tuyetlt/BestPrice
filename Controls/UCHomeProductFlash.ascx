@@ -26,6 +26,9 @@
     {  %>
 <section class="product product__special-topPage moduleProductSlideshow-specials mb-5">
     <div class="container">
+        <div class="banner-sale">
+            <img src="/themes/images/cate.webp" alt="banner cate flash sale" />
+        </div>
         <div class="moduleProductSlideshow__wrap">
                 <div class="moduleProductSlideshow__section">
                     <div class="moduleProductSlideshow__section-inner product-flash-sale">
@@ -51,7 +54,17 @@
                                         <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                             <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
                                         </a>
-                                        <div class="countdown timer"></div>
+                                        <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
+                                            <span class="hours"></span>
+                                            <b>:</b>
+                                            <span class="minutes"></span>
+                                            <b>:</b>
+                                            <span class="seconds"></span>
+                                        </div>
+
+                                         <div class="frame-label-sale">
+                                             <img src="/themes/images/sale.webp" alt="Sale" />
+                                         </div>
                                     </div>
                                     <div class="product__info">
                                         <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
@@ -60,6 +73,7 @@
                                             <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
                                         </div>
                                     </div>
+                                     
                                 </div>
                             </div>
                             <% } %><% } %>

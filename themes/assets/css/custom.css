@@ -2750,10 +2750,42 @@ header .show_search_content {
     border: 1px solid #f1f1f1;
     padding:10px;
 }
-    @media (min-width: 1400px) {
-        .header__logo {
-        margin-right: 1.5rem;
-    }
+.timeCountdown {
+    display: flex;
+    align-items:center;
+    margin: 15px auto 15px;
+    justify-content:center;
+}
+.timeCountdown span {
+    width: 40px;
+    max-width: 40px;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    background-color: #222;
+    border-top: 1px solid #fff;
+    border-radius: 3px;
+    margin: 0 4px;
+    padding: 4px 0;
+    display: inline-block;
+    position: relative;
+}
+.frame-label-sale {
+    position: absolute;
+    right: -19px;
+    top: -10px;
+    max-width: 70px;
+}
+.banner-sale {
+    margin-left: -0.625rem;
+    margin-right: -0.625rem;
+}
+@media (min-width: 1400px) {
+    .header__logo {
+    margin-right: 1.5rem;
+}
 }
 
 @media only screen and (min-width: 1024px) {
@@ -2938,6 +2970,10 @@ header .show_search_content {
 
     .banner__productAdvert .slick-next {
         right: 0;
+    }
+    .product-flash-sale .product__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 15px;
     }
 }
 
