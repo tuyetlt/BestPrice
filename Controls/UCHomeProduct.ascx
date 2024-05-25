@@ -202,6 +202,9 @@
                                          <div class="frame-label-sale">
                                              <img src="/themes/images/sale.webp" alt="Sale" />
                                          </div>
+                                        <div class="icon-flash-sale">
+                                            <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
+                                        </div>
                                     </div>
                                     <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
                                         <span class="hours"></span>
