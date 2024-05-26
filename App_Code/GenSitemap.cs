@@ -6,7 +6,7 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using System.Windows;
-using WebSoSanh;
+
 
 /// <summary>
 /// Summary description for GenSitemap
