@@ -49,8 +49,8 @@
                 <div id="countdown">
                     <div id='tiles'></div>
                 </div>
-                <h2 class="heading__title justify-content-center text-center text-white"><a href="/"><span class="text-title"><%= Title %></span></a></h2>
-                <a href="/flash-sale/" target="_self" class="btn-more"></a>
+                <h2 class="heading__title justify-content-center text-center text-white"><a href="/flash-sale/"><span class="text-title"><%= Title %></span></a></h2>
+                <a href="/flash-sale/" target="_self" class="btn-more">Xem thêm</a>
             </div>
             <div class="product__special-topPage__content">
                 <div class="moduleProductSlideshow__wrap">
