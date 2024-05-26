@@ -111,7 +111,7 @@
                             <div class="product__brand mb-3">
                                 <span>Tình trạng:</span> <%= strStatus %>
                             </div>
-                            <div class="product__price mb-3">
+                            <%--<div class="product__price mb-3">
                                 <strong class="price"><%= string.Format("{0:N0} {1}", dr["Price"], "VNĐ") %></strong>
                                 <% if (SqlHelper.GetPrice_Decimal(ConvertUtility.ToInt32(dr["ID"]), "Price1", true) > 0)
                                     { %>
@@ -123,6 +123,30 @@
                                     <div><span class="txt-price me-1">Tiết kiệm:</span><strong><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(dr["ID"])) %></strong></div>
                                 </div>
                                 <% } %>
+                            </div>--%>
+                            <div class="product__price product_price_sale  mb-3">
+                                <div class="cnt-box-price">
+                                    <div class="txt-price me-1">Giá online rẻ hơn:</div>
+                                    <strong class="price"><%= string.Format("{0:N0} {1}", dr["Price"], "VNĐ") %></strong>
+                                    <% if (SqlHelper.GetPrice_Decimal(ConvertUtility.ToInt32(dr["ID"]), "Price1", true) > 0)
+                                        { %>
+                                    <div class="d-flex align-items-center text-price">
+                                        <div class="">
+                                            <span class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price1", true) %></span>
+                                        </div>
+                                        <div class="box-percent"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(dr["ID"])) %></span></div>
+                                    </div>
+                                    <% } %>
+                                </div>
+                                <div class="cnt-box-time">
+                                     <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
+                                         <span class="hours"></span>
+                                         <b>:</b>
+                                         <span class="minutes"></span>
+                                         <b>:</b>
+                                         <span class="seconds"></span>
+                                     </div>
+                                </div>
                             </div>
                             <div class="product__attr">
                                 <%= dr["Description"] %>

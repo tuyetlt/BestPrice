@@ -247,15 +247,6 @@
     padding: 0px 10px 20px;
 }
 
-    .filter-ajax .title-sidebar {
-        font-size: 16px;
-        line-height: 30px;
-        font-weight: bold;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        text-transform: uppercase;
-    }
-
 .breadcrumb-item > a {
     color: #004ebd;
     font-size: 18px;
@@ -349,11 +340,6 @@
 
 .tags__item:hover, .tags__item.active {
     background-color: #004ebd;
-}
-
-.tags__item {
-    border: 1px solid #e0e0e0;
-    background-color: transparent;
 }
 
 .sidebar__title {
@@ -861,6 +847,7 @@
         border-radius: 20px;
         background-color: #da251c;
         box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1), 0 0 3px 1px rgba(0, 0, 0, 0.1);
+
     }
 
     .navs-container .arc-menu > li {
@@ -880,6 +867,7 @@
         background-size: 32px 26px;
         background-repeat: no-repeat;
         background-position: center center;
+        animation: phone-vr-circle-fill 1s infinite ease-in-out;
     }
 
     .navs-container .arc-menu.active {
@@ -1760,18 +1748,25 @@ header .show_search_content {
 }
 
     .filter-ajax .title-sidebar {
-        font-size: 16px;
-        line-height: 30px;
+        font-size: 14px;
+        line-height: 20px;
         font-weight: bold;
-        padding-bottom: 10px;
-        padding-top: 10px;
+        padding-bottom: 5px;
+        padding-top: 5px;
         text-transform: uppercase;
     }
-
-.breadcrumb-item > a {
-    color: #004ebd;
-    font-size: 18px;
+.list-cate-side .item-filter {
+    display: flex;
+    align-items: center;
 }
+    .list-cate-side .item-filter label{
+        font-size:14px;
+        font-size:14px;
+    }
+    .breadcrumb-item > a {
+        color: #004ebd;
+        font-size: 18px;
+    }
 
 .breadcrumb-item + .breadcrumb-item::before {
     color: #004ebd;
@@ -1866,12 +1861,12 @@ header .show_search_content {
 .tags__item {
     border: 1px solid #e0e0e0;
     background-color: transparent;
+    font-size:14px;
+    padding: 4px;
 }
 
 .sidebar__title {
-    /*background: #004ebd;*/
-    margin: 0 0 15px !important;
-    /*color: #fff;*/
+    margin: 0 0 5px !important;
     padding: 10px;
 }
 
@@ -2748,7 +2743,6 @@ header .show_search_content {
 }
     .product-flash-sale .product__grid .product__item {
         border: 1px solid #f1f1f1;
-        padding: 10px;
         background-color: #fff;
     }
 .timeCountdown {
@@ -2758,30 +2752,171 @@ header .show_search_content {
     justify-content:center;
 }
 .timeCountdown span {
-    width: 40px;
-    max-width: 40px;
-    font-size: 28px;
-    line-height: 32px;
+    width: 36px;
+    max-width: 36px;
+    font-size: 24px;
+    line-height: 28px;
     font-weight: 700;
     text-align: center;
     color: #fff;
     background-color: #222;
-    border-top: 1px solid #fff;
     border-radius: 3px;
     margin: 0 4px;
     padding: 4px 0;
     display: inline-block;
     position: relative;
 }
+.icon-flash-sale {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 111;
+    max-width: 90px;
+}
 .frame-label-sale {
     position: absolute;
-    right: -19px;
-    top: -10px;
+    right: -9px;
+    top: -0px;
     max-width: 70px;
 }
 .banner-sale {
     margin-left: -0.625rem;
     margin-right: -0.625rem;
+}
+.product_price_sale {
+    background: url(../images/bg-fs.png);
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 15px;
+    border-radius: 10px;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+.product_price_sale.product__price .txt-price,
+.product_price_sale.product__price .price,
+.product_price_sale.product__price .text-price,
+.product_price_sale.product__price .old-price {
+    color: #fff;
+}
+    .product_price_sale.product__price .txt-price{
+        font-size:16px;
+        font-weight:700;
+    }
+    .product_price_sale.product__price .price {
+        font-size: 32px;
+        padding: 5px 0;
+        display: block;
+    }
+    .product_price_sale.product__price .text-price{
+        font-size:14px;
+    }
+    .product_price_sale.product__price .text-price .box-percent {
+        color: #303538;
+        background: #fff;
+        border-radius: 5px;
+        margin-left: 10px;
+        padding: 4px;
+    }
+.block-qty-cart .btn:hover {
+    background-color: #f00;
+}
+.block-qty-cart .input-group-btn,
+.block-qty-cart .form-control {
+    height: 42px;
+}
+.block-qty-cart .btn {
+    line-height: 26px;
+}
+.frame-flash-sale {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0px;
+    left: 0;
+}
+.sidebar.sticky {
+    position: fixed;
+    top: 5px;
+    width: calc(300px - 15px - 1.25rem);
+    z-index:10;
+}
+.sidebar__inner{
+    margin-bottom:0;
+}
+@-webkit-keyframes phone-vr-circle-fill {
+    0% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+    }
+
+    10% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+    }
+
+    20% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+    }
+
+    30% {
+        -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+    }
+
+    40% {
+        -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0) scale(1) skew(1deg);
+    }
+}
+
+@-webkit-keyframes zoom {
+    0% {
+        transform: scale(.9)
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px transparent
+    }
+
+    100% {
+        transform: scale(.9);
+        box-shadow: 0 0 0 0 transparent
+    }
+}
+
+@keyframes zoom {
+    0% {
+        transform: scale(.9)
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px transparent
+    }
+
+    100% {
+        transform: scale(.9);
+        box-shadow: 0 0 0 0 transparent
+    }
+}
+
+.phone-bar a {
+    position: fixed;
+    bottom: 25px;
+    left: 30px;
+    z-index: -1;
+    color: #fff;
+    font-size: 16px;
+    padding: 8px 15px 7px 50px;
+    border-radius: 100px;
+    white-space: nowrap;
 }
 @media (min-width: 1400px) {
     .header__logo {
