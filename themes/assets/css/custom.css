@@ -831,7 +831,7 @@
     text-align: center;
     color: #fff;
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 1;
     z-index: 896;
     transition: all 0.2s;
 }
@@ -846,7 +846,6 @@
         -webkit-border-radius: 20px;
         border-radius: 20px;
         background-color: #da251c;
-        box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1), 0 0 3px 1px rgba(0, 0, 0, 0.1);
 
     }
 
@@ -869,10 +868,33 @@
         background-position: center center;
         animation: phone-vr-circle-fill 1s infinite ease-in-out;
     }
-
-    .navs-container .arc-menu.active {
+    .navs-container .arc-menu:before {
+        right: -10px;
+        top: -10px;
+        content: '';
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
         opacity: 1;
+        position: absolute;
+        box-shadow: 0 0 0 0 #c31d1d;
+        background-color: rgba(230, 8, 8, 0.7);
+        border-radius: 50%;
+        border: 2px solid transparent;
+        -webkit-animation: phone-vr-circle-fill 2.3s infinite ease-in-out;
+        animation: phone-vr-circle-fill 2.3s infinite ease-in-out;
+        transition: all .5s;
+        -webkit-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        -webkit-animuiion: zoom 1.3s infinite;
+        animation: zoom 1.3s infinite;
     }
+        .navs-container .arc-menu.active:before{
+            display:none!important;
+        }
+        .navs-container .arc-menu.active {
+            opacity: 1;
+        }
 
         .navs-container .arc-menu.active ~ .navs-bg {
             display: block;
@@ -3064,6 +3086,7 @@ header .show_search_content .price .per {
         display: flex;
         align-items: flex-start;
         margin-bottom: 10px;
+        padding-right:5px;
     }
 
         .filter-ajax .item-filter label {
