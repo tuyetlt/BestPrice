@@ -166,14 +166,15 @@
 
                         <div class="product__item col-6 col-sm-4 col-md-4 col-lg-3">
                             <div class="product__inner">
+                                <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                 <div class="product__thumb">
 
                                     <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
                                         { %>
                                     <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
                                     <% } %>
-                                    <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
-                                        <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" /></a>
+                                   
+                                        <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" />
                                     <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
                                         <span class="hours"></span>
                                         <b>:</b>
@@ -191,6 +192,7 @@
                                         <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
                                     </div>
                                 </div>
+                                    </a>
                                 <div class="product__info">
                                     <h3 class="product__name"><a href="<%= linkDetail %>"><%= drProduct["Name"].ToString() %></a></h3>
 
