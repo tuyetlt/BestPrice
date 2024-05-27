@@ -50,7 +50,7 @@
                     <div id='tiles'></div>
                 </div>
                 <h2 class="heading__title justify-content-center text-center text-white"><a href="/flash-sale/"><span class="text-title"><%= Title %></span></a></h2>
-                <a href="/flash-sale/" target="_self" class="btn-more">Xem Thêm</a>
+                <a href="/flash-sale/" target="_self" class="btn-more">Xem thêm</a>
             </div>
             <div class="product__special-topPage__content">
                 <div class="moduleProductSlideshow__wrap">
@@ -203,6 +203,9 @@
                                          <div class="frame-label-sale">
                                              <img src="/themes/images/sale.webp" alt="Sale" />
                                          </div>
+                                        <div class="icon-flash-sale">
+                                            <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
+                                        </div>
                                     </div>
                                     <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
                                         <span class="hours"></span>
