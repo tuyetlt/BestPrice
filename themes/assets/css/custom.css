@@ -2925,6 +2925,9 @@ header .show_search_content .price .per {
     transform: scale(0.98);
     transition: all 300ms ease;
 }
+.product-flash-sale .product__item .product__inner .product__info{
+    padding:10px;
+}
 @media (min-width: 1400px) {
     .header__logo {
     margin-right: 1.5rem;
@@ -3117,6 +3120,32 @@ header .show_search_content .price .per {
     .product-flash-sale .product__grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px 15px;
+    }
+    #countdown #tiles > span {
+        width: 30px;
+        max-width: 30px;
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 700;
+        text-align: center;
+        color: #111;
+        background-color: #fff;
+        border-top: 1px solid #fff;
+        border-radius: 3px;
+        margin: 0 4px;
+        padding: 4px 0;
+        display: inline-block;
+        position: relative;
+    }
+    .product__special-topPage__inner .heading .heading__title span.text-title:before {
+        position: absolute;
+        width: 26px;
+        height: 34px;
+        content: "";
+        left: -26px;
+    }
+    .product__special-topPage__inner .heading .heading__title span {
+        margin: 0px 1.25rem;
     }
 }
 
