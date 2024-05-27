@@ -8,9 +8,10 @@ public partial class _tool_QRCode : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        string url = "https://maps.app.goo.gl/PFMxnderbHW6V67j6";
-        string logoPath = Server.MapPath("~/upload/images/logo/tiendat.png");
-        GenerateStyledQRCode(url, logoPath);
+        string url = "https://maps.app.goo.gl/Who4DkFiVHtKEpax6";
+        string logoPath = Server.MapPath("~/upload/images/logo/thadaco.png");
+        //GenerateStyledQRCode(url, logoPath);
+        GenerateQRCode(url);
     }
 
     private void GenerateStyledQRCode(string url, string logoPath)
@@ -52,5 +53,29 @@ public partial class _tool_QRCode : System.Web.UI.Page
         }
 
         return new Bitmap(logo, new Size(logoWidth, logoHeight));
+    }
+
+
+
+    // Không logo
+    private void GenerateQRCode(string url)
+    {
+        using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+        {
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+            using (QRCode qrCode = new QRCode(qrCodeData))
+            {
+                using (Bitmap qrCodeImage = qrCode.GetGraphic(20))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        qrCodeImage.Save(ms, ImageFormat.Png);
+                        byte[] byteImage = ms.ToArray();
+                        string base64Image = Convert.ToBase64String(byteImage);
+                        imgQRCode.ImageUrl = "data:image/png;base64," + base64Image;
+                    }
+                }
+            }
+        }
     }
 }
