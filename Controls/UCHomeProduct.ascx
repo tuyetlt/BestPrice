@@ -82,7 +82,8 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
+                                        <div class="timeCountdown" data-date="<%= Utils.FormatDateTimeFlashSale(ConfigWeb.FlashSaleTimeDisplay) %>">
+                                            <%--December 24, 2024 21:14:01--%>
                                             <span class="hours"></span>
                                             <b>:</b>
                                             <span class="minutes"></span>
@@ -209,7 +210,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
+                                    <div class="timeCountdown" data-date="<%= Utils.FormatDateTimeFlashSale(ConfigWeb.FlashSaleTimeDisplay) %>">
                                         <span class="hours"></span>
                                         <b>:</b>
                                         <span class="minutes"></span>

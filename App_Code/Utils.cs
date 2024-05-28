@@ -22,6 +22,7 @@ using System.Web.UI.WebControls;
 using System.Xml;
 using System.Xml.Serialization;
 
+
 public class Utils
 {
     private static Hashtable hashtable = new Hashtable();
@@ -87,18 +88,26 @@ public class Utils
     }
     public static DateTime DateTimeString_To_DateTime(string DateTimeString)
     {
+        DateTime _dateTime = DateTime.Now;
+        string[] formats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy HH:mm:ss", "dd-MM-yyyy HH:mm", "dd/MM/yyyy hh:mm tt" };
 
-        DateTime _dateTime = new DateTime();
         try
         {
+
             if (!string.IsNullOrEmpty(DateTimeString.Trim()))
-                _dateTime = DateTime.ParseExact(DateTimeString, "dd/MM/yyyy HH:mm", null);
-            else
-                _dateTime = DateTime.Now;
+            {
+                foreach (var format in formats)
+                {
+                    if (DateTime.TryParseExact(DateTimeString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out _dateTime))
+                    {
+                        return _dateTime;
+                    }
+                }
+            }
         }
         catch
         {
-            _dateTime = DateTime.Now;
+
         }
 
         return _dateTime;
@@ -107,6 +116,48 @@ public class Utils
     {
         return DateTimeToSQLDate(DateTimeString_To_DateTime(DateTimeString));
     }
+
+
+
+    public static DateTime ConvertStringToDateTime(string dateTimeString)
+    {
+        try
+        {
+            string format = "yyyy-MM-dd HH:mm:ss.fff";
+            return DateTime.ParseExact(dateTimeString, format, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        catch
+        {
+            return DateTime.Now;
+        }
+    }
+
+    public static string FormatDateTime(DateTime dateTime)
+    {
+        try
+        {
+            return dateTime.ToString("MMMM dd, yyyy HH:mm:ss");
+        }
+        catch
+        {
+            return DateTime.Now.ToString("MMMM dd, yyyy HH:mm:ss");
+        }
+    }
+
+    public static string FormatDateTimeFlashSale(string dateTimeStringSql)
+    {
+        try
+        {
+            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
+            DateTime dateTime = ConvertStringToDateTime(dateTimeStringSql);
+            return dateTime.ToString("MMMM dd, yyyy HH:mm:ss", culture);
+        }
+        catch
+        {
+            return DateTime.Now.ToString("MMMM dd, yyyy HH:mm:ss");
+        }
+    }
+
     public static string CommaTrim(string strInput)
     {
         string result = "";

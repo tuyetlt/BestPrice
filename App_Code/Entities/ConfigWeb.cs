@@ -767,6 +767,41 @@ public class ConfigWeb
             return strReturn;
         }
     }
+    public static string FlashSaleTimeDisplay
+    {
+        get
+        {
+            string strReturn = string.Empty;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleTimeDisplay", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = dt.Rows[0][0].ToString();
+            return strReturn;
+        }
+    }
+
+    public static string FlashSaleTimeReal
+    {
+        get
+        {
+            string strReturn = string.Empty;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleTimeReal", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = dt.Rows[0][0].ToString();
+            return strReturn;
+        }
+    }
+
+    public static int AutoRenewal
+    {
+        get
+        {
+            int strReturn = 0;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "AutoRenewal", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = ConvertUtility.ToInt32(dt.Rows[0][0].ToString());
+            return strReturn;
+        }
+    }
 
 
 }
