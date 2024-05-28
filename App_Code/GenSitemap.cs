@@ -6,6 +6,7 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Xml.Linq;
 
 
 /// <summary>
@@ -13,116 +14,6 @@ using System.Windows;
 /// </summary>
 public class GenSitemap
 {
-    public static void SitemapUpdate()
-    {
-        try
-        {
-            string fileName = HttpContext.Current.Request.MapPath("/sitemap.xml");
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc = GetSitemapDocument();
-            xmlDoc.Save(fileName);
-        }
-        catch { }
-    }
-
-
-    #region Build sitemap document methods
-    private static XmlDocument GetSitemapDocument()
-    {
-        XmlDocument sitemapDocument = new XmlDocument();
-        XmlDeclaration xmlDeclaration = sitemapDocument.CreateXmlDeclaration("1.0", "UTF-8", string.Empty);
-        sitemapDocument.AppendChild(xmlDeclaration);
-
-        XmlElement urlset = sitemapDocument.CreateElement("urlset");
-        urlset.SetAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
-        urlset.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        urlset.SetAttribute("schemaLocation", "http://www.w3.org/2001/XMLSchema-instance", "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd");
-
-        sitemapDocument.AppendChild(urlset);
-
-        List<SitemapPage> urls = GetSitemapPages();
-
-        foreach (SitemapPage sitemapPage in urls)
-        {
-            XmlElement url = CreateUrlElement(sitemapDocument, sitemapPage);
-            urlset.AppendChild(url);
-        }
-        return sitemapDocument;
-    }
-
-    private static XmlElement CreateUrlElement(XmlDocument sitemapDocument, SitemapPage sitemapPage)
-    {
-        XmlElement url = sitemapDocument.CreateElement("url");
-        XmlElement loc = CreateElementWithText(sitemapDocument, "loc", sitemapPage.Location);
-        url.AppendChild(loc);
-        string lastModValue = sitemapPage.LastModificationDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
-        XmlElement lastmod = CreateElementWithText(sitemapDocument, "lastmod", lastModValue);
-        url.AppendChild(lastmod);
-        if (!string.IsNullOrEmpty(sitemapPage.ChangeFrequency))
-        {
-            XmlElement changefreq = CreateElementWithText(sitemapDocument, "changefreq", sitemapPage.ChangeFrequency);
-            url.AppendChild(changefreq);
-        }
-        XmlElement priority = CreateElementWithText(sitemapDocument, "priority", sitemapPage.Priority);
-        url.AppendChild(priority);
-        return url;
-    }
-
-    private static XmlElement CreateElementWithText(XmlDocument document, string elementName, string text)
-    {
-        XmlElement element = document.CreateElement(elementName);
-        XmlText elementValue = document.CreateTextNode(text);
-        element.AppendChild(elementValue);
-        return element;
-    }
-    #endregion
-    private static List<SitemapPage> GetSitemapPages()
-    {
-        string SiteUrl = C.MAIN_URL + C.DS;
-
-        List<SitemapPage> sitemapPages = new List<SitemapPage>();
-
-        sitemapPages.Add(new SitemapPage(SiteUrl, DateTime.Now, "always", "1.0"));
-        sitemapPages.Add(new SitemapPage(SiteUrl, new DateTime(2017, 4, 15), "yearly", "0.4"));
-        sitemapPages.Add(new SitemapPage(SiteUrl, DateTime.Now, "monthly", "1.0"));
-
-        int count = 3;
-
-
-
-        DataTable dtArticle = SqlHelper.SQLToDataTable(C.ARTICLE_TABLE, "", Utils.CreateFilterHide + " AND StartDate<=getdate()", "ID DESC");
-        foreach (DataRow drNews in dtArticle.Rows)
-        {
-            sitemapPages.Add(new SitemapPage(TextChanger.GetLinkRewrite_Article(drNews["FriendlyUrl"].ToString()), ConvertUtility.ToDateTime(drNews["CreatedDate"]), "monthly", "0.5"));
-            count++;
-        }
-
-
-        DataTable dt = SqlHelper.SQLToDataTable("tblProducts", "", Utils.CreateFilterHide, "ID DESC");
-        if (Utils.CheckExist_DataTable(dt))
-        {
-            foreach (DataRow drProduct in dt.Rows)
-            {
-                sitemapPages.Add(new SitemapPage(TextChanger.GetLinkRewrite_Products(drProduct["FriendlyUrlCategory"].ToString(), drProduct["FriendlyUrl"].ToString()), ConvertUtility.ToDateTime(drProduct["CreatedDate"]), "monthly", "0.5"));
-                count++;
-            }
-        }
-
-
-
-        DataTable dtCategory = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "", "Moduls='category' and (Hide=null or hide=0)", "ID DESC");
-        foreach (DataRow drCategory in dtCategory.Rows)
-        {
-            sitemapPages.Add(new SitemapPage(TextChanger.GetLinkRewrite_Category(drCategory["FriendlyUrl"].ToString()), ConvertUtility.ToDateTime(drCategory["EditedDate"]), "monthly", "0.5"));
-            count++;
-        }
-
-        //ltr.Text = "Lập được: " + count + " chỉ mục  -  <a href=\"" + Globals.BaseUrl + "sitemap.xml\"> Xem Sitemap </a>";
-        return sitemapPages;
-    }
-
-
-
     public static void GenGoogleShopping(HttpContext context, string web)
     {
         string Uu_Tien = "NO";
@@ -724,9 +615,6 @@ public class GenSitemap
         }
     }
 
-
-
-
     public static string GenerateFriendlyUrlCondition(string inputString)
     {
         if (!string.IsNullOrEmpty(inputString))
@@ -780,22 +668,269 @@ public class GenSitemap
         }
         return Return;
     }
-}
 
-public class SitemapPage
-{
-    public SitemapPage(string location, DateTime lastModificationDate, string changeFrequency, string priority)
+
+    #region SiteMap
+    public static void SitemapUpdate()
     {
-        Location = location;
-        LastModificationDate = lastModificationDate;
-        ChangeFrequency = changeFrequency;
-        Priority = priority;
+        XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+
+        XElement sitemapIndex = new XElement(ns + "sitemapindex",
+            new XElement(ns + "sitemap",
+                new XElement(ns + "loc", C.ROOT_URL + "/sitemap/danh-muc-san-pham.xml")),
+            new XElement(ns + "sitemap",
+                new XElement(ns + "loc", C.ROOT_URL + "/sitemap/danh-muc-tin-tuc.xml")),
+            new XElement(ns + "sitemap",
+                new XElement(ns + "loc", C.ROOT_URL + "/sitemap/noi-dung.xml")),
+            new XElement(ns + "sitemap",
+                new XElement(ns + "loc", C.ROOT_URL + "/sitemap/san-pham.xml")),
+            new XElement(ns + "sitemap",
+                new XElement(ns + "loc", C.ROOT_URL + "/sitemap/tin-tuc.xml"))
+        );
+
+        XDocument sitemapDocument = new XDocument(
+            new XDeclaration("1.0", "utf-8", null),
+            sitemapIndex
+        );
+
+        string fileName = HttpContext.Current.Request.MapPath("/sitemap.xml");
+        sitemapDocument.Save(fileName);
+
+        Article_Sitemap();
+        Product_Sitemap();
+        Article_Category_Sitemap();
+        Product_Category_Sitemap();
+        Content_Category_Sitemap();
     }
 
-    public string Location;
-    public DateTime LastModificationDate;
-    public string ChangeFrequency;
-    public string Priority;
+    public static void Article_Sitemap()
+    {
+        try
+        {
+            DataTable dataTable = SqlHelper.SQLToDataTable(C.ARTICLE_TABLE, "FriendlyUrl,EditedDate", string.Format(@"{0} AND StartDate<=getdate() AND {1}", Utils.CreateFilterDate, Utils.CreateFilterHide), "ID DESC");
+            if (Utils.CheckExist_DataTable(dataTable))
+            {
+                XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+                XElement urlSet = new XElement(ns + "urlset");
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    string formattedDate = string.Empty;
+                    DateTime editedDate;
+                    if (dr["EditedDate"] != DBNull.Value && DateTime.TryParse(dr["EditedDate"].ToString(), out editedDate))
+                    {
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+                    else
+                    {
+                        editedDate = new DateTime(2010, 1, 1);
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+
+                    XElement urlElement = new XElement(ns + "url",
+                        new XElement(ns + "loc", TextChanger.GetLinkRewrite_Article(dr["FriendlyUrl"].ToString())),
+                        new XElement(ns + "lastmod", formattedDate),
+                        new XElement(ns + "changefreq", "daily"),
+                        new XElement(ns + "priority", "0.6")
+                    );
+                    urlSet.Add(urlElement);
+                }
+
+                XDocument sitemapDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    urlSet
+                );
+
+                sitemapDocument.Save(HttpContext.Current.Request.MapPath("/sitemap/tin-tuc.xml"));
+            }
+        }
+        catch { }
+    }
+
+    public static void Product_Sitemap()
+    {
+        try
+        {
+            DataTable dataTable = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "FriendlyUrl,EditedDate,FriendlyUrlCategory", Utils.CreateFilterHide, ConfigWeb.SortArticle);
+            if (Utils.CheckExist_DataTable(dataTable))
+            {
+                XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+                XElement urlSet = new XElement(ns + "urlset");
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+
+                    string formattedDate = string.Empty;
+                    DateTime editedDate;
+                    if (dr["EditedDate"] != DBNull.Value && DateTime.TryParse(dr["EditedDate"].ToString(), out editedDate))
+                    {
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+                    else
+                    {
+                        editedDate = new DateTime(2010, 1, 1);
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+
+
+                    XElement urlElement = new XElement(ns + "url",
+                        new XElement(ns + "loc", TextChanger.GetLinkRewrite_Products(dr["FriendlyUrlCategory"].ToString(), dr["FriendlyUrl"].ToString())),
+                        new XElement(ns + "lastmod", formattedDate),
+                        new XElement(ns + "changefreq", "daily"),
+                        new XElement(ns + "priority", "0.5")
+                    );
+                    urlSet.Add(urlElement);
+                }
+
+                XDocument sitemapDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    urlSet
+                );
+
+                sitemapDocument.Save(HttpContext.Current.Request.MapPath("/sitemap/san-pham.xml"));
+            }
+        }
+        catch { }
+    }
+
+
+    public static void Article_Category_Sitemap()
+    {
+        try
+        {
+            string filter = string.Format("(Hide is null OR Hide=0) AND LinkTypeMenuFlag & {0} <> 0 and PositionMenuFlag & {1} = 0", (int)LinkTypeMenuFlag.Article, (int)PositionMenuFlag.Bottom);
+            DataTable dataTable = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "FriendlyUrl,EditedDate", string.Format("{0}", filter), "Sort");
+            if (Utils.CheckExist_DataTable(dataTable))
+            {
+                XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+                XElement urlSet = new XElement(ns + "urlset");
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    string formattedDate = string.Empty;
+                    DateTime editedDate;
+                    if (dr["EditedDate"] != DBNull.Value && DateTime.TryParse(dr["EditedDate"].ToString(), out editedDate))
+                    {
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+                    else
+                    {
+                        editedDate = new DateTime(2010, 1, 1);
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+
+                    XElement urlElement = new XElement(ns + "url",
+                        new XElement(ns + "loc", TextChanger.GetLinkRewrite_CategoryArticle(dr["FriendlyUrl"].ToString())),
+                        new XElement(ns + "lastmod", formattedDate),
+                        new XElement(ns + "changefreq", "daily"),
+                        new XElement(ns + "priority", "0.8")
+                    );
+                    urlSet.Add(urlElement);
+                }
+
+                XDocument sitemapDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    urlSet
+                );
+
+                sitemapDocument.Save(HttpContext.Current.Request.MapPath("/sitemap/danh-muc-tin-tuc.xml"));
+            }
+        }
+        catch { }
+    }
+
+
+    public static void Product_Category_Sitemap()
+    {
+        try
+        {
+            string filter = string.Format("{0} AND {1}", Utils.CreateFilterHide, Utils.CreateFilterFlags(PositionMenuFlag.Main, "PositionMenuFlag"));
+            DataTable dataTable = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "FriendlyUrl,EditedDate", string.Format("{0}", filter), "Sort");
+            if (Utils.CheckExist_DataTable(dataTable))
+            {
+                XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+                XElement urlSet = new XElement(ns + "urlset");
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    string formattedDate = string.Empty;
+                    DateTime editedDate;
+                    if (dr["EditedDate"] != DBNull.Value && DateTime.TryParse(dr["EditedDate"].ToString(), out editedDate))
+                    {
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+                    else
+                    {
+                        editedDate = new DateTime(2010, 1, 1);
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+
+                    XElement urlElement = new XElement(ns + "url",
+                        new XElement(ns + "loc", TextChanger.GetLinkRewrite_Category(dr["FriendlyUrl"].ToString())),
+                        new XElement(ns + "lastmod", formattedDate),
+                        new XElement(ns + "changefreq", "daily"),
+                        new XElement(ns + "priority", "0.9")
+                    );
+                    urlSet.Add(urlElement);
+                }
+
+                XDocument sitemapDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    urlSet
+                );
+
+                sitemapDocument.Save(HttpContext.Current.Request.MapPath("/sitemap/danh-muc-san-pham.xml"));
+            }
+        }
+        catch { }
+    }
+
+    public static void Content_Category_Sitemap()
+    {
+        try
+        {
+            string filter = string.Format("{0} AND {1}", Utils.CreateFilterHide, Utils.CreateFilterFlags(LinkTypeMenuFlag.Content, "LinkTypeMenuFlag"));
+            DataTable dataTable = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "FriendlyUrl,EditedDate", string.Format("{0}", filter), "Sort");
+            if (Utils.CheckExist_DataTable(dataTable))
+            {
+                XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+                XElement urlSet = new XElement(ns + "urlset");
+
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    string formattedDate = string.Empty;
+                    DateTime editedDate;
+                    if (dr["EditedDate"] != DBNull.Value && DateTime.TryParse(dr["EditedDate"].ToString(), out editedDate))
+                    {
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+                    else
+                    {
+                        editedDate = new DateTime(2010, 1, 1);
+                        formattedDate = editedDate.ToString("yyyy-MM-ddTHH:mm:ss+07:00");
+                    }
+
+                    XElement urlElement = new XElement(ns + "url",
+                        new XElement(ns + "loc", TextChanger.GetLinkRewrite_Menu(dr["FriendlyUrl"].ToString())),
+                        new XElement(ns + "lastmod", formattedDate),
+                        new XElement(ns + "changefreq", "daily"),
+                        new XElement(ns + "priority", "0.5")
+                    );
+                    urlSet.Add(urlElement);
+                }
+
+                XDocument sitemapDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    urlSet
+                );
+
+                sitemapDocument.Save(HttpContext.Current.Request.MapPath("/sitemap/noi-dung.xml"));
+            }
+        }
+        catch { }
+    }
+    #endregion
+
 }
 
 public class ProductFeed
