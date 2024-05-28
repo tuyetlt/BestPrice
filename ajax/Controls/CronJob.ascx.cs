@@ -10,7 +10,7 @@ public partial class ajax_Controls_CronJob : System.Web.UI.UserControl
     public int TotalProducts = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        string web = RequestHelper.GetString("web", "hoanghai");
+        string web = RequestHelper.GetString("web", "bestprice");
 
         if (web == "sitemap")
             GenSitemap.SitemapUpdate();
