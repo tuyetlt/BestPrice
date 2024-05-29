@@ -863,10 +863,14 @@
         z-index: 50;
         -webkit-border-radius: 20px;
         border-radius: 20px;
-        background-size: 32px 26px;
+        background-size: 32px 24px;
         background-repeat: no-repeat;
         background-position: center center;
         animation: phone-vr-circle-fill 1s infinite ease-in-out;
+        width: 42px;
+        height: 42px;
+        top: -1px;
+        left: -1px;
     }
     .navs-container .arc-menu:before {
         right: -10px;
@@ -2950,6 +2954,9 @@ header .show_search_content .price .per {
 .product-flash-sale .product__item .product__inner .product__info{
     padding:10px;
 }
+.footer__support a:hover {
+    color: #fff;
+}
 @media (min-width: 1400px) {
     .header__logo {
     margin-right: 1.5rem;
@@ -3077,7 +3084,8 @@ header .show_search_content .price .per {
     }
 
     .list-cate-side {
-        display: table;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .filter-ajax .item-filter {
