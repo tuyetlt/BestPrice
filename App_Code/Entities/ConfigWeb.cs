@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data;
+using System.Globalization;
 using MetaNET.DataHelper;
 
 public class ConfigWeb
@@ -767,6 +768,8 @@ public class ConfigWeb
             return strReturn;
         }
     }
+
+
     public static string FlashSaleTimeDisplay
     {
         get
@@ -774,7 +777,12 @@ public class ConfigWeb
             string strReturn = string.Empty;
             DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleTimeDisplay", "");
             if (dt != null && dt.Rows.Count > 0)
-                strReturn = dt.Rows[0][0].ToString();
+            {
+                string dateTimeStringSql = dt.Rows[0][0].ToString();
+                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("vi-VN");
+                DateTime dateTime = Utils.ConvertStringToDateTime(dateTimeStringSql);
+                return dateTime.ToString("MMMM dd, yyyy HH:mm:ss", culture);
+            }
             return strReturn;
         }
     }

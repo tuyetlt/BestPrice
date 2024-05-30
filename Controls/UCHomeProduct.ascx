@@ -210,7 +210,9 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div class="timeCountdown" data-date="<%= Utils.FormatDateTimeFlashSale(ConfigWeb.FlashSaleTimeDisplay) %>">
+                                   
+
+                                    <div class="timeCountdown" data-date="<%= ConfigWeb.FlashSaleTimeDisplay %>">
                                         <span class="hours"></span>
                                         <b>:</b>
                                         <span class="minutes"></span>
