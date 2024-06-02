@@ -1054,7 +1054,7 @@ $(document).on("keyup", "td.price input", function (event) {
 function SuaGiaXong(el) {
     var newPrice = el.val().replace(",", ".").replace(",", ".").replace(",", ".").replace(",", ".").replace(",", ".");
     var newPriceAjax = newPrice.replace(".", "").replace(".", "").replace(".", "").replace(".", "").replace(".", "");
-    if (typeof (newPriceAjax) == "undefined" || newPriceAjax=="")
+    if (typeof (newPriceAjax) == "undefined" || newPriceAjax == "")
         newPriceAjax = "0";
     console.log("newPrice: " + newPrice);
     el.hide();
@@ -1319,7 +1319,7 @@ $("#menu").click(function () {
         }
     }
 
- 
+
 
 
 });

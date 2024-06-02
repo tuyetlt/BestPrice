@@ -5,10 +5,10 @@
 
 <script type="text/javascript" src="<%= Utils.CheckVersion_NonTemplate("/admin/js/admin.js") %>"></script>
 
-<% if(Utils. GetControlAdmin().ToLower().Contains("list")){  %>
+<% if(Utils.GetControlAdmin().ToLower().Contains("list")){  %>
 <script type="text/javascript">
     $(document).ready(function () {
-        getval(0);
+        //getval(0);
         setTimeout(function () { getval(0); }, 100);
     });
 </script>

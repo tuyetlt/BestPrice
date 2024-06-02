@@ -34,8 +34,10 @@
 
             DataRow drRoot = drB;
             int RootID = ConvertUtility.ToInt32(drRoot["ID"]);
+            int countDo = 0;
             do
             {
+                countDo++;
                 if (ConvertUtility.ToInt32(drRoot["ParentID"]) > 0)
                 {
                     DataTable dtRoot = SqlHelper.SQLToDataTable(tableSql, "ID, ParentID, Name", string.Format("ID={0}", drRoot["ParentID"]));
@@ -51,7 +53,7 @@
                     }
                 }
             }
-            while (ConvertUtility.ToInt32(drRoot["ParentID"]) > 0);
+            while (ConvertUtility.ToInt32(drRoot["ParentID"]) > 0 && countDo <= 5);
         }
 
         int count = 0;
@@ -313,7 +315,7 @@
                     <input type="text" value="<%= string.Format("{0:N0}", dr[Column]) %>" class="edit-price" data-field="<%=Column%>" data-id="<%= dr["ID"] %>" />
                     <span class="entertoupdate">Enter để lưu giá</span>
 
-<%--                    <% if (Utils.GetFolderControlAdmin() == "product" && Column == "Price")
+                    <%--                    <% if (Utils.GetFolderControlAdmin() == "product" && Column == "Price")
                         { %>
                     <a href="javascript:;" class="btnPrice <%= classPriceTemporary %>" data-value="<%= dr["ID"] %>" aria-label="Giá tạm thời" data-microtip-position="top" role="tooltip">
                         <i class="fad fa-usd-circle"></i>
@@ -415,9 +417,9 @@
                                 Response.Write(string.Format(@"<td><a href=""{0}""><b style='color:#038c1c'>{1}</b></a></td>", linkEdit, "Đã chốt"));
                             else if (dr[dc.ColumnName].ToString() == "3")
                                 Response.Write(string.Format(@"<td><a href=""{0}""><b style='color:#adb51d'>{1}</b></a></td>", linkEdit, "Chờ khách xem thêm"));
-                              else if (dr[dc.ColumnName].ToString() == "4")
+                            else if (dr[dc.ColumnName].ToString() == "4")
                                 Response.Write(string.Format(@"<td><a href=""{0}""><b style='color:#8f1a1a'>{1}</b></a></td>", linkEdit, "Hết hàng"));
-                              else if (dr[dc.ColumnName].ToString() == "20")
+                            else if (dr[dc.ColumnName].ToString() == "20")
                                 Response.Write(string.Format(@"<td><a href=""{0}""><b style='color:#8f1a1a'>{1}</b></a></td>", linkEdit, "Huỷ đơn"));
                             else if (dr[dc.ColumnName].ToString() == "10")
                                 Response.Write(string.Format(@"<td style='color:#32a852'><a href=""{0}"">{1}</a></td>", linkEdit, "Đã xử lý"));

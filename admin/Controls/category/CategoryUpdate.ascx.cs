@@ -660,8 +660,10 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
                     IsLeaf = true;
                 }
                 bcList.Push(CreateBreadCrumb(drCurrent, bcChildList)); //Add chính nó
+                int count = 0;
                 do
                 {
+                    count++;
                     if (!Utils.IsNullOrEmpty(drCurrent["ParentID"]) && ConvertUtility.ToInt32(drCurrent["ParentID"]) > 0)
                     {
                         dtCurrent = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, ParentID, LinkTypeMenuFlag, FriendlyUrl, Name, Link", string.Format("ID={0}", drCurrent["ParentID"]), "Sort");
@@ -692,7 +694,7 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
                         }
                     }
                 }
-                while (!Utils.IsNullOrEmpty(drCurrent["ParentID"]) && ConvertUtility.ToInt32(drCurrent["ParentID"]) > 0 && Level <= 3);
+                while (!Utils.IsNullOrEmpty(drCurrent["ParentID"]) && ConvertUtility.ToInt32(drCurrent["ParentID"]) > 0 && Level <= 3 && count<=5);
 
                 foreach (BreadCrumb bc in bcList)
                 {

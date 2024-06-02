@@ -41,8 +41,10 @@ public partial class ajax_Controls_AttributeProduct : System.Web.UI.UserControl
                         DataRow drRoot;
                         drRoot = dr;
                         jsonString = dr["FilterJson"].ToString();
+                        int count = 0;
                         do
                         {
+                            count++;
                             if (ConvertUtility.ToInt32(dr["ParentID"]) > 0)
                             {
                                  DataTable dtRoot = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, ParentID, FilterJson", string.Format("ID={0}", drRoot["ParentID"]));
@@ -58,7 +60,7 @@ public partial class ajax_Controls_AttributeProduct : System.Web.UI.UserControl
                                 }
                             }
                         }
-                        while (ConvertUtility.ToInt32(drRoot["ParentID"]) > 0 && jsonString.Length>10);
+                        while (ConvertUtility.ToInt32(drRoot["ParentID"]) > 0 && jsonString.Length>10 && count<=5);
                     }
                 }
             }  

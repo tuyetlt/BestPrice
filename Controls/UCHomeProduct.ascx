@@ -47,7 +47,7 @@
         <div class="product__special-topPage__inner">
             <div class="heading heading-read-more">
                 <div id="countdown">
-                    <div id='tiles'></div>
+                    <div id='tiles'><%= ConfigWeb.FlashSaleTimeDisplay %></div>
                 </div>
                 <h2 class="heading__title justify-content-center text-center text-white"><a href="/flash-sale/"><span class="text-title"><%= Title %></span></a></h2>
                 <a href="/flash-sale/" target="_self" class="btn-more">Xem thêm</a>
@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <div class="timeCountdown" data-date="<%= Utils.FormatDateTimeFlashSale(ConfigWeb.FlashSaleTimeDisplay) %>">
+                                        <div class="timeCountdown" data-date="<%= ConfigWeb.FlashSaleTimeDisplay %>">
                                             <%--December 24, 2024 21:14:01--%>
                                             <span class="hours"></span>
                                             <b>:</b>

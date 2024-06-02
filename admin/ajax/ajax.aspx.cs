@@ -68,6 +68,11 @@ public partial class admin_DonHang_ajax_ajax : System.Web.UI.Page
                             mainControl = LoadControl("~/admin/ajax/controls/ProductSelected.ascx");
                             break;
                         }
+                    case "flashsale":
+                        {
+                            mainControl = LoadControl("~/admin/ajax/controls/AjaxFlashSaleControl.ascx");
+                            break;
+                        }
                     default:
                         {
                             mainControl = LoadControl("~/admin/ajax/controls/Select2Control.ascx");

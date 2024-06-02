@@ -5,7 +5,7 @@ using Ebis.Utilities;
 using System.Collections;
 using System.Net.Mail;
 using MetaNET.DataHelper;
-public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserControl
+public partial class admin_ajax_Controls_AjaxFlashSaleControl : System.Web.UI.UserControl
 {
     public DataRow dr;
     public DataTable dataTable, dtMenu;
@@ -110,12 +110,12 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
 
         if (!string.IsNullOrEmpty(FromDate) && !string.IsNullOrEmpty(ToDate))
         {
-            if(tableSql=="tblOrder")
+            if (tableSql == "tblOrder")
                 filter += string.Format("WHERE OrderDate >= '{0}' AND OrderDate < DATEADD(day,1,'{1}')", FromDate, ToDate);
             else
                 filter += string.Format("WHERE EditedDate >= '{0}' AND EditedDate < DATEADD(day,1,'{1}')", FromDate, ToDate);
-        }    
-            
+        }
+
 
 
 
@@ -151,7 +151,7 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
                 else
                     filter += " WHERE ";
 
-                filter += "(";
+
 
                 foreach (JsonListPageAjax json in jsonList)
                 {
@@ -190,7 +190,6 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
                     }
                     filter += ")";
                 }
-                filter += ")";
             }
         }
 
@@ -267,6 +266,19 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
 
                 string sqlQuery = string.Format(" DELETE FROM {0} WHERE ID={1}", tableSql, RemoveID);
                 db.ExecuteSql(sqlQuery);
+
+                if (tableSql == "tblCategories" || tableSql == "tblArticle" || tableSql == "tblProducts") // Xoá Trong Bảng URL
+                {
+                    string filter = "ContentID='blabla'";
+                    if (tableSql == "tblArticle")
+                        filter = string.Format("ContentID='{0}' AND Moduls=N'{1}'", RemoveID, "article_detail");
+                    else if (tableSql == "tblProducts")
+                        filter = string.Format("ContentID='{0}' AND Moduls=N'{1}'", RemoveID, "product_detail");
+                    else if (tableSql == "tblCategories")
+                        filter = string.Format("ContentID='{0}' AND (Moduls=N'{1}' OR Moduls=N'{2}' OR Moduls=N'{3}')", RemoveID, "category_product", "category_article", "category_content");
+                    string sqlQueryUrl = string.Format(" DELETE FROM {0} WHERE {1}", "tblUrl", filter);
+                    db.ExecuteSql(sqlQueryUrl);
+                }
             }
         }
         else
@@ -400,7 +412,7 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
             }
             else if (tableSql == C.PRODUCT_TABLE && !Utils.IsNullOrEmpty(Keyword))
             {
-                dataTable = SearchProduct(Keyword, filter, fieldSql, pageSize);
+                dataTable = Utils.SearchProduct(Keyword, fieldSql, 100);
             }
             else
             {
@@ -416,18 +428,6 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
     }
 
 
-    protected DataTable SearchProduct(string keyword, string filter, string field, int pageSize)
-    {
-        DataTable dtProduct = new DataTable();
-        dtProduct = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, field, string.Format("{0}", filter.Replace("WHERE ", "")), "EditedDate DESC", pageIndex, pageSize);
-        if (!Utils.CheckExist_DataTable(dtProduct))
-        {
-            dtProduct = Utils.SearchProduct(keyword, field, 100);
-        }
-        return dtProduct;
-    }
-
-
     protected string GenPrefixFilter(string filter)
     {
         string returnStr = "";
@@ -437,4 +437,5 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
             returnStr = " WHERE ";
         return returnStr;
     }
+
 }

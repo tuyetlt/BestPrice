@@ -1444,9 +1444,9 @@ if ($("#frm_checkout").length) {
         $('#frm_checkout .list-content-nganluong li').removeClass('active');
         $(this).parent('li').addClass('active');
     });
-
-
 }
+
+
 
 document.addEventListener('readystatechange', event => {
     if (event.target.readyState === "complete") {
@@ -1455,7 +1455,7 @@ document.addEventListener('readystatechange', event => {
         for (var i = 0; i < clockdiv.length; i++) {
             countDownDate[i] = new Array();
             countDownDate[i]['el'] = clockdiv[i];
-            countDownDate[i]['time'] = new Date(clockdiv[i].getAttribute('data-date')).getTime();
+            countDownDate[i]['time'] = parseVietnameseDate(clockdiv[i].getAttribute('data-date')).getTime();
             countDownDate[i]['hours'] = 0;
             countDownDate[i]['seconds'] = 0;
             countDownDate[i]['minutes'] = 0;
@@ -1468,32 +1468,15 @@ document.addEventListener('readystatechange', event => {
                 countDownDate[i]['hours'] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 countDownDate[i]['minutes'] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 countDownDate[i]['seconds'] = Math.floor((distance % (1000 * 60)) / 1000);
-                
+
                 if (distance < 0) {
-                    
                     countDownDate[i]['el'].querySelector('.hours').innerHTML = 0;
                     countDownDate[i]['el'].querySelector('.minutes').innerHTML = 0;
                     countDownDate[i]['el'].querySelector('.seconds').innerHTML = 0;
                 } else {
-                    console.log(countDownDate[i]['hours'])
-                    if (countDownDate[i]['hours'] < 10) {
-                        countDownDate[i]['el'].querySelector('.hours').innerHTML = "0" + countDownDate[i]['hours'];
-                    }
-                    else {
-                        countDownDate[i]['el'].querySelector('.hours').innerHTML = countDownDate[i]['hours'];
-                    }
-                    if (countDownDate[i]['minutes'] < 10) {
-                        countDownDate[i]['el'].querySelector('.minutes').innerHTML ='0' + countDownDate[i]['minutes'];
-                    }
-                    else {
-                        countDownDate[i]['el'].querySelector('.minutes').innerHTML = countDownDate[i]['minutes'];
-                    }
-                    if (countDownDate[i]['seconds'] < 10) {
-                        countDownDate[i]['el'].querySelector('.seconds').innerHTML ='0' + countDownDate[i]['seconds'];
-                    }
-                    else {
-                        countDownDate[i]['el'].querySelector('.seconds').innerHTML = countDownDate[i]['seconds'];
-                    } 
+                    countDownDate[i]['el'].querySelector('.hours').innerHTML = pad(countDownDate[i]['hours']);
+                    countDownDate[i]['el'].querySelector('.minutes').innerHTML = pad(countDownDate[i]['minutes']);
+                    countDownDate[i]['el'].querySelector('.seconds').innerHTML = pad(countDownDate[i]['seconds']);
                 }
             }
         }, 1000);
@@ -1501,21 +1484,79 @@ document.addEventListener('readystatechange', event => {
 });
 
 
+function parseVietnameseDate(dateStr) {
+    // Tách ngày, tháng, năm, giờ, phút, giây và AM/PM
+    var dateTimeParts = dateStr.split(' ');
+    var dateParts = dateTimeParts[0].split('/');
+    var timeParts = dateTimeParts[1].split(':');
+    var period = dateTimeParts[2]; // AM hoặc PM
+
+    var day = parseInt(dateParts[0]);
+    var month = parseInt(dateParts[1]) - 1; // Tháng trong JavaScript tính từ 0
+    var year = parseInt(dateParts[2]);
+    var hours = parseInt(timeParts[0]);
+    var minutes = parseInt(timeParts[1]);
+    var seconds = parseInt(timeParts[2]);
+
+    // Chuyển đổi giờ sang định dạng 24h
+    if (period === 'CH' && hours < 12) {
+        hours += 12;
+    }
+    if (period === 'SA' && hours === 12) {
+        hours = 0;
+    }
+
+    return new Date(year, month, day, hours, minutes, seconds);
+}
 
 
 
-var target_date = new Date().getTime() + (1000 * 3600 * 12);
+
+function pad(num) {
+    return num < 10 ? '0' + num : num;
+}
+
+function parseVietnameseDate(dateStr) {
+    // Tách ngày, tháng, năm, giờ, phút, giây và AM/PM
+    var dateTimeParts = dateStr.split(' ');
+    var dateParts = dateTimeParts[0].split('/');
+    var timeParts = dateTimeParts[1].split(':');
+    var period = dateTimeParts[2]; // AM hoặc PM
+
+    var day = parseInt(dateParts[0]);
+    var month = parseInt(dateParts[1]) - 1; // Tháng trong JavaScript tính từ 0
+    var year = parseInt(dateParts[2]);
+    var hours = parseInt(timeParts[0]);
+    var minutes = parseInt(timeParts[1]);
+    var seconds = parseInt(timeParts[2]);
+
+    // Chuyển đổi giờ sang định dạng 24h
+    if (period === 'CH' && hours < 12) {
+        hours += 12;
+    }
+    if (period === 'SA' && hours === 12) {
+        hours = 0;
+    }
+
+    return new Date(year, month, day, hours, minutes, seconds);
+}
+
+var targetDateString = document.getElementById('tiles').innerText;
+var targetTime = parseVietnameseDate(targetDateString);
+var now = new Date();
+var todayTarget = new Date(now.getFullYear(), now.getMonth(), now.getDate(), targetTime.getHours(), targetTime.getMinutes(), targetTime.getSeconds());
+
+// Nếu thời gian hiện tại đã qua 21:14:01, đặt mục tiêu là 21:14:01 ngày mai
+if (now > todayTarget) {
+    todayTarget.setDate(todayTarget.getDate() + 1);
+}
+
+var target_date = todayTarget.getTime();
+
 var days, hours, minutes, seconds;
-
 var countdown = document.getElementById("tiles");
 
-getCountdown();
-
-setInterval(function () { getCountdown(); }, 1000);
-
 function getCountdown() {
-
-
     var current_date = new Date().getTime();
     var seconds_left = (target_date - current_date) / 1000;
 
@@ -1528,12 +1569,11 @@ function getCountdown() {
     if (countdown) {
         countdown.innerHTML = "<span>" + hours + "</span><b> : </b><span>" + minutes + "</span> <b> : </b> <span>" + seconds + "</span>";
     }
-    
 }
 
-function pad(n) {
-    return (n < 10 ? '0' : '') + n;
-}
+getCountdown();
+setInterval(function () { getCountdown(); }, 1000);
+
 /* Fixed slidebar */
 
 var $sidebar = $('.sidebar');
