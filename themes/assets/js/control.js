@@ -1278,6 +1278,22 @@ $('#readmore').click(function () {
         $(this).text("Đọc thêm")
     }
 });
+$('#readmore-detail').click(function () {
+    $('.tab-thongtinsp').toggleClass('add');
+    if ($('#readmore-detail').text() == "Đọc thêm") {
+        $(this).text("Thu gọn")
+    } else {
+        $(this).text("Đọc thêm")
+    }
+}); 
+$('#readmore-tskt').click(function () {
+    $('.tab-thongsokythuat').toggleClass('add');
+    if ($('#readmore-tskt').text() == "Đọc thêm") {
+        $(this).text("Thu gọn")
+    } else {
+        $(this).text("Đọc thêm")
+    }
+});
 function OpenSocial() {
     var screenWidth = $(window).width();
     var isTouch = !!('ontouchstart' in window) || !!('onmsgesturechange' in window);

@@ -252,8 +252,32 @@
 
                     <div id="description" class="product__description mb-5">
                         <div class="productReadMore readMore up-description">
-                            <%= dr["Tab1"].ToString() %>
-                            <%= longDescription %>
+                            <div class="box-content-description">
+                                <div class="tab-thongtinsp">
+                                    <div class="cnt-title">
+                                         Thông tin sản phẩm 
+                                    </div>
+                                    <div class="list-decription">
+                                         <%= longDescription %>
+                                    </div>
+                                    <div class="bg-article"></div>
+                                    <p class="show-more">
+                                        <a id="readmore-detail" href="javascript:;" class="readmore">Đọc thêm</a>
+                                    </p>
+                                </div>
+                                <div class="tab-thongsokythuat">
+                                     <div class="cnt-title">
+                                         Thông số kỹ thuật
+                                     </div>
+                                    <div class="cnt-table-decription">
+                                        <%= dr["Tab1"].ToString() %>
+                                    </div>
+                                    <div class="bg-article"></div>
+                                    <p class="show-more">
+                                        <a id="readmore-tskt" href="javascript:;" class="readmore">Đọc thêm</a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
