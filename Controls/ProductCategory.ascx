@@ -22,7 +22,7 @@
             <div class="col">
                 <div class="d-flex justify-content-between justify-content-end align-items-center">
                     <button type="button" class="btn btn-primary btn-sidebar-filter hidden-md"><i class="fa fa-filter"></i>LỌC</button>
-                   <%-- <form class="ms-sm-auto" method="get">
+                    <%-- <form class="ms-sm-auto" method="get">
                         <select name="orderby" class="form-select" aria-label="Đơn hàng của cửa hàng">
                             <option value="date" selected="selected">Mới nhất</option>
                             <option value="rating">Điểm đánh giá</option>
@@ -37,7 +37,7 @@
     </div>
     <section class="category category__topPage">
         <div class="container">
-          <%--  <div class="heading">
+            <%--  <div class="heading">
                 <h2 class="heading__title"><span><%= categoryTitle %></span></h2>
             </div>--%>
             <div class="category__inner">
@@ -71,7 +71,6 @@
                     </div>
                     <% }
                         } %>
-                   
                 </div>
             </div>
         </div>
@@ -160,44 +159,59 @@
                                 foreach (DataRow drProduct in dtProduct.Rows)
                                 {
                                     string linkDetail = TextChanger.GetLinkRewrite_Products(ConvertUtility.ToString(drProduct["FriendlyUrlCategory"]), ConvertUtility.ToString(drProduct["FriendlyUrl"]));
-
+                                    string Price = string.Empty;
+                                    if (!Utils.IsFlashSale(drProduct["AttrProductFlag"]))
+                                        Price = SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price");
+                                    else
+                                        Price = SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price2");
                         %>
 
 
                         <div class="product__item col-6 col-sm-4 col-md-4 col-lg-3">
                             <div class="product__inner">
                                 <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
-                                <div class="product__thumb">
+                                    <div class="product__thumb">
 
-                                    <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
-                                        { %>
-                                    <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
-                                    <% } %>
-                                   
+                                        <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
+                                            { %>
+                                        <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
+                                        <% } %>
                                         <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" />
-                                    <div class="timeCountdown" data-date="December 24, 2024 21:14:01">
-                                        <span class="hours"></span>
-                                        <b>:</b>
-                                        <span class="minutes"></span>
-                                        <b>:</b>
-                                        <span class="seconds"></span>
+                                        <% if (Utils.IsFlashSale(drProduct["AttrProductFlag"]))
+                                            {
+                                        %>
+                                        <div class="timeCountdown" data-date="<%= ConfigWeb.FlashSaleTimeDisplay %>">
+                                            <span class="hours"></span>
+                                            <b>:</b>
+                                            <span class="minutes"></span>
+                                            <b>:</b>
+                                            <span class="seconds"></span>
+                                        </div>
+                                        <%if (!string.IsNullOrEmpty(ConfigWeb.FlashSaleFrame1))
+                                            {  %>
+                                        <div class="frame-flash-sale">
+                                            <img src="<%= ConfigWeb.FlashSaleFrame1 %>" alt="Flash Sale" />
+                                        </div>
+                                        <% } %>
+                                        <%if (!string.IsNullOrEmpty(ConfigWeb.FlashSaleFrame2))
+                                            {  %>
+                                        <div class="frame-label-sale">
+                                            <img src="<%= ConfigWeb.FlashSaleFrame2 %>" alt="Flash Sale" />
+                                        </div>
+                                        <% } %>
+                                        <%if (!string.IsNullOrEmpty(ConfigWeb.FlashSaleFrame3))
+                                            {  %>
+                                        <div class="icon-flash-sale">
+                                            <img src="<%= ConfigWeb.FlashSaleFrame3 %>" alt="Flash Sale" />
+                                        </div>
+                                        <% } %>
+                                        <% } %>
                                     </div>
-                                    <div class="frame-flash-sale">
-                                        <img src="/themes/images/summer.png" alt="Alternate Text" />
-                                    </div>
-                                     <div class="frame-label-sale">
-                                         <img src="/themes/images/sale.webp" alt="Sale" />
-                                     </div>
-                                    <div class="icon-flash-sale">
-                                        <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
-                                    </div>
-                                </div>
-                                    </a>
+                                </a>
                                 <div class="product__info">
                                     <h3 class="product__name"><a href="<%= linkDetail %>"><%= drProduct["Name"].ToString() %></a></h3>
-
                                     <div class="product__price d-flex align-items-center">
-                                        <div class="price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></div>
+                                        <div class="price"><%= Price %></div>
                                         <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
                                     </div>
                                 </div>
@@ -230,10 +244,6 @@
                     </p>
 
                     <%} %>
-
-
-
-
                     <%
                         string TagsList = drCat["TagIDList"].ToString().Trim(',');
                         if (!Utils.IsNullOrEmpty(TagsList))

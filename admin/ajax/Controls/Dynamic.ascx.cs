@@ -64,7 +64,7 @@ public partial class admin_ajax_Controls_Dynamic : System.Web.UI.UserControl
 
 
             // Lấy ra giá cũ:
-            DataTable dtPrice = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Price,Price1,Name", "ID=" + q["pid"]);
+            DataTable dtPrice = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Price,Price1,Price2,Name,AttrProductFlag", "ID=" + q["pid"]);
             if (Utils.CheckExist_DataTable(dtPrice))
             {
                 decimal oldPrice = ConvertUtility.ToDecimal(dtPrice.Rows[0]["Price"]);
@@ -91,6 +91,31 @@ public partial class admin_ajax_Controls_Dynamic : System.Web.UI.UserControl
                 {
                     string sqlQuery = string.Format("Update {0} set {1}={2} WHERE ID={3}", q["table"], q["field"], q["newPrice"], q["pid"]);
                     dbx.ExecuteSql(sqlQuery);
+                }
+
+                //update Flash Sale
+                if (q["field"] == "Price2")
+                {
+                    int currentValue = ConvertUtility.ToInt32(dtPrice.Rows[0]["AttrProductFlag"]);
+                    int updatedValue = currentValue;
+                    AttrProductFlag currentFlags = (AttrProductFlag)currentValue;
+                    if (ConvertUtility.ToInt32(q["newPrice"]) > 0)
+                    {
+                        currentFlags |= AttrProductFlag.FlashSale;
+                        updatedValue = (int)currentFlags;
+                    }
+                    else
+                    {
+                        currentFlags &= ~AttrProductFlag.FlashSale;
+                        updatedValue = (int)currentFlags;
+                    }
+                    using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
+                    {
+                        string sqlQuery = @"UPDATE tblProducts SET AttrProductFlag=@AttrProductFlag WHERE ID=@ProductID";
+                        db.AddParameter("@ProductID", System.Data.SqlDbType.Int, q["pid"]);
+                        db.AddParameter("@AttrProductFlag", System.Data.SqlDbType.Int, updatedValue);
+                        db.ExecuteSqlScalar<int>(sqlQuery, 0);
+                    }
                 }
             }
         }
@@ -206,38 +231,78 @@ public partial class admin_ajax_Controls_Dynamic : System.Web.UI.UserControl
                 Response.Clear();
                 Response.Write(jsonString);
                 Response.End();
-
             }
-
         }
         else if (q["Action"] == "setFlag")
         {
-
             CacheUtility.PurgeCacheItems(q["table"]);
-
-
-
+            DataTable dtProduct = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "AttrProductFlag", "ID=" + q["pid"]);
+            if (Utils.CheckExist_DataTable(dtProduct))
+            {
+                int currentValue = ConvertUtility.ToInt32(dtProduct.Rows[0]["AttrProductFlag"]);
+                int updatedValue = ConvertUtility.ToInt32(q["updateFlagValue"]);
+                int resultValue = currentValue;
+                AttrProductFlag Flag = (AttrProductFlag)updatedValue; // Chuyển sang dạng Flag
+                AttrProductFlag currentFlags = (AttrProductFlag)currentValue;
+                if (ConvertUtility.ToInt32(q["addFlag"]) == 1)
+                {
+                    currentFlags |= Flag;
+                    resultValue = (int)currentFlags;
+                }
+                else
+                {
+                    currentFlags &= ~Flag;
+                    resultValue = (int)currentFlags;
+                }
+                using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
+                {
+                    string sqlQuery = string.Format(@"Update {0} set {1}={2} Where ID={3}", q["table"], q["field"], resultValue, q["pid"]);
+                    db.ExecuteSql(sqlQuery);
+                }
+            }
+        }
+        else if (q["Action"] == "setHide")
+        {
+            CacheUtility.PurgeCacheItems(q["table"]);
             using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
             {
-                string sqlQuery = string.Format(@"Update {0} set {1}={2} Where ID={3}", q["table"], q["field"], q["total_flags"], q["pid"]);
+                string sqlQuery = string.Format(@"Update {0} set {1}={2} Where ID={3}", q["table"], q["field"], q["isHide"], q["pid"]);
                 db.ExecuteSql(sqlQuery);
             }
-
-
         }
+        else if (q["Action"] == "remove-product-flashsale")
+        {
+            string pidList = q["pid_list"];
 
-
-        //for (int index = 0; index < queryString.Count; index++)
-        //{
-        //    var item = queryString.ElementAt(index);
-        //    string Key = item.Key;
-        //    string Value = item.Value;
-        //    //Response.Write(itemKey + "-" + itemValue + "<br />");
-        //}
-
-
-
-
-
+            DataTable dtPrice = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Price,Price1,Price2,Name,AttrProductFlag", string.Format("ID IN ({0})", pidList));
+            if (Utils.CheckExist_DataTable(dtPrice))
+            {
+                foreach (DataRow dr in dtPrice.Rows)
+                {
+                    int currentValue = ConvertUtility.ToInt32(dr["AttrProductFlag"]);
+                    int updatedValue = currentValue;
+                    AttrProductFlag currentFlags = (AttrProductFlag)currentValue;
+                    currentFlags &= ~AttrProductFlag.FlashSale;
+                    updatedValue = (int)currentFlags;
+                    using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
+                    {
+                        string sqlQuery = @"UPDATE tblProducts SET AttrProductFlag=@AttrProductFlag,Price2=@Price2 WHERE ID=@ProductID";
+                        db.AddParameter("@ProductID", System.Data.SqlDbType.Int, dr["ID"]);
+                        db.AddParameter("@Price2", System.Data.SqlDbType.Money, 0);
+                        db.AddParameter("@AttrProductFlag", System.Data.SqlDbType.Int, updatedValue);
+                        db.ExecuteSqlScalar<int>(sqlQuery, 0);
+                    }
+                }
+            }
+        }
+        else if (q["Action"] == "del-multi")
+        {
+            CacheUtility.PurgeCacheItems(q["table"]);
+            using (var dbx = MetaNET.DataHelper.SqlService.GetSqlService())
+            {
+                string sqlQuery = string.Format("DELETE FROM {0} WHERE ID IN({1})", q["table"], q["pid_list"]);
+                dbx.ExecuteSql(sqlQuery);
+            }
+        }
     }
 }

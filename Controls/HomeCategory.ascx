@@ -28,7 +28,7 @@
             <div class="slider createBannerProductAdvertSliders">
                 <div class="banner__item">
                     <div class="banner__item-inner">
-                        <img src="<%= img_src %>" alt="<%= dr_1["Name"] %>" />
+                        <a href="<%= linkDetail %>"><img src="<%= img_src %>" alt="<%= dr_1["Name"] %>" /></a>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
             <div class="slider createBannerProductAdvertSliders">
                 <div class="banner__item">
                     <div class="banner__item-inner">
-                        <img src="<%= img_src %>" alt="<%= dr_1["Name"] %>" />
+                        <a href="<%= linkDetail %>"><img src="<%= img_src %>" alt="<%= dr_1["Name"] %>" /></a>
                     </div>
                 </div>
 

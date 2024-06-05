@@ -16,8 +16,8 @@
                             string link = ConvertUtility.ToString(dr["Link"]);
                 %>
                 <div class="banner__item">
-                    <div class="banner__item-inner">
-                        <img src="<%= dr["Image_1"] %>" alt="<%= dr["Alt"] %>" />
+                    <div class="banner__item-inner"><a href="<%= link %>">
+                        <img src="<%= dr["Image_1"] %>" alt="<%= dr["Alt"] %>" /></a>
                     </div>
                 </div>
                 <% }

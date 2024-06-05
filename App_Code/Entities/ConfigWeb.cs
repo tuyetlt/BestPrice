@@ -794,7 +794,6 @@ public class ConfigWeb
             }
         }
     }
-
     public static string FlashSaleTimeReal
     {
         get
@@ -806,7 +805,6 @@ public class ConfigWeb
             return strReturn;
         }
     }
-
     public static int AutoRenewal
     {
         get
@@ -818,8 +816,61 @@ public class ConfigWeb
             return strReturn;
         }
     }
-
-
+    public static string FlashSaleHeader
+    {
+        get
+        {
+            string strReturn = string.Empty;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleHeader", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = dt.Rows[0][0].ToString();
+            return strReturn;
+        }
+    }
+    public static string FlashSaleBackgroundColor
+    {
+        get
+        {
+            string strReturn = string.Empty;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleBackgroundColor", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = dt.Rows[0][0].ToString();
+            return strReturn;
+        }
+    }
+    public static string FlashSaleFrame1
+    {
+        get
+        {
+            string strReturn = string.Empty;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleFrame1", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = dt.Rows[0][0].ToString();
+            return strReturn;
+        }
+    }
+    public static string FlashSaleFrame2
+    {
+        get
+        {
+            string strReturn = string.Empty;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleFrame2", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = dt.Rows[0][0].ToString();
+            return strReturn;
+        }
+    }
+    public static string FlashSaleFrame3
+    {
+        get
+        {
+            string strReturn = string.Empty;
+            DataTable dt = SqlHelper.SQLToDataTable("dbo.tblConfigs", "FlashSaleFrame3", "");
+            if (dt != null && dt.Rows.Count > 0)
+                strReturn = dt.Rows[0][0].ToString();
+            return strReturn;
+        }
+    }
 }
 
 

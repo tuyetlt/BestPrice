@@ -47,6 +47,13 @@
                             <input type="text" id="price1" name="price1" class="price" value="<%= string.Format("{0:N0}", dr["Price1"]) %>" />
                         </div>
                     </div>
+                    <!-- Giá FlashSale -->
+                    <div class="form-group">
+                        <div><i class="fad fa-bolt" style="color:#ceaf00"></i> Giá FlashSale</div>
+                        <div>
+                            <input type="text" id="price2" name="price2" class="price" value="<%= string.Format("{0:N0}", dr["Price2"]) %>" />
+                        </div>
+                    </div>
                     <!--- Danh mục sản phẩm -->
                     <div class="form-group">
                         <div>Danh mục<span class="required">*</span></div>
@@ -201,7 +208,7 @@
                             <div>
                                 <input type="checkbox" id="trangchu" name="trangchu" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.Home)) %> />
                                 <label for="trangchu">Đặt lên trang chủ</label><br>
-                               <%-- <input type="checkbox" id="home1" name="home1" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.Home1)) %> />
+                                <%-- <input type="checkbox" id="home1" name="home1" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.Home1)) %> />
                                 <label for="home1">Đặt lên trang chủ (dưới)</label><br>
                                 <input type="checkbox" id="priority" name="priority" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.Priority))%> />
                                 <label for="priority">Sản phẩm ưu tiên</label><br>
@@ -233,26 +240,7 @@
                                 <input type="checkbox" id="TextHome5" name="TextHome5" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.TextHome5))%> />
                                 <label for="TextHome5">Home (<%= ConfigWeb.TextHome5 %>)</label><br>
                                 <%} %>
-                            </div>
-                            <div>
 
-                                <% 
-                                    string displayNone = "display: none";
-                                    if (ConvertUtility.ToDecimal(dr["Price2"]) > 0)
-                                        displayNone = "";
-                                %>
-
-
-                                <script type="text/javascript">
-                                    $("input[name='chkFlashSale']").change(function () {
-                                        if ($(this).is(":checked")) {
-                                            $("#DivFlash").show();
-                                        }
-                                        else {
-                                            $("#DivFlash").hide();
-                                        }
-                                    });
-                                </script>
                             </div>
                         </div>
                         <div>

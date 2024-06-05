@@ -458,32 +458,6 @@ input.btn {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 table .custom {
     width: auto;
 }
@@ -502,8 +476,8 @@ table .custom {
     color: #1d9700;
     font-style: italic;
     position: absolute;
-    left: 10px;
-    top: 7px;
+    right: 10px;
+    top: 36px;
 }
 
 

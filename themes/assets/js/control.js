@@ -1238,7 +1238,12 @@ function GetValueFromAttr() {
                 });
                 $(".div-ajax-loading").hide();
                 ShowMore(pageIndexShowMore, false);
-            }, 500);
+
+                alert($.cookie("TotalProduct") + " sản phẩm");
+
+            }, 200); 
+
+            
         }
     });
 

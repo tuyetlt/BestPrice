@@ -383,11 +383,12 @@ public enum AttrProductFlag
     Discount = 32,
     Selling = 64,
     Home1 = 128,
-    TextHome1 = 256,
-    TextHome2 = 512,
-    TextHome3 = 1024,
-    TextHome4 = 2048,
-    TextHome5 = 4096,
+    FlashSale = 256,
+    TextHome1 = 512,
+    TextHome2 = 1024,
+    TextHome3 = 2048,
+    TextHome4 = 4096,
+    TextHome5 = 8192
 }
 
 

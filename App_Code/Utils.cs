@@ -3659,6 +3659,19 @@ public class Utils
         }
     }
 
+    public static bool IsFlashSale(object attrProductFlagValue)
+    {
+        int attrProductFlagValueInt = ConvertUtility.ToInt32(attrProductFlagValue); 
+        AttrProductFlag currentFlags = (AttrProductFlag)attrProductFlagValue;
+        if ((currentFlags & AttrProductFlag.FlashSale) == AttrProductFlag.FlashSale)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 public static class RateLimiter
 {

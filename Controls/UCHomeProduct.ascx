@@ -18,12 +18,24 @@
 <div class="product__item">
     <div class="product__inner">
         <div class="product__thumb">
+
             <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
                 { %>
             <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
             <% } %>
+
             <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
-                <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" /></a>
+                <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
+                <div class="frame-flash-sale">
+                    <img src="/themes/images/summer.png" alt="Alternate Text" />
+                </div>
+                <div class="frame-label-sale">
+                    <img src="/themes/images/sale.webp" alt="Sale" />
+                </div>
+                <div class="icon-flash-sale">
+                    <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
+                </div>
+            </a>
         </div>
         <div class="product__info">
             <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
@@ -58,7 +70,8 @@
                         <div class="moduleProductSlideshow__section-inner">
                             <div class="product__grid productSliders createProductSlideshows_specials slider" module="specials">
                                 <% 
-                                    DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,HashTagUrlList", string.Format("(Hide is null OR Hide=0) AND {0}", Filter), ConfigWeb.SortProductHome, 1, 20);
+                                    string FilterFlashSale = string.Format("(Hide is null OR Hide=0) AND AttrProductFlag & {0} <> 0 AND Price2>0", (int)AttrProductFlag.FlashSale);
+                                    DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,HashTagUrlList", Filter, ConfigWeb.SortProductHome, 1, 20);
                                     if (Utils.CheckExist_DataTable(dt))
                                     {
                                 %>
@@ -72,13 +85,19 @@
                                     <div class="product__inner">
                                         <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                             <div class="product__thumb">
-                                                <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
+                                                <%--  <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
                                                     { %>
                                                 <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
-                                                <% } %>
+                                                <% } %>--%>
                                                 <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
                                                 <div class="frame-flash-sale">
                                                     <img src="/themes/images/summer.png" alt="Alternate Text" />
+                                                </div>
+                                                <div class="frame-label-sale">
+                                                    <img src="/themes/images/sale.webp" alt="Sale" />
+                                                </div>
+                                                <div class="icon-flash-sale">
+                                                    <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
                                                 </div>
                                             </div>
                                         </a>
@@ -110,7 +129,7 @@
 </section>
 
 <%}
-    else if (Modul == "Home" || Modul=="Detail") // Dạng trang chủ hoặc chi tiết sp
+    else if (Modul == "Home" || Modul == "Detail") // Dạng trang chủ hoặc chi tiết sp
     {  %>
 <section class="product product__latest-top  moduleProductSlideshow-latest mb-5">
     <div class="container">
@@ -137,13 +156,23 @@
                                 <div class="product__item">
                                     <div class="product__inner">
                                         <div class="product__thumb">
+
                                             <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
                                                 { %>
                                             <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
                                             <% } %>
                                             <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
-                                                <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" /></a>
-                                            
+                                                <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
+                                                <div class="frame-flash-sale">
+                                                    <img src="/themes/images/summer.png" alt="Alternate Text" />
+                                                </div>
+                                                <div class="frame-label-sale">
+                                                    <img src="/themes/images/sale.webp" alt="Sale" />
+                                                </div>
+                                                <div class="icon-flash-sale">
+                                                    <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
+                                                </div>
+                                            </a>
                                         </div>
                                         <div class="product__info">
                                             <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
@@ -171,69 +200,82 @@
 <section class="product product__special-topPage moduleProductSlideshow-specials mb-5">
     <div class="container">
         <div class="banner-sale">
-            <img src="/themes/images/cate.webp" alt="banner cate flash sale" />
+            <img src="<%= ConfigWeb.FlashSaleHeader %>" alt="Flash Sale" />
         </div>
         <div class="moduleProductSlideshow__wrap">
-                <div class="moduleProductSlideshow__section">
-                    <div class="moduleProductSlideshow__section-inner product-flash-sale">
-                        <div class="product__grid d-grid createProductSlideshows_specials" module="specials">
-                            <% 
-                                DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,HashTagUrlList", string.Format("(Hide is null OR Hide=0) AND {0}", Filter), ConfigWeb.SortProductHome, 1, 32);
-                                if (Utils.CheckExist_DataTable(dt))
-                                {
-                            %>
-                            <%
-                                for (int i = 0; i < dt.Rows.Count; i++)
-                                {
-                                    DataRow drProduct = dt.Rows[i];
-                                    string linkDetail = TextChanger.GetLinkRewrite_Products(drProduct["FriendlyUrlCategory"].ToString(), drProduct["FriendlyUrl"].ToString());
-                            %>
-                            <div class="product__item">
-                                <div class="product__inner">
-                                     <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
-                                        <div class="product__thumb">
-                                            <%-- %><% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
-                                                { %>
-                                            <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
-                                            <% } %>--%>
-                                            
-                                           <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
-                                            
-                                            <div class="frame-flash-sale">
-                                                <img src="/themes/images/summer.png" alt="Alternate Text" />
-                                            </div>
-                                             <div class="frame-label-sale">
-                                                 <img src="/themes/images/sale.webp" alt="Sale" />
-                                             </div>
-                                            <div class="icon-flash-sale">
-                                                <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
-                                            </div>
+            <div class="moduleProductSlideshow__section">
+                <div class="moduleProductSlideshow__section-inner product-flash-sale">
+                    <div class="product__grid d-grid createProductSlideshows_specials" module="specials">
+                        <% 
+                            string FilterFlashSale = string.Format("(Hide is null OR Hide=0) AND AttrProductFlag & {0} <> 0 AND Price2>0", (int)AttrProductFlag.FlashSale);
+                            DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,HashTagUrlList", FilterFlashSale, ConfigWeb.SortProductHome, 1, 32);
+                            if (Utils.CheckExist_DataTable(dt))
+                            {
+                        %>
+                        <%
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                DataRow drProduct = dt.Rows[i];
+                                string linkDetail = TextChanger.GetLinkRewrite_Products(drProduct["FriendlyUrlCategory"].ToString(), drProduct["FriendlyUrl"].ToString());
+                        %>
+                        <div class="product__item">
+                            <div class="product__inner">
+                                <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
+                                    <div class="product__thumb">
+                                        <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
+                                        <%-- <div class="frame-flash-sale">
+                                            <img src="/themes/images/summer.png" alt="Alternate Text" />
                                         </div>
-                                    </a>
-                                   
+                                        <div class="frame-label-sale">
+                                            <img src="/themes/images/sale.webp" alt="Sale" />
+                                        </div>
+                                        <div class="icon-flash-sale">
+                                            <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
+                                        </div>--%>
 
-                                    <div class="timeCountdown" data-date="<%= ConfigWeb.FlashSaleTimeDisplay %>">
-                                        <span class="hours"></span>
-                                        <b>:</b>
-                                        <span class="minutes"></span>
-                                        <b>:</b>
-                                        <span class="seconds"></span>
-                                    </div>
-                                    <div class="product__info">
-                                        <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
-                                        <div class="product__price d-flex align-items-center justify-content-center">
-                                            <div class="price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></div>
-                                            <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
+                                        <%if (!string.IsNullOrEmpty(ConfigWeb.FlashSaleFrame1))
+                                            {  %>
+                                        <div class="frame-flash-sale">
+                                            <img src="<%= ConfigWeb.FlashSaleFrame1 %>" alt="Flash Sale" />
                                         </div>
+                                        <% } %>
+                                        <%if (!string.IsNullOrEmpty(ConfigWeb.FlashSaleFrame2))
+                                            {  %>
+                                        <div class="frame-label-sale">
+                                            <img src="<%= ConfigWeb.FlashSaleFrame2 %>" alt="Flash Sale" />
+                                        </div>
+                                        <% } %>
+                                        <%if (!string.IsNullOrEmpty(ConfigWeb.FlashSaleFrame3))
+                                            {  %>
+                                        <div class="icon-flash-sale">
+                                            <img src="<%= ConfigWeb.FlashSaleFrame3 %>" alt="Flash Sale" />
+                                        </div>
+                                        <% } %>
                                     </div>
-                                     
+                                </a>
+
+                                <div class="timeCountdown" data-date="<%= ConfigWeb.FlashSaleTimeDisplay %>">
+                                    <span class="hours"></span>
+                                    <b>:</b>
+                                    <span class="minutes"></span>
+                                    <b>:</b>
+                                    <span class="seconds"></span>
                                 </div>
+                                <div class="product__info">
+                                    <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
+                                    <div class="product__price d-flex align-items-center justify-content-center">
+                                        <div class="price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></div>
+                                        <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <% } %><% } %>
                         </div>
+                        <% } %><% } %>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </section>
 

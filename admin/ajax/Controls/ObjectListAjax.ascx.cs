@@ -271,8 +271,6 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
         }
         else
         {
-
-
             if (action == "getTotalRecord")
             {
                 if (Utils.CommaSQLAdd(fieldSql).ToLower().Contains(",parentid,"))
@@ -383,7 +381,6 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
             }
             else if (Level.ToLower() == "false")
             {
-
                 filter += GenPrefixFilter(filter);
                 string FolderCategory = CookieUtility.GetValueFromCookie("FolderCategory" + tableSql);// RequestHelper.GetString("FolderCategory", "0");
                 if (!string.IsNullOrEmpty(FolderCategory))
@@ -404,14 +401,12 @@ public partial class admin_ajax_Controls_ObjectListAjax : System.Web.UI.UserCont
             }
             else
             {
-
                 using (var dbx = SqlService.GetSqlService())
                 {
                     string sqlQuery = string.Format("SELECT {0} FROM {1} {2} {3} {4}", fieldSql, tableSql, filter, SortOrder, pagingSql);
                     dataTable = dbx.ExecuteSqlDataTable(sqlQuery);
                 }
             }
-
         }
     }
 

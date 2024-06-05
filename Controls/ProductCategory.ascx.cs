@@ -100,7 +100,7 @@ public partial class Controls_ProductCategory : System.Web.UI.UserControl
                     sort = string.Format("(CASE WHEN {0}=N'{1}' THEN 1 ELSE 0 END) DESC, {2}", "Brand", drAttribute["Name"], ConfigWeb.SortProduct);
             }
             string filterProduct = string.Format(@"(Hide is null OR Hide=0) AND (CategoryIDList Like N'%,{0},%' OR CategoryIDParentList Like N'%,{0},%' OR TagIDList Like N'%,{0},%')", drCat["ID"]);
-            dtProduct = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,HashTagUrlList", filterProduct, sort, 1, _pageSize, out _totalProduct);
+            dtProduct = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,HashTagUrlList,AttrProductFlag", filterProduct, sort, 1, _pageSize, out _totalProduct);
             _totalPage = _totalProduct / _pageSize;
 
             if (_totalPage % _pageSize != 0)

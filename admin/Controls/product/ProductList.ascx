@@ -76,8 +76,28 @@
         <select id="flags">
             <option value="0">Tùy chọn lọc</option>
             <option value="<%= (int)AttrProductFlag.Home %>">Home</option>
-            <option value="<%= (int)AttrProductFlag.Priority %>">Ưu tiên</option>
-            <option value="<%= (int)AttrProductFlag.New %>">Mới</option>
+            <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome1))
+                { %>
+            <option value="<%= (int)AttrProductFlag.TextHome1 %>"><%= ConfigWeb.TextHome1 %></option>
+            <%} %>
+            <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome2))
+                { %>
+            <option value="<%= (int)AttrProductFlag.TextHome2 %>"><%= ConfigWeb.TextHome2 %></option>
+            <%} %>
+            <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome3))
+                { %>
+            <option value="<%= (int)AttrProductFlag.TextHome3 %>"><%= ConfigWeb.TextHome3 %></option>
+            <%} %>
+            <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome4))
+                { %>
+            <option value="<%= (int)AttrProductFlag.TextHome1 %>"><%= ConfigWeb.TextHome4 %></option>
+            <%} %>
+            <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome5))
+                { %>
+            <option value="<%= (int)AttrProductFlag.TextHome1 %>"><%= ConfigWeb.TextHome5 %></option>
+            <%} %>
+            <option value="<%= (int)AttrProductFlag.FlashSale %>">FlashSale</option>
+
         </select>
     </div>
     <div class="content-list">

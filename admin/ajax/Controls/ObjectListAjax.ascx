@@ -241,7 +241,7 @@
 
                     string image = string.Empty;
                     //Response.Write(string.Format("<tr data-id='{0}'>", dr["ID"]));
-                    Response.Write(string.Format(@"<td><input type=""checkbox"" id=""select_{0}"" /></td>", dr["ID"]));
+                    Response.Write(string.Format(@"<td><input type=""checkbox"" id=""select_{0}"" data-id=""{0}"" /></td>", dr["ID"]));
                     string linkEdit = string.Format(@"{0}?id={1}", editLink, dr["ID"]);
 
                     string levelCSS = "";
@@ -301,7 +301,7 @@
                         {
                             Response.Write(string.Format(@"<td class=""price"">{0:N0} VNĐ</td>", dr[Column]));
                         }
-                        else if (Column == "Price" || Column == "Price1")
+                        else if (Column == "Price" || Column == "Price1" || Column == "Price2")
                         {
                             int IDProduct = ConvertUtility.ToInt32(dr["ID"]);
                             if (tableSql == "tblPrice")
@@ -314,14 +314,6 @@
                     <a class="price-edit-edit" href="javascript:;" style="float: right"><i class="fal fa-edit"></i></a>
                     <input type="text" value="<%= string.Format("{0:N0}", dr[Column]) %>" class="edit-price" data-field="<%=Column%>" data-id="<%= dr["ID"] %>" />
                     <span class="entertoupdate">Enter để lưu giá</span>
-
-                    <%--                    <% if (Utils.GetFolderControlAdmin() == "product" && Column == "Price")
-                        { %>
-                    <a href="javascript:;" class="btnPrice <%= classPriceTemporary %>" data-value="<%= dr["ID"] %>" aria-label="Giá tạm thời" data-microtip-position="top" role="tooltip">
-                        <i class="fad fa-usd-circle"></i>
-                    </a>
-                    <% } %>--%>
-
                 </td>
                 <%
                     }
@@ -333,15 +325,58 @@
                 <td class="checkbox flag" data-field="AttrProductFlag" data-id="<%= dr["ID"].ToString() %>">
                     <input type="checkbox" id="home<%= dr["ID"].ToString() %>" name="home" data-value="<%= (int)AttrProductFlag.Home %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.Home)) %> />
                     <label for="home<%= dr["ID"].ToString() %>">Đặt lên trang chủ</label>
-                    <input type="checkbox" id="home1<%= dr["ID"].ToString() %>" name="home1" data-value="<%= (int)AttrProductFlag.Home1 %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.Home1)) %> />
-                    <label for="home1<%= dr["ID"].ToString() %>">Đặt lên trang chủ (dưới)</label>
-                    <input type="checkbox" id="priority<%= dr["ID"].ToString() %>" name="priority" data-value="<%= (int)AttrProductFlag.Priority %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.Priority))%> />
-                    <label for="priority">Sản phẩm ưu tiên</label>
-                    <input type="checkbox" id="chkNew<%= dr["ID"].ToString() %>" name="chkNew" data-value="<%= (int)AttrProductFlag.New %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.New))%> />
-                    <label for="chkNew<%= dr["ID"].ToString() %>">Sản phẩm mới</label>
+                   
+                    <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome1))
+                        { %>
+                    <input type="checkbox" id="TextHome1<%= dr["ID"].ToString() %>" name="TextHome1<%= dr["ID"].ToString() %>" data-value="<%= (int)AttrProductFlag.TextHome1 %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.TextHome1))%> />
+                    <label for="TextHome1<%= dr["ID"].ToString() %>">Home (<%= ConfigWeb.TextHome1 %>)</label>
+                    <%} %>
+                   
+                   
+                    <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome2))
+                        { %>
+                    <input type="checkbox" id="TextHome2<%= dr["ID"].ToString() %>" name="TextHome2<%= dr["ID"].ToString() %>" data-value="<%= (int)AttrProductFlag.TextHome2 %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.TextHome2))%> />
+                    <label for="TextHome2<%= dr["ID"].ToString() %>">Home (<%= ConfigWeb.TextHome2 %>)</label>
+                    <%} %>
+                   
+                   
+                    <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome3))
+                        { %>
+                    <input type="checkbox" id="TextHome3<%= dr["ID"].ToString() %>" name="TextHome3<%= dr["ID"].ToString() %>" data-value="<%= (int)AttrProductFlag.TextHome3 %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.TextHome3))%> />
+                    <label for="TextHome3<%= dr["ID"].ToString() %>">Home (<%= ConfigWeb.TextHome3 %>)</label>
+                    <%} %>
+                   
+
+                   
+                    <% if (!string.IsNullOrEmpty(ConfigWeb.TextHome4))
+                        { %>
+                    <input type="checkbox" id="TextHome4<%= dr["ID"].ToString() %>" name="TextHome4<%= dr["ID"].ToString() %>" data-value="<%= (int)AttrProductFlag.TextHome4 %>" <%= Utils.SetChecked(attrProFlag.HasFlag(AttrProductFlag.TextHome4))%> />
+                    <label for="TextHome3<%= dr["ID"].ToString() %>">Home (<%= ConfigWeb.TextHome3 %>)</label>
+                    <%} %>
+                   
+
+
+
                 </td>
 
-                <% }
+                <%}
+                    else if (Column == "Hide")
+                    {
+                %>
+
+                <td class="td_hide" data-id="<%= dr["ID"].ToString() %>">
+                    <%
+                        string isHide = "";
+                        if (!string.IsNullOrEmpty(dr["Hide"].ToString()) && ConvertUtility.ToBoolean(dr["Hide"]))
+                            isHide = " checked";
+                    %>
+                    <input type="checkbox" name="hide<%= dr["ID"].ToString() %>" id="hide<%= dr["ID"].ToString() %>" <%= isHide %> />
+                    <label for="hide<%= dr["ID"].ToString() %>">Ẩn</label>
+                </td>
+
+                <%
+
+                    }
                     else if (Column == "PositionMenuFlag" && tableSql == C.CATEGORY_TABLE)
                     {
                         int AttrInt = ConvertUtility.ToInt32(dr["PositionMenuFlag"]);
@@ -808,17 +843,13 @@
 
 
     $('td.flag input[type="checkbox"]').change(function () {
-        //var count = 0;
-        //$(this).siblings().each(function () {
-        //    var tx = $(this).attr("data-value");
-        //    count++;
-        //    console.log(count);
-        //});
-
-
-
         var count = 0;
         var td = $(this).parent();
+        var updateFlagValue = $(this).attr("data-value");
+        var addFlag = 0;
+        if ($(this).is(':checked'))
+            addFlag = 1;
+
         $(td).children('input[type="checkbox"]').each(function () {
             if ($(this).is(':checked')) {
                 var tx = $(this).attr("data-value");
@@ -831,13 +862,27 @@
         var id = $(td).attr("data-id");
         $.ajax({
             url: "/admin/ajax/ajax.aspx",
-            data: { ctrl: "dynamic", Action: "setFlag", table: "<%= tableSql %>", pid: id, field: field, total_flags: count, t: Math.random() },
+            data: { ctrl: "dynamic", Action: "setFlag", table: "<%= tableSql %>", pid: id, field: field, updateFlagValue: updateFlagValue, addFlag: addFlag, total_flags: count, t: Math.random() },
             success: function (html) {
                 GetNotify("Cập nhật thành công", "success");
             }
         });
-
     });
 
+    $('td.td_hide input[type="checkbox"]').change(function () {
+        var count = 0;
+        var td = $(this).parent();
+        var isChecked = $(this).is(':checked') ? 1 : 0;
+       
+        var field = "Hide";
+        var id = $(td).attr("data-id");
+        $.ajax({
+            url: "/admin/ajax/ajax.aspx",
+            data: { ctrl: "dynamic", Action: "setHide", table: "<%= tableSql %>", pid: id, field: field, isHide: isChecked, t: Math.random() },
+            success: function (html) {
+                GetNotify("Cập nhật thành công", "success");
+            }
+        });
+    });
 
 </script>

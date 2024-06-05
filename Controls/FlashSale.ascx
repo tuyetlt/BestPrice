@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="FlashSale.ascx.cs" Inherits="Controls_FlashSale" %>
 <%@ Import Namespace="System.Data" %>
-<div class="main main__wrapper" style="background-color:#00beb4">
+<div class="main main__wrapper" style="background-color:<%= ConfigWeb.FlashSaleBackgroundColor %>">
     <div class="container">
        <%-- <div class="heading d-flex align-items-end">
             <div class="col flash-sale-Breadcrumb">

@@ -137,6 +137,8 @@ public partial class admin_Controls_ProductUpdate : System.Web.UI.UserControl
             string TextHome3 = ConvertUtility.ToString(Request.Form["TextHome3"]);
             string TextHome4 = ConvertUtility.ToString(Request.Form["TextHome4"]);
             string TextHome5 = ConvertUtility.ToString(Request.Form["TextHome5"]);
+            hashtable["Price2"] = Utils.KillChars(Request.Form["price2"]).Replace(",", "").Replace(".", "");
+
 
             int AttrProductFlag_INT = 0;
             AttrProductFlag attrProductFlag = AttrProductFlag.None;
@@ -186,6 +188,21 @@ public partial class admin_Controls_ProductUpdate : System.Web.UI.UserControl
             {
                 AttrProductFlag_INT += (int)AttrProductFlag.TextHome5;
                 attrProductFlag |= AttrProductFlag.TextHome5;
+            }
+
+
+            
+            // Update FlashSale
+            AttrProductFlag currentFlags = (AttrProductFlag)AttrProductFlag_INT;
+            if (ConvertUtility.ToInt32(hashtable["Price2"]) > 0)
+            {
+                currentFlags |= AttrProductFlag.FlashSale;
+                AttrProductFlag_INT = (int)currentFlags;
+            }
+            else
+            {
+                currentFlags &= ~AttrProductFlag.FlashSale;
+                AttrProductFlag_INT = (int)currentFlags;
             }
 
 
@@ -259,7 +276,7 @@ public partial class admin_Controls_ProductUpdate : System.Web.UI.UserControl
             hashtable["FriendlyUrl"] = Utils.KillChars(Request.Form["friendlyurl"]);
             hashtable["Price"] = Utils.KillChars(Request.Form["price"]).Replace(",", "").Replace(".", "");
             hashtable["Price1"] = Utils.KillChars(Request.Form["price1"]).Replace(",", "").Replace(".", "");
-            hashtable["Price2"] = Utils.KillChars(Request.Form["price2"]).Replace(",", "").Replace(".", "");
+            
 
 
             string[] arr = CatUrlList.Trim(',').Split(',');

@@ -74,17 +74,6 @@ function getval(removeID) {
     if (attr_c_id.length && !stringIsEmpty(attr_c_id.val())) {
         var filterJson = '[{"Field":"AttributeConfigIDList","Value":"' + attr_c_id.val() + '"}]';
     }
-    //var obj = JSON.parse(field);
-    //var strResult = "";
-    //$.each(obj, function (key, value) {
-    //    if (value.Show == true)
-    //        strResult += value.Field + ",";
-    //});
-
-    //if (strResult.length > 1)
-    //    strResult = strResult.slice(0, -1);
-
-    //field = strResult;
 
     if (removeID > 0) {
         if (confirm('Bạn có chắc chắn muốn xoá ' + removeID)) {
@@ -119,8 +108,9 @@ function GetAjax(startDate, endDate, removeID, keyword, sort, fieldSort, filter,
         //Paging Info
         $.ajax({
             url: "/admin/ajax/ajax.aspx",
-            data: { ctrl: "objlist", pageSize: pageSize, pageIndex: pageIndex, categoryid: categoryid, startDate: startDate, endDate: endDate, removeID: removeID, key: keyword, filter: filter, sort: sort, fieldSort: fieldSort, table: table, field: field, action: "getTotalRecord", control: control, folder: folder, ControlName: controlName, filterJson: filterJson, flag: flag, hide: hide, t: Math.random() },
-            //data: { ctrl: "objlist", pageSize: pageSize, pageIndex: pageIndex, categoryid: categoryid, startDate: startDate, endDate: endDate, removeID: removeID, key: keyword, filter: filter, sort: sort, table: table, field: field, action: "getTotalRecord", t: Math.random() },
+            data: { ctrl: "objlist", pageSize: pageSize, pageIndex: pageIndex, categoryid: categoryid, startDate: startDate, endDate: endDate, removeID: removeID, key: keyword, filter: filter, sort: sort, fieldSort: fieldSort, table: table, field: field, action: "getTotalRecord", control: control, folder: folder, ControlName: controlName, filterJson: filterJson, flag: flag, PositionMenuFlag: PositionMenuFlag, AttrProductFlag: AttrProductFlag, hide: hide, level: level, t: Math.random() },
+
+            //data: { ctrl: "objlist", pageSize: pageSize, pageIndex: pageIndex, categoryid: categoryid, startDate: startDate, endDate: endDate, removeID: removeID, key: keyword, filter: filter, sort: sort, fieldSort: fieldSort, table: table, field: field, action: "getTotalRecord", control: control, folder: folder, ControlName: controlName, filterJson: filterJson, flag: flag, hide: hide, t: Math.random() },
 
             success: function (html) {
                 var totalRecord = parseInt(html);
@@ -131,19 +121,58 @@ function GetAjax(startDate, endDate, removeID, keyword, sort, fieldSort, filter,
 }
 
 
+//$('#delete').click(function () {
+//    var count = $('table').find('input[type="checkbox"]:checked').length;
+//    if (count == 0) {
+//        alert("Vui lòng chọn đối tượng cần xóa trước khi thực hiện thao tác")
+//    }
+//    else {
+//        if (confirm("Bạn có chắc chắn muốn xóa " + count + " mục?")) {
+//            $('table').find('input[type="checkbox"]:checked').each(function () {
+//                getval($(this).attr("id").replace("select_", ""));
+//                getval(0);
+//            });
+//        }
+//    }
+//});
+
+
 $('#delete').click(function () {
-    var count = $('table').find('input[type="checkbox"]:checked').length;
-    if (count == 0) {
-        alert("Vui lòng chọn đối tượng cần xóa trước khi thực hiện thao tác")
+    var selectedIds = [];
+    $('input[type="checkbox"]:checked[id^="select_"]').each(function () {
+        selectedIds.push($(this).data('id'));
+    });
+
+    if (selectedIds.length === 0) {
+        alert('Không có bản ghi nào được chọn.');
+        return;
     }
-    else {
-        if (confirm("Bạn có chắc chắn muốn xóa " + count + " mục?")) {
-            $('table').find('input[type="checkbox"]:checked').each(function () {
-                getval($(this).attr("id").replace("select_", ""));
-                getval(0);
-            });
+
+    var pidList = selectedIds.join(',');
+
+    var confirmMessage = 'Bạn có chắc chắn muốn xoá ' + selectedIds.length + ' bản ghi này không?';
+    if (!confirm(confirmMessage)) {
+        return;
+    }
+    var table = $("#table").val();
+
+    $.ajax({
+        url: '/admin/ajax/ajax.aspx',
+        type: 'GET',
+        data: {
+            ctrl: 'dynamic',
+            Action: 'del-multi',
+            table: table,
+            pid_list: pidList
+        },
+        success: function (response) {
+            GetNotify('Bản ghi với ID ' + pidList + ' đã được xóa');
+            setTimeout(function () { getval(0); }, 100);
+        },
+        error: function (xhr, status, error) {
+            alert('Đã xảy ra lỗi: ' + error);
         }
-    }
+    });
 });
 
 

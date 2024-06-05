@@ -10,7 +10,7 @@
     <div class="container">
         <div class="heading d-flex align-items-end">
             <div class="col">
-                 <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
+                <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
             </div>
         </div>
         <div class="column__main col-12 col-md-9">
@@ -39,7 +39,18 @@
 
 
                                 <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
-                                    <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" /></a>
+                                    <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" />
+                                    <div class="frame-flash-sale">
+                                        <img src="/themes/images/summer.png" alt="Alternate Text" />
+                                    </div>
+                                    <div class="frame-label-sale">
+                                        <img src="/themes/images/sale.webp" alt="Sale" />
+                                    </div>
+                                    <div class="icon-flash-sale">
+                                        <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
+                                    </div>
+
+                                </a>
                             </div>
                             <div class="product__info">
                                 <h3 class="product__name"><a href="<%= linkDetail %>"><%= drProduct["Name"].ToString() %></a></h3>
