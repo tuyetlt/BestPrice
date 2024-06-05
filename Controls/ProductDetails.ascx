@@ -117,24 +117,18 @@
                             <div class="product__brand mb-3">
                                 <span>Tình trạng:</span> <%= strStatus %>
                             </div>
-                            <%
-                                string Price = string.Empty;
-                                if (!Utils.IsFlashSale(dr["AttrProductFlag"]))
-                                    Price = SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price");
-                                else
-                                    Price = SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price2");
-                            %>
+                          
                             <div class="product__price product_price_sale  mb-3">
                                 <div class="cnt-box-price">
                                     <div class="txt-price me-1">Giá Flash Sale:</div>
-                                    <strong class="price"><%= Price %></strong>
-                                    <% if (SqlHelper.GetPrice_Decimal(ConvertUtility.ToInt32(dr["ID"]), "Price1", true) > 0)
+                                    <strong class="price"><%= SqlHelper.GetPrice(PriceReturn.Price, dr) %></strong>
+                                    <% if (ConvertUtility.ToBoolean(SqlHelper.GetPrice(PriceReturn.IsDiscount, dr)))
                                         { %>
                                     <div class="d-flex align-items-center text-price">
                                         <div class="">
-                                            <span class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price1", true) %></span>
+                                            <span class="old-price"><%= SqlHelper.GetPrice(PriceReturn.OriginalPrice, dr) %></span>
                                         </div>
-                                        <div class="box-percent"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(dr["ID"])) %></span></div>
+                                        <div class="box-percent"><span><%= SqlHelper.GetPrice(PriceReturn.Percent, dr) %></span></div>
                                     </div>
                                     <% } %>
                                 </div>

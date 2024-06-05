@@ -486,6 +486,17 @@ public enum OrderStatus
     Canceled = 4
 }
 
+// Xuất ra dạng Price cần thiết
+public enum PriceReturn
+{
+    Price = 1,
+    OriginalPrice = 2,
+    Percent = 3,
+    IsFlashSale = 4,
+    PriceDecimal = 5,
+    IsDiscount = 6
+}
+
 public class OrderInfo
 {
     public int ProductID { get; set; }
