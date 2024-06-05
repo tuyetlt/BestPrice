@@ -110,43 +110,16 @@
                     <% } %>
                     <aside class="sidebar__filters">
                         <form method="POST" class="sidebar__filters-inner">
-
                             <div id="filted">
                             </div>
-
-                            <div class="sidebar__inner filter-ajax">
-                                <h4 class="sidebar__title">Công suất loa</h4>
-                                <div class="sidebar__content">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" name="name" value="" class="form-check-input" checked />
-                                            <span>Trên 1000W</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" name="name" value="" class="form-check-input" />
-                                            <span>Từ 100 W - 500 W</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" name="name" value="" class="form-check-input" />
-                                            <span>Từ 1000 W - 2000 W</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" name="name" value="" class="form-check-input" />
-                                            <span>Từ 500 W - 1000 W</span>
-                                        </label>
-                                    </div>
-                                </div>
+                            <div class="sidebar__inner filter-ajax">   
                             </div>
-
-
                         </form>
                     </aside>
+                    <div class="box-fillter-btn">
+                        <button class="btn-close-all hidden-md">Bỏ chọn</button>
+                        <button class="">Xem </button>
+                    </div>
                 </div>
             </div>
             <div class="column__main col-12 col-md-9">
