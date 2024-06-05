@@ -1878,12 +1878,59 @@ public class SqlHelper
         return jsonObjectByField;
     }
 
-    //public static string GetJsonObjectByField(List<JsonObjectByField>)
-    //{
-    //    List<JsonObjectByField> jsonObjectByField = Newtonsoft.Json.JsonConvert.DeserializeObject<List<JsonObjectByField>>(jsonString);
-    //    return jsonObjectByField;
-    //}
-
+    public static string GetPrice(PriceReturn priceReturn, DataRow drProduct)
+    {
+        string _return = string.Empty;
+        decimal Price = ConvertUtility.ToDecimal(drProduct["Price"]);
+        decimal Price1 = ConvertUtility.ToDecimal(drProduct["Price1"]);
+        decimal Price2 = ConvertUtility.ToDecimal(drProduct["Price2"]);
+        int attrProductFlagValue = ConvertUtility.ToInt32(drProduct["AttrProductFlag"]);
+        bool IsFlashSale = false;
+        AttrProductFlag currentFlags = (AttrProductFlag)attrProductFlagValue;
+        if ((currentFlags & AttrProductFlag.FlashSale) == AttrProductFlag.FlashSale || Price2 > 0)
+            IsFlashSale = true;
+        if (priceReturn == PriceReturn.Price)
+        {  
+            if (IsFlashSale)
+                _return = string.Format("{0:N0} {1}", Price2, "VNĐ");
+            else
+                _return = string.Format("{0:N0} {1}", Price, "VNĐ");
+        }
+        else if (priceReturn == PriceReturn.OriginalPrice)
+        {
+            _return = string.Format("{0:N0} {1}", Price1, "VNĐ");
+        }
+        else if (priceReturn == PriceReturn.Percent)
+        {
+            if (Price1 > Price && Price > 0)
+            {
+                int percentComplete = 100 - (int)Math.Round((decimal)(100 * Price) / Price1);
+                _return = "-" + percentComplete + " %";
+            }
+        }
+        else if(priceReturn==PriceReturn.PriceDecimal)
+        {
+            if (IsFlashSale)
+                _return = Price2.ToString("0");
+            else
+                _return = Price.ToString("0");
+        }
+        else if(priceReturn == PriceReturn.IsFlashSale)
+        {
+            if (IsFlashSale)
+                _return = "True";
+            else
+                _return = "False";
+        }
+        else if(priceReturn == PriceReturn.IsDiscount)
+        {
+            if (Price1 > Price && Price > 0)
+                _return = "True";
+            else
+                _return = "False";
+        }
+        return _return;
+    }
 
     public static string GetPricePercent(int ProductID)
     {
@@ -1900,8 +1947,6 @@ public class SqlHelper
         }
         return strReturn;
     }
-
-
     public static string GetPrice(int ProductID, string PriceField)
     {
         bool isTemporary;
@@ -1912,9 +1957,6 @@ public class SqlHelper
         bool isTemporary;
         return GetPrice(ProductID, PriceField, "VNĐ", ByCurrentDate, out isTemporary);
     }
-
-
-
     public static string GetPrice(int ProductID, string PriceField, string CurrencySymbol, bool ByCurrentDate, out bool isTemporary)
     {
         isTemporary = false;
@@ -1931,14 +1973,11 @@ public class SqlHelper
         }
         return strReturn;
     }
-
-
     public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate)
     {
         bool isTemporary = false;
         return GetPrice_Decimal(ProductID, PriceField, ByCurrentDate, out isTemporary);
     }
-
     public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate, out bool isTemporary)
     {
         decimal Return = 0;
@@ -1963,6 +2002,82 @@ public class SqlHelper
         return Return;
     }
 
+
+
+
+
+
+    #region Price
+    //public static string GetPricePercent(int ProductID)
+    //{
+    //    string strReturn = string.Empty;
+    //    bool isTemporary = false;
+    //    decimal Price = GetPrice_Decimal(ProductID, "Price", true, out isTemporary);
+    //    decimal Price1 = GetPrice_Decimal(ProductID, "Price1", true, out isTemporary);
+
+    //    int percentComplete = 0;
+    //    if (Price1 > Price && Price > 0)
+    //    {
+    //        percentComplete = 100 - (int)Math.Round((decimal)(100 * Price) / Price1);
+    //        strReturn = "-" + percentComplete + " %";
+    //    }
+    //    return strReturn;
+    //}
+    //public static string GetPrice(int ProductID, string PriceField)
+    //{
+    //    bool isTemporary;
+    //    return GetPrice(ProductID, PriceField, "VNĐ", true, out isTemporary);
+    //}
+    //public static string GetPrice(int ProductID, string PriceField, bool ByCurrentDate)
+    //{
+    //    bool isTemporary;
+    //    return GetPrice(ProductID, PriceField, "VNĐ", ByCurrentDate, out isTemporary);
+    //}
+    //public static string GetPrice(int ProductID, string PriceField, string CurrencySymbol, bool ByCurrentDate, out bool isTemporary)
+    //{
+    //    isTemporary = false;
+    //    string strReturn = string.Empty;
+
+    //    decimal price = GetPrice_Decimal(ProductID, PriceField, ByCurrentDate, out isTemporary);
+    //    if (price > 0)
+    //    {
+    //        strReturn = string.Format("{0:N0} {1}", price, CurrencySymbol);
+    //    }
+    //    else if (PriceField == "Price")
+    //    {
+    //        strReturn = "Vui lòng liên hệ";
+    //    }
+    //    return strReturn;
+    //}
+    //public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate)
+    //{
+    //    bool isTemporary = false;
+    //    return GetPrice_Decimal(ProductID, PriceField, ByCurrentDate, out isTemporary);
+    //}
+    //public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate, out bool isTemporary)
+    //{
+    //    decimal Return = 0;
+    //    string FilterDate = "";
+    //    if (ByCurrentDate)
+    //        FilterDate = " AND StartDate<DATEADD(DAY, DATEDIFF(day, 0, getdate()), 1) AND EndDate>DATEADD(DAY, DATEDIFF(day, 0, getdate()), 1)";
+    //    DataTable dtTemporaryPrice = SqlHelper.SQLToDataTable("tblPrice", PriceField, string.Format("ProductID={0}{1}", ProductID, FilterDate), "ID DESC", 1, 1);
+    //    if (dtTemporaryPrice != null && dtTemporaryPrice.Rows.Count > 0)
+    //    {
+    //        isTemporary = true;
+    //        Return = ConvertUtility.ToDecimal(dtTemporaryPrice.Rows[0][PriceField]);
+    //    }
+    //    else
+    //    {
+    //        isTemporary = false;
+    //        DataTable dtPrice = SQLToDataTable("tblProducts", PriceField, "ID=" + ProductID);
+    //        if (dtPrice != null && dtPrice.Rows.Count > 0 && ConvertUtility.ToInt32(dtPrice.Rows[0][PriceField]) > 0)
+    //        {
+    //            Return = ConvertUtility.ToDecimal(dtPrice.Rows[0][PriceField]);
+    //        }
+    //    }
+    //    return Return;
+    //}
+    #endregion
 
     public static bool GetForeignTable_Check(string Field)
     {

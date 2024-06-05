@@ -223,16 +223,7 @@
                                 <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                     <div class="product__thumb">
                                         <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
-                                        <%-- <div class="frame-flash-sale">
-                                            <img src="/themes/images/summer.png" alt="Alternate Text" />
-                                        </div>
-                                        <div class="frame-label-sale">
-                                            <img src="/themes/images/sale.webp" alt="Sale" />
-                                        </div>
-                                        <div class="icon-flash-sale">
-                                            <img src="/themes/images/icon-flash-sale.png" alt="Alternate Text" />
-                                        </div>--%>
-
+                                      
                                         <%if (!string.IsNullOrEmpty(ConfigWeb.FlashSaleFrame1))
                                             {  %>
                                         <div class="frame-flash-sale">

@@ -1239,7 +1239,7 @@ function GetValueFromAttr() {
                 $(".div-ajax-loading").hide();
                 ShowMore(pageIndexShowMore, false);
 
-                alert($.cookie("TotalProduct") + " sản phẩm");
+                //alert($.cookie("TotalProduct") + " sản phẩm");
 
             }, 200); 
 
