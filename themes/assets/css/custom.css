@@ -212,10 +212,6 @@
     top: 9px;
 }
 
-.sidebar {
-    border: 1px solid #f1f1f1;
-}
-
 .filted .header {
     line-height: 25px;
     display: inline-block;
@@ -1740,6 +1736,9 @@ header .show_search_content {
 
 .sidebar {
     border: 1px solid #f1f1f1;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0.5rem;
 }
 
 .filted .header {
@@ -2957,10 +2956,121 @@ header .show_search_content .price .per {
 .footer__support a:hover {
     color: #fff;
 }
-@media (min-width: 1400px) {
-    .header__logo {
-    margin-right: 1.5rem;
+.box-content-description{
+    display:flex;
 }
+.tab-thongtinsp{
+    width:55%;
+    padding-right:20px;
+    position:relative;
+}
+.tab-thongsokythuat{
+    width:45%;
+    padding-left:20px;
+    position:relative;
+}
+#description .cnt-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    padding-bottom:20px;
+}
+#description .tab-thongtinsp p b{
+    font-size:18px;
+}
+.tab-thongsokythuat table tbody tr td{
+    padding-top:8px;
+    padding-bottom:8px;
+    font-size:14px;
+}
+.tab-thongsokythuat table tbody tr td:first-child {
+    font-weight: bold;
+}
+.tab-thongsokythuat table tbody tr td:last-child ul{
+    margin:0;
+    border:0;
+    padding:0;
+}
+.tab-thongtinsp .bg-article, .tab-thongsokythuat .bg-article {
+    background: linear-gradient(to bottom, rgba(255 255 255 / 0), rgba(255 255 255 / 62.5), rgba(255 255 255 / 1));
+    bottom: -22px;
+    height: 105px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    margin-bottom: 3px;
+}
+.tab-thongtinsp .list-decription,.tab-thongsokythuat .cnt-table-decription {
+    overflow: hidden;
+    max-height: 800px;
+}
+.tab-thongtinsp.add .list-decription, .tab-thongsokythuat.add .cnt-table-decription {
+    overflow-y: scroll;
+}
+.tab-thongtinsp.add .bg-article, .tab-thongsokythuat.add .bg-article {
+    display: none;
+}
+/* width */
+.tab-thongtinsp .list-decription::-webkit-scrollbar, 
+.tab-thongsokythuat.add .cnt-table-decription::-webkit-scrollbar {
+    width: 6px;
+    border-radius:6px;
+}
+
+/* Track */
+.tab-thongtinsp .list-decription::-webkit-scrollbar-track,
+.tab-thongsokythuat.add .cnt-table-decription::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 6px;
+}
+
+/* Handle */
+.tab-thongtinsp .list-decription::-webkit-scrollbar-thumb,
+.tab-thongsokythuat.add .cnt-table-decription::-webkit-scrollbar-thumb {
+    background: #4a90e2;
+    border-radius: 6px;
+}
+
+/* Handle on hover */
+.tab-thongtinsp .list-decription::-webkit-scrollbar-thumb:hover,
+.tab-thongsokythuat.add .cnt-table-decription::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border-radius: 6px;
+}
+#description .show-more a {
+    background: #4a90e2;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+}
+.box-fillter-btn {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    padding: 10px 0;
+    bottom: 0;
+    display:flex;
+}
+.box-fillter-btn button{
+    width:50%;
+    margin: 0 10px;
+    padding:10px;
+}
+    .box-fillter-btn button:first-child{
+        border:1px solid #960100;
+        color:#960100;
+        font-weight:bold;
+    }
+    .box-fillter-btn button:last-child {
+        border: 1px solid #0fa80f;
+        color: #fff;
+        background: #0fa80f;
+        font-weight: bold;
+    }
+    @media (min-width: 1400px) {
+        .header__logo {
+        margin-right: 1.5rem;
+    }
 }
 
 @media only screen and (min-width: 1024px) {
