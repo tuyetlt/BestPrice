@@ -108,6 +108,7 @@
 
         routes.MapPageRoute("content", "{caturl}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "contentdetail" } });
         routes.MapPageRoute("sp", "{caturl}/{purl}.html", "~/Default.aspx", true, new RouteValueDictionary { { "m", "productdetails" } });
+        routes.MapPageRoute("test", "test/", "~/Default.aspx", true, new RouteValueDictionary { { "m", "WidgetProductHistory" } });
 
         routes.MapPageRoute("ajax_shoppingcart", "ajax/shoppingcart", "~/Default.aspx", true, new RouteValueDictionary { { "ajax", "shoppingcart" } });
         routes.MapPageRoute("ajax_search", "ajax/search", "~/Default.aspx", true, new RouteValueDictionary { { "ajax", "product_search" } });

@@ -38,7 +38,7 @@ public partial class Controls_WidgetProductHistory : System.Web.UI.UserControl
                 where += ")";
             }
 
-            dtProduct = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1", where, sort, 1, 100);
+            dtProduct = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,Price2,AttrProductFlag", where, sort, 1, 100);
         }
         catch
         {

@@ -13,23 +13,17 @@
 <div class="product__item col-6 col-sm-4 col-md-4 col-lg-3">
     <div class="product__inner">
         <div class="product__thumb">
-
-            <% if (!string.IsNullOrEmpty(SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"]))))
-                { %>
-            <label class="on-sale"><span><%= SqlHelper.GetPricePercent(ConvertUtility.ToInt32(drProduct["ID"])) %></span></label>
-            <% } %>
-
-
-
-            <a href="<%= linkDetail %>" title="Máy nước nóng Panasonic DH-4RP1" class="product__image">
-                <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" /></a>
+            <%= SqlHelper.GetPercentLabel(drProduct) %>
+            <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
+                <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" />
+                 <%= SqlHelper.GenFlashSaleFrame(drProduct) %>
+            </a>
         </div>
         <div class="product__info">
             <h3 class="product__name"><a href="<%= linkDetail %>"><%= drProduct["Name"].ToString() %></a></h3>
-
             <div class="product__price d-flex align-items-center">
-                <div class="price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price") %></div>
-                <div class="old-price"><%= SqlHelper.GetPrice(ConvertUtility.ToInt32(drProduct["ID"]), "Price1") %></div>
+                <div class="price"><%= SqlHelper.GetPrice(PriceReturn.Price, drProduct) %></div>
+                <div class="old-price"><%= SqlHelper.GetPrice(PriceReturn.OriginalPrice, drProduct) %></div>
             </div>
         </div>
     </div>
@@ -39,7 +33,7 @@
         }
     }
 
-    %>
+%>
 
 <%
     if (action == "article_list")

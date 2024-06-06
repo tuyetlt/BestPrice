@@ -1,9 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ProductDetails.ascx.cs" Inherits="Controls_ProductDetails" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="Newtonsoft.Json" %>
-
-
-
 <%
     if (Utils.IsNullOrEmpty(dr))
         return;
@@ -117,7 +114,26 @@
                             <div class="product__brand mb-3">
                                 <span>Tình trạng:</span> <%= strStatus %>
                             </div>
-                          
+
+
+                             <% if (!ConvertUtility.ToBoolean(SqlHelper.GetPrice(PriceReturn.IsFlashSale, dr))) //Nếu không có Flash Sale
+                                 { %>
+
+                            <div class="product__price mb-3">
+                                <strong class="price">24.800.000 VNĐ</strong>
+                                
+                                <div class="d-flex align-items-center">
+                                    <div class="me-2">
+                                        <span class="txt-price me-1">Giá gốc:</span>
+                                        <span class="old-price">32.000.000 VNĐ</span>
+                                    </div>
+                                    <div><span class="txt-price me-1">Tiết kiệm:</span><strong>-22 %</strong></div>
+                                </div>
+                                
+                            </div>
+                            <%}
+                                else //Nếu có Flash Sale
+                                {  %>
                             <div class="product__price product_price_sale  mb-3">
                                 <div class="cnt-box-price">
                                     <div class="txt-price me-1">Giá Flash Sale:</div>
@@ -142,6 +158,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <% } %>
                             <div class="product__attr">
                                 <%= dr["Description"] %>
                             </div>

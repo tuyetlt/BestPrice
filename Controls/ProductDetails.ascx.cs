@@ -149,7 +149,7 @@ public partial class Controls_ProductDetails : System.Web.UI.UserControl
             SEO_Schema.SKU = ConvertUtility.ToString(dr["ID"]);
             SEO_Schema.Description = MetaDescription;
             SEO_Schema.Image = image;
-            decimal MinPrice = SqlHelper.GetPrice_Decimal(ConvertUtility.ToInt32(dr["ID"]), "Price", true);
+            decimal MinPrice = ConvertUtility.ToDecimal(SqlHelper.GetPrice(PriceReturn.Price, dr));
             SEO_Schema.Url = url;
             SEO_Schema.Price = string.Format("{0:N0}", MinPrice).Replace(".", "");
             SEO_Schema.AuthorName = C.SITE_NAME;
