@@ -1988,75 +1988,75 @@ public class SqlHelper
     }
 
     #region Price
-    //public static string GetPricePercent(int ProductID)
-    //{
-    //    string strReturn = string.Empty;
-    //    bool isTemporary = false;
-    //    decimal Price = GetPrice_Decimal(ProductID, "Price", true, out isTemporary);
-    //    decimal Price1 = GetPrice_Decimal(ProductID, "Price1", true, out isTemporary);
+    public static string GetPricePercent(int ProductID)
+    {
+        string strReturn = string.Empty;
+        bool isTemporary = false;
+        decimal Price = GetPrice_Decimal(ProductID, "Price", true, out isTemporary);
+        decimal Price1 = GetPrice_Decimal(ProductID, "Price1", true, out isTemporary);
 
-    //    int percentComplete = 0;
-    //    if (Price1 > Price && Price > 0)
-    //    {
-    //        percentComplete = 100 - (int)Math.Round((decimal)(100 * Price) / Price1);
-    //        strReturn = "-" + percentComplete + " %";
-    //    }
-    //    return strReturn;
-    //}
-    //public static string GetPrice(int ProductID, string PriceField)
-    //{
-    //    bool isTemporary;
-    //    return GetPrice(ProductID, PriceField, "VNĐ", true, out isTemporary);
-    //}
-    //public static string GetPrice(int ProductID, string PriceField, bool ByCurrentDate)
-    //{
-    //    bool isTemporary;
-    //    return GetPrice(ProductID, PriceField, "VNĐ", ByCurrentDate, out isTemporary);
-    //}
-    //public static string GetPrice(int ProductID, string PriceField, string CurrencySymbol, bool ByCurrentDate, out bool isTemporary)
-    //{
-    //    isTemporary = false;
-    //    string strReturn = string.Empty;
+        int percentComplete = 0;
+        if (Price1 > Price && Price > 0)
+        {
+            percentComplete = 100 - (int)Math.Round((decimal)(100 * Price) / Price1);
+            strReturn = "-" + percentComplete + " %";
+        }
+        return strReturn;
+    }
+    public static string GetPrice(int ProductID, string PriceField)
+    {
+        bool isTemporary;
+        return GetPrice(ProductID, PriceField, "VNĐ", true, out isTemporary);
+    }
+    public static string GetPrice(int ProductID, string PriceField, bool ByCurrentDate)
+    {
+        bool isTemporary;
+        return GetPrice(ProductID, PriceField, "VNĐ", ByCurrentDate, out isTemporary);
+    }
+    public static string GetPrice(int ProductID, string PriceField, string CurrencySymbol, bool ByCurrentDate, out bool isTemporary)
+    {
+        isTemporary = false;
+        string strReturn = string.Empty;
 
-    //    decimal price = GetPrice_Decimal(ProductID, PriceField, ByCurrentDate, out isTemporary);
-    //    if (price > 0)
-    //    {
-    //        strReturn = string.Format("{0:N0} {1}", price, CurrencySymbol);
-    //    }
-    //    else if (PriceField == "Price")
-    //    {
-    //        strReturn = "Vui lòng liên hệ";
-    //    }
-    //    return strReturn;
-    //}
-    //public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate)
-    //{
-    //    bool isTemporary = false;
-    //    return GetPrice_Decimal(ProductID, PriceField, ByCurrentDate, out isTemporary);
-    //}
-    //public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate, out bool isTemporary)
-    //{
-    //    decimal Return = 0;
-    //    string FilterDate = "";
-    //    if (ByCurrentDate)
-    //        FilterDate = " AND StartDate<DATEADD(DAY, DATEDIFF(day, 0, getdate()), 1) AND EndDate>DATEADD(DAY, DATEDIFF(day, 0, getdate()), 1)";
-    //    DataTable dtTemporaryPrice = SqlHelper.SQLToDataTable("tblPrice", PriceField, string.Format("ProductID={0}{1}", ProductID, FilterDate), "ID DESC", 1, 1);
-    //    if (dtTemporaryPrice != null && dtTemporaryPrice.Rows.Count > 0)
-    //    {
-    //        isTemporary = true;
-    //        Return = ConvertUtility.ToDecimal(dtTemporaryPrice.Rows[0][PriceField]);
-    //    }
-    //    else
-    //    {
-    //        isTemporary = false;
-    //        DataTable dtPrice = SQLToDataTable("tblProducts", PriceField, "ID=" + ProductID);
-    //        if (dtPrice != null && dtPrice.Rows.Count > 0 && ConvertUtility.ToInt32(dtPrice.Rows[0][PriceField]) > 0)
-    //        {
-    //            Return = ConvertUtility.ToDecimal(dtPrice.Rows[0][PriceField]);
-    //        }
-    //    }
-    //    return Return;
-    //}
+        decimal price = GetPrice_Decimal(ProductID, PriceField, ByCurrentDate, out isTemporary);
+        if (price > 0)
+        {
+            strReturn = string.Format("{0:N0} {1}", price, CurrencySymbol);
+        }
+        else if (PriceField == "Price")
+        {
+            strReturn = "Vui lòng liên hệ";
+        }
+        return strReturn;
+    }
+    public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate)
+    {
+        bool isTemporary = false;
+        return GetPrice_Decimal(ProductID, PriceField, ByCurrentDate, out isTemporary);
+    }
+    public static decimal GetPrice_Decimal(int ProductID, string PriceField, bool ByCurrentDate, out bool isTemporary)
+    {
+        decimal Return = 0;
+        string FilterDate = "";
+        if (ByCurrentDate)
+            FilterDate = " AND StartDate<DATEADD(DAY, DATEDIFF(day, 0, getdate()), 1) AND EndDate>DATEADD(DAY, DATEDIFF(day, 0, getdate()), 1)";
+        DataTable dtTemporaryPrice = SqlHelper.SQLToDataTable("tblPrice", PriceField, string.Format("ProductID={0}{1}", ProductID, FilterDate), "ID DESC", 1, 1);
+        if (dtTemporaryPrice != null && dtTemporaryPrice.Rows.Count > 0)
+        {
+            isTemporary = true;
+            Return = ConvertUtility.ToDecimal(dtTemporaryPrice.Rows[0][PriceField]);
+        }
+        else
+        {
+            isTemporary = false;
+            DataTable dtPrice = SQLToDataTable("tblProducts", PriceField, "ID=" + ProductID);
+            if (dtPrice != null && dtPrice.Rows.Count > 0 && ConvertUtility.ToInt32(dtPrice.Rows[0][PriceField]) > 0)
+            {
+                Return = ConvertUtility.ToDecimal(dtPrice.Rows[0][PriceField]);
+            }
+        }
+        return Return;
+    }
     #endregion
 
     public static bool GetForeignTable_Check(string Field)

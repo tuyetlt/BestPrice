@@ -21,7 +21,7 @@
             </div>
             <div class="col">
                 <div class="d-flex justify-content-between justify-content-end align-items-center">
-                    <button type="button" class="btn btn-primary btn-sidebar-filter hidden-md"><i class="fa fa-filter"></i>LỌC</button>
+                    <button type="button" class="btn btn-primary btn-sidebar-filter hidden-md"><i class="fa fa-filter"></i>LỌC TÌM SẢN PHẨM</button>
                     <%-- <form class="ms-sm-auto" method="get">
                         <select name="orderby" class="form-select" aria-label="Đơn hàng của cửa hàng">
                             <option value="date" selected="selected">Mới nhất</option>

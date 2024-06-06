@@ -228,8 +228,8 @@
                     bool isPriceTemporaryByDate = false;
                     bool isPriceTemporary_NonDate = false;
 
-                    string price = SqlHelper.GetPrice(PriceReturn.Price,dr);
-                    //SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price", "VNĐ", false, out isPriceTemporary_NonDate);
+                    string price = SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price", "VNĐ", true, out isPriceTemporaryByDate);
+                    SqlHelper.GetPrice(ConvertUtility.ToInt32(dr["ID"]), "Price", "VNĐ", false, out isPriceTemporary_NonDate);
 
                     string classPriceTemporary = "";
                     if (isPriceTemporaryByDate)
@@ -310,7 +310,7 @@
 
                 <td class="price">
 
-                    <span><%= SqlHelper.GetPrice(PriceReturn.Price, dr) %></span>
+                    <span><%= SqlHelper.GetPrice(IDProduct, Column, false) %></span>
                     <a class="price-edit-edit" href="javascript:;" style="float: right"><i class="fal fa-edit"></i></a>
                     <input type="text" value="<%= string.Format("{0:N0}", dr[Column]) %>" class="edit-price" data-field="<%=Column%>" data-id="<%= dr["ID"] %>" />
                     <span class="entertoupdate">Enter để lưu giá</span>
