@@ -117,8 +117,8 @@
                         </form>
                     </aside>
                     <div class="box-fillter-btn">
-                        <button class="btn-close-all hidden-md">Bỏ chọn</button>
-                        <button class="">Xem </button>
+                        <button class="btn-close-sidebar hidden-md">Bỏ chọn</button>
+                        <button class="btn-reader-more-fillter hidden-md"></button>
                     </div>
                 </div>
             </div>

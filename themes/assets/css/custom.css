@@ -3044,8 +3044,32 @@ header .show_search_content .price .per {
     padding: 5px;
     border-radius: 20px;
 }
-@media (min-width: 1400px) {
-    .header__logo {
+.box-fillter-btn {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    padding: 10px 0;
+    bottom: 0;
+    display:flex;
+}
+.box-fillter-btn button{
+    width:50%;
+    margin: 0 10px;
+    padding:10px;
+}
+    .box-fillter-btn button:first-child{
+        border:1px solid #960100;
+        color:#960100;
+        font-weight:bold;
+    }
+    .box-fillter-btn button:last-child {
+        border: 1px solid #0fa80f;
+        color: #fff;
+        background: #0fa80f;
+        font-weight: bold;
+    }
+    @media (min-width: 1400px) {
+        .header__logo {
         margin-right: 1.5rem;
     }
 }

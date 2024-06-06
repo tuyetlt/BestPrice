@@ -1066,7 +1066,6 @@ function ShowMore(pageIndex, fistLoad) {
         $(".section-readmore-cate").show();
     }
 
-    //alert(TotalProduct + ", " + pageIndex);
     $("#category_paging").text("Xem thêm (" + leftProduct + " sản phẩm)");
 }
 $(document).ready(function () {
@@ -1150,6 +1149,7 @@ function BindDataToAttr() {
     });
 }
 // Load theo Attributes
+$(".box-fillter-btn").hide();
 function GetValueFromAttr() {
     $("#loadByFilter").val("1");
 
@@ -1215,6 +1215,7 @@ function GetValueFromAttr() {
         keyword = $("#keyword").val();
 
     $(".div-ajax-loading").show();
+    
     $(".product-list").css({
         opacity: 0.3
     });
@@ -1232,18 +1233,17 @@ function GetValueFromAttr() {
         },
         complete: function (response) {
             setTimeout(function () {
+                console.log('Toét test')
                 $('.product-list').html(response.responseText);
                 $(".product-list").css({
                     opacity: 1
                 });
                 $(".div-ajax-loading").hide();
                 ShowMore(pageIndexShowMore, false);
-
-                //alert($.cookie("TotalProduct") + " sản phẩm");
-
+                $(".box-fillter-btn").show();
+                $(".btn-reader-more-fillter").html(" Xem " + $.cookie("TotalProduct") + " sản phẩm");
             }, 200); 
 
-            
         }
     });
 
