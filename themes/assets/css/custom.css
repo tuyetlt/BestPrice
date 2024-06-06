@@ -1736,9 +1736,7 @@ header .show_search_content {
 
 .sidebar {
     border: 1px solid #f1f1f1;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0.5rem;
+    
 }
 
 .filted .header {
@@ -3067,8 +3065,20 @@ header .show_search_content .price .per {
         background: #0fa80f;
         font-weight: bold;
     }
-    @media (min-width: 1400px) {
-        .header__logo {
+/*.list-cate-side {
+    display: flex;
+    flex-wrap: wrap;
+}
+.list-cate-side .item-filter {
+    width: 50%;
+    float: left;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding-right: 5px;
+}*/
+@media (min-width: 1400px) {
+    .header__logo {
         margin-right: 1.5rem;
     }
 }
@@ -3077,6 +3087,12 @@ header .show_search_content .price .per {
     .navigation__categories .navigation__menu > .nav-item .btn {
         line-height: 24px;
     }
+    .sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0.5rem;
+    }
+   
 }
 
 @media only screen and (max-width: 1023px) {
