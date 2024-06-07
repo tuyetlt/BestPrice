@@ -118,7 +118,7 @@
                     </aside>
                     <div class="box-fillter-btn">
                         <button class="btn-close-sidebar hidden-md">Bỏ chọn</button>
-                        <button class="btn-reader-more-fillter hidden-md"></button>
+                        <button class="btn-close-sidebar btn-reader-more-fillter hidden-md">Xem 0 Sản phẩm</button>
                     </div>
                 </div>
             </div>

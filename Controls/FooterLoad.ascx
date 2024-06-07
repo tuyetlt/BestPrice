@@ -7,11 +7,7 @@
 <script src="/themes/assets/js/jquery/jquery.cookie.min.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.validate.min.js"></script>
 <script src="/themes/assets/js/control.js"></script>
-<div class="div-ajax-loading">
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
+<div class="div-ajax-loading"></div>
 <div class="navs-container home-zone">
     <style>
         .navs-container .arc-menu.active ~ .navs-bg {
