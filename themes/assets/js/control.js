@@ -1149,7 +1149,6 @@ function BindDataToAttr() {
     });
 }
 // Load theo Attributes
-$(".box-fillter-btn").hide();
 function GetValueFromAttr() {
     $("#loadByFilter").val("1");
 
