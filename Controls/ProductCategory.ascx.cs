@@ -133,7 +133,15 @@ public partial class Controls_ProductCategory : System.Web.UI.UserControl
             string image = ConvertUtility.ToString(drCat["Image_1"]);
             if (string.IsNullOrEmpty(image))
                 image = ConfigWeb.Image;
+            if (ConvertUtility.ToBoolean(drCat["IsFlashSale"]))
+            {
+                if(!string.IsNullOrEmpty(drCat["FlashSaleHeader"].ToString()))
+                    image = drCat["FlashSaleHeader"].ToString();
+            }
+           
             PageUtility.OpenGraph(this.Page, MetaTitle, "website", url, C.ROOT_URL + image, ConfigWeb.SiteName, MetaDescription);
+
+
             PageUtility.AddCanonicalLink(this.Page, url);
 
             SEO_Schema.Type = "WebSite";

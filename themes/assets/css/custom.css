@@ -3104,6 +3104,19 @@ header .show_search_content .price .per {
     /*    .first-page, .prev-page, .next-page, .last-page {
                     display: none;
                 }*/
+    .box-content-description{
+        display:block;
+    }
+    .tab-thongtinsp {
+        width: 100%;
+        padding-right: 0px;
+        margin-bottom:20px;
+    }
+
+    .tab-thongsokythuat {
+        width: 100%;
+        padding-left: 0px;
+    }
 
     .pg-item {
         display: none;

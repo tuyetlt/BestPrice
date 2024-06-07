@@ -1963,11 +1963,11 @@ public class SqlHelper
         {
            
                 if (!string.IsNullOrEmpty(drCategory["FlashSaleFrame1"].ToString()))
-                    _return += string.Format(@"<div class=""frame-flash-sale""><img src=""{0}"" alt=""{1}"" /></div>", ConfigWeb.FlashSaleFrame1, "Flash Sale");
+                    _return += string.Format(@"<div class=""frame-flash-sale""><img src=""{0}"" alt=""{1}"" /></div>", drCategory["FlashSaleFrame1"], "Flash Sale");
                 if (!string.IsNullOrEmpty(drCategory["FlashSaleFrame2"].ToString()))
-                    _return += string.Format(@"<div class=""frame-label-sale""><img src=""{0}"" alt=""{1}"" /></div>", ConfigWeb.FlashSaleFrame2, "Flash Sale");
+                    _return += string.Format(@"<div class=""frame-label-sale""><img src=""{0}"" alt=""{1}"" /></div>", drCategory["FlashSaleFrame2"], "Flash Sale");
                 if (!string.IsNullOrEmpty(drCategory["FlashSaleFrame3"].ToString()))
-                    _return += string.Format(@"<div class=""icon-flash-sale""><img src=""{0}"" alt=""{1}"" /></div>", ConfigWeb.FlashSaleFrame3, "Flash Sale");
+                    _return += string.Format(@"<div class=""icon-flash-sale""><img src=""{0}"" alt=""{1}"" /></div>", drCategory["FlashSaleFrame3"], "Flash Sale");
             
         }
         return _return;
