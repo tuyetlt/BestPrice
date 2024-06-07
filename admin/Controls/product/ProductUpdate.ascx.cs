@@ -626,17 +626,22 @@ public partial class admin_Controls_ProductUpdate : System.Web.UI.UserControl
 
     protected void UpdateBrand(string AttributesIDList, string CategoryNameList, string ID)
     {
-        List<string> attrList = GenSitemap.GenAttribute(AttributesIDList, CategoryNameList);
-        if (attrList.Count > 0)
+        try
         {
-            using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
+            List<string> attrList = GenSitemap.GenAttribute(AttributesIDList, CategoryNameList);
+            if (attrList.Count > 0)
             {
-                string sqlQuery = @"UPDATE [dbo].[tblProducts] SET [Brand]=@Brand WHERE [ID] = @ID";
-                db.AddParameter("@ID", System.Data.SqlDbType.Int, ID);
-                db.AddParameter("@Brand", System.Data.SqlDbType.NVarChar, attrList[0].ToString());
-                db.ExecuteSql(sqlQuery);
+                using (var db = MetaNET.DataHelper.SqlService.GetSqlService())
+                {
+                    string sqlQuery = @"UPDATE [dbo].[tblProducts] SET [Brand]=@Brand WHERE [ID] = @ID";
+                    db.AddParameter("@ID", System.Data.SqlDbType.Int, ID);
+                    db.AddParameter("@Brand", System.Data.SqlDbType.NVarChar, attrList[0].ToString());
+                    db.ExecuteSql(sqlQuery);
+                }
             }
         }
+        catch
+        { }
     }
 
 

@@ -3275,11 +3275,11 @@ public class Utils
 
     public static DataTable SearchProduct(string keyword)
     {
-        return SearchProduct(keyword, "ID,Name,Price,Price1, Gallery,FriendlyUrlCategory,FriendlyUrl", 100);
+        return SearchProduct(keyword, "ID,Name,Price,Price1,Price2,AttrProductFlag,Gallery,FriendlyUrlCategory,FriendlyUrl", 100);
     }
     public static DataTable SearchProduct(string keyword, int pageSize)
     {
-        return SearchProduct(keyword, "ID,Name,Price,Price1, Gallery,FriendlyUrlCategory,FriendlyUrl", pageSize);
+        return SearchProduct(keyword, "ID,Name,Price,Price1,Price2,AttrProductFlag,Gallery,FriendlyUrlCategory,FriendlyUrl", pageSize);
     }
 
 

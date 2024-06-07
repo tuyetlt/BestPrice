@@ -62,13 +62,13 @@
                             <div class="cart__inner d-grid align-items-sm-center">
                                 <input class="hdfPrice_<%= orderInfo.ProductID %>" value="<%= orderInfo.TotalPrice %>" type="hidden" />
                                 <div class="cart__img">
-                                    <a href="#" class="thumb">
+                                    <a href="<%=link %>" target="_blank" class="thumb">
                                         <img src="<%= orderInfo.Image %>" alt="<%= orderInfo.Name %>" />
                                     </a>
                                 </div>
                                 <div class="cart__product d-grid align-items-center">
                                     <div class="cart__desc">
-                                        <div class="product__name"><a href="<%=link %>"><%= orderInfo.Name %></a></div>
+                                        <div class="product__name"><a href="<%=link %>" target="_blank"><%= orderInfo.Name %></a></div>
                                     </div>
                                     <div class="cart__prices">
                                         <div class="price price_item_<%= orderInfo.ProductID %>"><strong><%=string.Format("{0:N0}", orderInfo.TotalPrice) %> VNĐ</strong></div>

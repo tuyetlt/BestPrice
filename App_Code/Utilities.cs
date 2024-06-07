@@ -2284,10 +2284,11 @@ public class ShoppingCart
         int TotalPrice = 0;
         int QuantityDiscount = 0;
 
-        DataTable dtProduct = SqlHelper.SQLToDataTable("tblProducts", "Price", "ID=" + PID);
+        DataTable dtProduct = SqlHelper.SQLToDataTable("tblProducts", "Price,Price1,Price2, AttrProductFlag", "ID=" + PID);
         if (Utils.CheckExist_DataTable(dtProduct))
         {
-            Price = ConvertUtility.ToInt32(dtProduct.Rows[0]["Price"]);
+            DataRow dr = dtProduct.Rows[0];
+            Price = ConvertUtility.ToInt32(SqlHelper.GetPrice(PriceReturn.PriceDecimal,dr)); //ConvertUtility.ToInt32(dtProduct.Rows[0]["Price"]);
             TotalPrice = Price * Quantity;
 
             //Lưu ý: chỉ đúng khi số lượng thêm vào giỏ hàng = 1
