@@ -120,14 +120,14 @@
                                  { %>
 
                             <div class="product__price mb-3">
-                                <strong class="price">24.800.000 VNĐ</strong>
+                                <strong class="price"><%= SqlHelper.GetPrice(PriceReturn.Price, dr) %></strong>
                                 
                                 <div class="d-flex align-items-center">
                                     <div class="me-2">
                                         <span class="txt-price me-1">Giá gốc:</span>
-                                        <span class="old-price">32.000.000 VNĐ</span>
+                                        <span class="old-price"><%= SqlHelper.GetPrice(PriceReturn.OriginalPrice, dr) %></span>
                                     </div>
-                                    <div><span class="txt-price me-1">Tiết kiệm:</span><strong>-22 %</strong></div>
+                                    <div><span class="txt-price me-1">Tiết kiệm:</span><strong><%= SqlHelper.GetPrice(PriceReturn.Percent, dr) %></strong></div>
                                 </div>
                                 
                             </div>
