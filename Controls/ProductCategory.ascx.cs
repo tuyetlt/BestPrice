@@ -46,7 +46,7 @@ public partial class Controls_ProductCategory : System.Web.UI.UserControl
         if (Utils.CheckExist_DataTable(dtRef))
             dtCat = dtRef;
         else
-            dtCat = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID,Name,FriendlyUrl,Image_1,Hide,ParentID,AttributesIDList,LongDescription,TagIDList,MetaTitle,MetaKeyword,MetaDescription,SchemaRatingCount,SchemaRatingValue,Moduls", string.Format("{0} AND Moduls=N'{1}' AND FriendlyUrl=N'{2}'", Utils.CreateFilterHide, "category", caturl));
+            dtCat = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID,Name,FriendlyUrl,Image_1,Hide,ParentID,AttributesIDList,LongDescription,TagIDList,MetaTitle,MetaKeyword,MetaDescription,SchemaRatingCount,SchemaRatingValue,Moduls,IsFlashSale,FlashSaleTimeDisplay,FlashSaleHeader,FlashSaleBackgroundColor,FlashSaleFrame1,FlashSaleFrame2,FlashSaleFrame3", string.Format("{0} AND Moduls=N'{1}' AND FriendlyUrl=N'{2}'", Utils.CreateFilterHide, "category", caturl));
 
         if (Utils.CheckExist_DataTable(dtCat))
         {

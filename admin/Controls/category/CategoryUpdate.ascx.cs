@@ -18,7 +18,7 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
     public PositionMenuFlag positionFlag;
     public LinkTypeMenuFlag linkTypeFlag;
     public AttrMenuFlag attrMenuFlag;
-
+    public string FlashSaleHeader = C.NO_IMG_PATH, FlashSaleFrame1 = C.NO_IMG_PATH, FlashSaleFrame2 = C.NO_IMG_PATH, FlashSaleFrame3 = C.NO_IMG_PATH;
     public string TagIDList = string.Empty,
         TagUrlList = string.Empty,
         TagNameList = string.Empty,
@@ -87,6 +87,15 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
                         image_4 = ds.Rows[0]["image_4"].ToString();
                     if (!string.IsNullOrEmpty(ds.Rows[0]["Icon"].ToString()))
                         icon = ds.Rows[0]["Icon"].ToString();
+
+                    if (!string.IsNullOrEmpty(dr["FlashSaleHeader"].ToString()))
+                        FlashSaleHeader = ds.Rows[0]["FlashSaleHeader"].ToString();
+                    if (!string.IsNullOrEmpty(dr["FlashSaleFrame1"].ToString()))
+                        FlashSaleFrame1 = ds.Rows[0]["FlashSaleFrame1"].ToString();
+                    if (!string.IsNullOrEmpty(dr["FlashSaleFrame2"].ToString()))
+                        FlashSaleFrame2 = ds.Rows[0]["FlashSaleFrame2"].ToString();
+                    if (!string.IsNullOrEmpty(dr["FlashSaleFrame3"].ToString()))
+                        FlashSaleFrame3 = ds.Rows[0]["FlashSaleFrame3"].ToString();
                 }
             }
 
@@ -248,6 +257,11 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
             else
                 hashtable["Hide"] = false;
 
+            if (!string.IsNullOrEmpty(Request.Form["IsFlashSale"]) && Request.Form["IsFlashSale"] == "on")
+                hashtable["IsFlashSale"] = true;
+            else
+                hashtable["IsFlashSale"] = false;
+
             #endregion
 
             CacheUtility.PurgeCacheItems(table);
@@ -323,6 +337,12 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
             hashtable["SchemaRatingValue"] = Utils.KillChars(Request.Form["schemaratingvalue"]);
             hashtable["SchemaRatingCount"] = Utils.KillChars(Request.Form["schemaratingcount"]);
 
+            hashtable["FlashSaleTimeDisplay"] = Utils.DateTimeString_To_DateTimeSql(Request.Form["FlashSaleTimeDisplay"]);
+            hashtable["FlashSaleHeader"] = Utils.KillChars(Request.Form["FlashSaleHeader"]);
+            hashtable["FlashSaleBackgroundColor"] = Utils.KillChars(Request.Form["FlashSaleBackgroundColor"]);
+            hashtable["FlashSaleFrame1"] = Utils.KillChars(Request.Form["FlashSaleFrame1"]);
+            hashtable["FlashSaleFrame2"] = Utils.KillChars(Request.Form["FlashSaleFrame2"]);
+            hashtable["FlashSaleFrame3"] = Utils.KillChars(Request.Form["FlashSaleFrame3"]);
 
             CacheUtility.PurgeCacheItems(table);
 
@@ -331,11 +351,11 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
                 string sqlQuery = string.Empty;
                 if (IsUpdate)
                 {
-                    sqlQuery = @"UPDATE [dbo].[tblCategories] SET [Name]=@Name, [FriendlyUrl]=@FriendlyUrl, [Description]=@Description, [LongDescription]=@LongDescription, [Link]=@Link, [ParentID]=@ParentID, [ParentIDList]=@ParentIDList, [LevelNumber]=@LevelNumber, [Image_1]=@Image_1, [Image_2]=@Image_2, [Image_3]=@Image_3,[Image_4]=@Image_4, [Icon]=@Icon, [Sort]=@Sort, [Sort1]=@Sort1, [Sort2]=@Sort2, [Moduls]=@Moduls, [LinkTypeMenuFlag]=@LinkTypeMenuFlag, [PositionMenuFlag]=@PositionMenuFlag, [AttrMenuFlag]=@AttrMenuFlag, [Hide]=@Hide, [FilterJson]=@FilterJson, [AttributesIDList]=@AttributesIDList, [AttributesUrlList]=@AttributesUrlList, [AttributeConfigIDList]=@AttributeConfigIDList, [AttributeConfigUrlList]=@AttributeConfigUrlList, [TagIDList]=@TagIDList, [TagNameList]=@TagNameList, [TagUrlList]=@TagUrlList, [HashTagIDList]=@HashTagIDList, [HashTagNameList]=@HashTagNameList, [HashTagUrlList]=@HashTagUrlList, [MetaTitle]=@MetaTitle, [MetaKeyword]=@MetaKeyword, [MetaDescription]=@MetaDescription, [EditedDate]=@EditedDate, [EditedBy]=@EditedBy, [Temp1]=@Temp1, [Temp2]=@Temp2, [Temp3]=@Temp3, [Temp4]=@Temp4, [Temp5]=@Temp5, [Temp6]=@Temp6, [Temp7]=@Temp7, [TempModuls]=@TempModuls,[SchemaBestRating]=@SchemaBestRating, [SchemaRatingValue]=@SchemaRatingValue, [SchemaRatingCount]=@SchemaRatingCount WHERE [ID] = @ID";
+                    sqlQuery = @"UPDATE [dbo].[tblCategories] SET [Name]=@Name, [FriendlyUrl]=@FriendlyUrl, [Description]=@Description, [LongDescription]=@LongDescription, [Link]=@Link, [ParentID]=@ParentID, [ParentIDList]=@ParentIDList, [LevelNumber]=@LevelNumber, [Image_1]=@Image_1, [Image_2]=@Image_2, [Image_3]=@Image_3,[Image_4]=@Image_4, [Icon]=@Icon, [Sort]=@Sort, [Sort1]=@Sort1, [Sort2]=@Sort2, [Moduls]=@Moduls, [LinkTypeMenuFlag]=@LinkTypeMenuFlag, [PositionMenuFlag]=@PositionMenuFlag, [AttrMenuFlag]=@AttrMenuFlag, [Hide]=@Hide, [FilterJson]=@FilterJson, [AttributesIDList]=@AttributesIDList, [AttributesUrlList]=@AttributesUrlList, [AttributeConfigIDList]=@AttributeConfigIDList, [AttributeConfigUrlList]=@AttributeConfigUrlList, [TagIDList]=@TagIDList, [TagNameList]=@TagNameList, [TagUrlList]=@TagUrlList, [HashTagIDList]=@HashTagIDList, [HashTagNameList]=@HashTagNameList, [HashTagUrlList]=@HashTagUrlList, [MetaTitle]=@MetaTitle, [MetaKeyword]=@MetaKeyword, [MetaDescription]=@MetaDescription, [EditedDate]=@EditedDate, [EditedBy]=@EditedBy, [Temp1]=@Temp1, [Temp2]=@Temp2, [Temp3]=@Temp3, [Temp4]=@Temp4, [Temp5]=@Temp5, [Temp6]=@Temp6, [Temp7]=@Temp7, [TempModuls]=@TempModuls,[SchemaBestRating]=@SchemaBestRating, [SchemaRatingValue]=@SchemaRatingValue, [SchemaRatingCount]=@SchemaRatingCount,[IsFlashSale]=@IsFlashSale,[FlashSaleTimeDisplay]=@FlashSaleTimeDisplay,[FlashSaleHeader]=@FlashSaleHeader,[FlashSaleBackgroundColor]=@FlashSaleBackgroundColor,[FlashSaleFrame1]=@FlashSaleFrame1,[FlashSaleFrame2]=@FlashSaleFrame2,[FlashSaleFrame3]=@FlashSaleFrame3 WHERE [ID] = @ID";
                 }
                 else
                 {
-                    sqlQuery = @"INSERT INTO [dbo].[tblCategories] ([Name],[FriendlyUrl],[Description],[LongDescription],[Link],[ParentID],[ParentIDList],[LevelNumber],[Image_1],[Image_2],[Image_3],[Image_4],[Icon],[Sort],[Sort1],[Sort2],[Moduls],[LinkTypeMenuFlag],[PositionMenuFlag],[AttrMenuFlag],[Hide],[FilterJson],[AttributesIDList],[AttributesUrlList],[AttributeConfigIDList],[AttributeConfigUrlList],[TagIDList],[TagNameList],[TagUrlList],[HashTagIDList],[HashTagNameList],[HashTagUrlList],[MetaTitle],[MetaKeyword],[MetaDescription],[CreatedDate],[EditedDate],[CreatedBy],[EditedBy],[Temp1],[Temp2],[Temp3],[Temp4],[Temp5],[Temp6],[Temp7],[TempModuls],[SchemaBestRating],[SchemaRatingValue],[SchemaRatingCount]) OUTPUT INSERTED.ID VALUES (@Name,@FriendlyUrl,@Description,@LongDescription,@Link,@ParentID,@ParentIDList,@LevelNumber,@Image_1,@Image_2,@Image_3,@Image_4,@Icon,@Sort,@Sort1,@Sort2,@Moduls,@LinkTypeMenuFlag,@PositionMenuFlag,@AttrMenuFlag,@Hide,@FilterJson,@AttributesIDList,@AttributesUrlList,@AttributeConfigIDList,@AttributeConfigUrlList,@TagIDList,@TagNameList,@TagUrlList,@HashTagIDList,@HashTagNameList,@HashTagUrlList,@MetaTitle,@MetaKeyword,@MetaDescription,@CreatedDate,@EditedDate,@CreatedBy,@EditedBy,@Temp1,@Temp2,@Temp3,@Temp4,@Temp5,@Temp6,@Temp7,@TempModuls,@SchemaBestRating,@SchemaRatingValue,@SchemaRatingCount)";
+                    sqlQuery = @"INSERT INTO [dbo].[tblCategories] ([Name],[FriendlyUrl],[Description],[LongDescription],[Link],[ParentID],[ParentIDList],[LevelNumber],[Image_1],[Image_2],[Image_3],[Image_4],[Icon],[Sort],[Sort1],[Sort2],[Moduls],[LinkTypeMenuFlag],[PositionMenuFlag],[AttrMenuFlag],[Hide],[FilterJson],[AttributesIDList],[AttributesUrlList],[AttributeConfigIDList],[AttributeConfigUrlList],[TagIDList],[TagNameList],[TagUrlList],[HashTagIDList],[HashTagNameList],[HashTagUrlList],[MetaTitle],[MetaKeyword],[MetaDescription],[CreatedDate],[EditedDate],[CreatedBy],[EditedBy],[Temp1],[Temp2],[Temp3],[Temp4],[Temp5],[Temp6],[Temp7],[TempModuls],[SchemaBestRating],[SchemaRatingValue],[SchemaRatingCount],[IsFlashSale],[FlashSaleTimeDisplay],[FlashSaleHeader],[FlashSaleBackgroundColor],[FlashSaleFrame1],[FlashSaleFrame2],[FlashSaleFrame3]) OUTPUT INSERTED.ID VALUES (@Name,@FriendlyUrl,@Description,@LongDescription,@Link,@ParentID,@ParentIDList,@LevelNumber,@Image_1,@Image_2,@Image_3,@Image_4,@Icon,@Sort,@Sort1,@Sort2,@Moduls,@LinkTypeMenuFlag,@PositionMenuFlag,@AttrMenuFlag,@Hide,@FilterJson,@AttributesIDList,@AttributesUrlList,@AttributeConfigIDList,@AttributeConfigUrlList,@TagIDList,@TagNameList,@TagUrlList,@HashTagIDList,@HashTagNameList,@HashTagUrlList,@MetaTitle,@MetaKeyword,@MetaDescription,@CreatedDate,@EditedDate,@CreatedBy,@EditedBy,@Temp1,@Temp2,@Temp3,@Temp4,@Temp5,@Temp6,@Temp7,@TempModuls,@SchemaBestRating,@SchemaRatingValue,@SchemaRatingCount,@IsFlashSale,@FlashSaleTimeDisplay,@FlashSaleHeader,@FlashSaleBackgroundColor,@FlashSaleFrame1,@FlashSaleFrame2,@FlashSaleFrame3)";
                 }
 
                 db.AddParameter("@Name", System.Data.SqlDbType.NVarChar, hashtable["Name"].ToString());
@@ -385,6 +405,13 @@ public partial class admin_Controls_CategoryUpdate : System.Web.UI.UserControl
                 db.AddParameter("@SchemaBestRating", System.Data.SqlDbType.Int, hashtable["SchemaBestRating"].ToString());
                 db.AddParameter("@SchemaRatingValue", System.Data.SqlDbType.Int, hashtable["SchemaRatingValue"].ToString());
                 db.AddParameter("@SchemaRatingCount", System.Data.SqlDbType.Int, hashtable["SchemaRatingCount"].ToString());
+                db.AddParameter("@IsFlashSale", System.Data.SqlDbType.Bit, hashtable["IsFlashSale"].ToString());
+                db.AddParameter("@FlashSaleTimeDisplay", System.Data.SqlDbType.DateTime, hashtable["FlashSaleTimeDisplay"].ToString());
+                db.AddParameter("@FlashSaleHeader", System.Data.SqlDbType.NVarChar, hashtable["FlashSaleHeader"].ToString());
+                db.AddParameter("@FlashSaleBackgroundColor", System.Data.SqlDbType.NVarChar, hashtable["FlashSaleBackgroundColor"].ToString());
+                db.AddParameter("@FlashSaleFrame1", System.Data.SqlDbType.NVarChar, hashtable["FlashSaleFrame1"].ToString());
+                db.AddParameter("@FlashSaleFrame2", System.Data.SqlDbType.NVarChar, hashtable["FlashSaleFrame2"].ToString());
+                db.AddParameter("@FlashSaleFrame3", System.Data.SqlDbType.NVarChar, hashtable["FlashSaleFrame3"].ToString());
 
                 db.AddParameter("@TempModuls", System.Data.SqlDbType.NVarChar, hashtable["TempModuls"].ToString());
 

@@ -82,7 +82,7 @@ public partial class _default : System.Web.UI.Page
                         }
                         else if (moduls == "category_product")
                         {
-                            DataTable dt = SqlHelper.SQLToDataTable("tblCategories", "ID,Name,FriendlyUrl,Image_1,Hide,ParentID,AttributesIDList,LongDescription,TagIDList,MetaTitle,MetaKeyword,MetaDescription,SchemaRatingCount,SchemaRatingValue,Moduls", string.Format("ID=N'{0}'", drUrl["ContentID"]));
+                            DataTable dt = SqlHelper.SQLToDataTable("tblCategories", "ID,Name,FriendlyUrl,Image_1,Hide,ParentID,AttributesIDList,LongDescription,TagIDList,MetaTitle,MetaKeyword,MetaDescription,SchemaRatingCount,SchemaRatingValue,Moduls,IsFlashSale,FlashSaleTimeDisplay,FlashSaleHeader,FlashSaleBackgroundColor,FlashSaleFrame1,FlashSaleFrame2,FlashSaleFrame3", string.Format("ID=N'{0}'", drUrl["ContentID"]));
                             mainControl = LoadControl("~/Controls/ProductCategory.ascx");
                             Controls_ProductCategory contentDetailControl = mainControl as Controls_ProductCategory;
                             if (contentDetailControl != null)

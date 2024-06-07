@@ -12,6 +12,40 @@
 <input type="hidden" id="thuonghieu" value="<%= thuonghieu %>" />
 
 <input type="hidden" id="AttributesIDList" value="<%= Utils.CommaSQLRemove(drCat["AttributesIDList"].ToString()) %>" />
+
+
+<%
+
+    if (ConvertUtility.ToBoolean(drCat["IsFlashSale"]))
+    {
+%>
+
+<div class="main main__wrapper" style="background-color: <%= drCat["FlashSaleBackgroundColor"].ToString() %>">
+    <div class="container">
+         <div class="heading d-flex align-items-end">
+            <div class="col flash-sale-Breadcrumb">
+                <%=Utils.LoadUserControl("~/Controls/WidgetBreadcrumb.ascx") %>
+            </div>
+        </div>
+        <div class="column__main col-12">
+            <% 
+                string Modul = "FlashSaleCategory";
+                string ReadMore = "";
+
+                string filter = string.Format(@"(Hide is null OR Hide=0) AND (CategoryIDList Like N'%,{0},%' OR CategoryIDParentList Like N'%,{0},%' OR TagIDList Like N'%,{0},%')", drCat["ID"]);
+                Response.Write(Utils.LoadUserControlCategory("~/Controls/UCHomeProduct.ascx", drCat));
+
+            %>
+        </div>
+    </div>
+</div>
+
+
+
+<% }
+    else
+    {  %>
+
 <div class="main main__wrapper">
     <div class="container">
         <div class="heading d-md-flex align-items-end">
@@ -112,7 +146,7 @@
                         <form method="POST" class="sidebar__filters-inner">
                             <div id="filted">
                             </div>
-                            <div class="sidebar__inner filter-ajax">   
+                            <div class="sidebar__inner filter-ajax">
                             </div>
                         </form>
                     </aside>
@@ -131,15 +165,15 @@
                                 foreach (DataRow drProduct in dtProduct.Rows)
                                 {
                                     string linkDetail = TextChanger.GetLinkRewrite_Products(ConvertUtility.ToString(drProduct["FriendlyUrlCategory"]), ConvertUtility.ToString(drProduct["FriendlyUrl"]));
-                                  
+
                         %>
                         <div class="product__item col-6 col-sm-4 col-md-4 col-lg-3">
                             <div class="product__inner">
                                 <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
                                     <div class="product__thumb">
-                                       <%= SqlHelper.GetPercentLabel(drProduct) %>
+                                        <%= SqlHelper.GetPercentLabel(drProduct) %>
                                         <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 300, 300) %>" alt="<%= drProduct["Name"].ToString() %>" width="350" height="400" />
-                                         <%= SqlHelper.GenFlashSaleFrame(drProduct) %>
+                                        <%= SqlHelper.GenFlashSaleFrame(drProduct) %>
                                         <%-- <%= SqlHelper.GetTimeCountdownFlashSale(drProduct) %>--%>
                                     </div>
                                 </a>
@@ -214,8 +248,6 @@
     </div>
 </div>
 
-
-
 <script id="product-template" type="text/template">
     <div class="product__item col-6 col-sm-4 col-md-4 col-lg-3">
         <div class="product__inner">
@@ -236,6 +268,7 @@
     </div>
 </script>
 
+<%} %>
 
 
 <input type="hidden" value="category" id="GG_Page" />

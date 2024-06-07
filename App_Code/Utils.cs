@@ -2051,6 +2051,31 @@ public class Utils
         }
     }
 
+
+    public static string LoadUserControlCategory(string url, DataRow drCategory)
+    {
+        try
+        {
+            using (Page page = new Page())
+            {
+                UserControl userControl = (UserControl)page.LoadControl(url);
+                userControl.GetType().GetProperty("drCategory").SetValue(userControl, drCategory);
+                userControl.GetType().GetProperty("Modul").SetValue(userControl, "FlashSaleCategory");
+                page.Controls.Add(userControl);
+                using (StringWriter writer = new StringWriter())
+                {
+                    HttpContext.Current.Server.Execute(page, writer, false);
+                    return writer.ToString();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
+
+
     public static string LoadMetaTags1(string url, string MetaTitle)
     {
         try

@@ -1956,6 +1956,22 @@ public class SqlHelper
         }
         return _return;
     }
+    public static string GenFlashSaleFrameCategory(DataRow drCategory)
+    {
+        string _return = string.Empty;
+        if (drCategory != null)
+        {
+           
+                if (!string.IsNullOrEmpty(drCategory["FlashSaleFrame1"].ToString()))
+                    _return += string.Format(@"<div class=""frame-flash-sale""><img src=""{0}"" alt=""{1}"" /></div>", ConfigWeb.FlashSaleFrame1, "Flash Sale");
+                if (!string.IsNullOrEmpty(drCategory["FlashSaleFrame2"].ToString()))
+                    _return += string.Format(@"<div class=""frame-label-sale""><img src=""{0}"" alt=""{1}"" /></div>", ConfigWeb.FlashSaleFrame2, "Flash Sale");
+                if (!string.IsNullOrEmpty(drCategory["FlashSaleFrame3"].ToString()))
+                    _return += string.Format(@"<div class=""icon-flash-sale""><img src=""{0}"" alt=""{1}"" /></div>", ConfigWeb.FlashSaleFrame3, "Flash Sale");
+            
+        }
+        return _return;
+    }
 
     public static string GetTimeCountdownFlashSale(DataRow drProduct)
     {
@@ -1976,14 +1992,34 @@ public class SqlHelper
         return _return;
     }
 
+    public static string GetTimeCountdownFlashSaleCategory(DataRow drCategory)
+    {
+        string _return = string.Empty;
+        if (drCategory != null)
+        {
+            System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
+            string dateString = drCategory["FlashSaleTimeDisplay"].ToString();
+
+            _return = string.Format(@"<div class=""timeCountdown"" data-date=""{0}"">
+                                    <span class=""hours""></span>
+                                    <b>:</b>
+                                    <span class=""minutes""></span>
+                                    <b>:</b>
+                                    <span class=""seconds""></span>
+                                    </div>", dateString);
+            
+        }
+        return _return;
+    }
+
     public static string GetPercentLabel(DataRow drProduct)
     {
         string _return = string.Empty;
-        if (!ConvertUtility.ToBoolean(SqlHelper.GetPrice(PriceReturn.IsFlashSale, drProduct)))
-        {
+        //if (!ConvertUtility.ToBoolean(SqlHelper.GetPrice(PriceReturn.IsFlashSale, drProduct)))
+        //{
             if (!string.IsNullOrEmpty(SqlHelper.GetPrice(PriceReturn.Percent, drProduct)))
                 _return = string.Format(@"<label class=""on-sale""><span>{0}</span></label>", GetPrice(PriceReturn.Percent, drProduct));
-        }
+        //}
         return _return;
     }
 

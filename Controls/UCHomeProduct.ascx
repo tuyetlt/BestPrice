@@ -199,5 +199,60 @@
 </section>
 <%
     }
+    else if (Modul == "FlashSaleCategory") // FlashSale Category
+    {
 %>
+<section class="product product__special-topPage moduleProductSlideshow-specials mb-5">
+    <div class="container">
+        <div class="banner-sale">
+            <img src="<%= drCategory["FlashSaleHeader"].ToString() %>" alt="Flash Sale" />
+        </div>
+        <div class="moduleProductSlideshow__wrap">
+            <div class="moduleProductSlideshow__section">
+                <div class="moduleProductSlideshow__section-inner product-flash-sale">
+                    <div class="product__grid d-grid createProductSlideshows_specials" module="specials">
+                        <% 
+                            string Category_ID = drCategory["ID"].ToString();
+                            string filter = string.Format(@"(Hide is null OR Hide=0) AND (CategoryIDList Like N'%,{0},%' OR CategoryIDParentList Like N'%,{0},%' OR TagIDList Like N'%,{0},%')", Category_ID);
+                            DataTable dt = SqlHelper.SQLToDataTable(C.PRODUCT_TABLE, "ID,Name,FriendlyUrl,FriendlyUrlCategory,Gallery,Price,Price1,Price2,AttrProductFlag,HashTagUrlList", filter, "Sort DESC, ID DESC", 1, 64);
+                            if (Utils.CheckExist_DataTable(dt))
+                            {
+                        %>
+                        <%
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                DataRow drProduct = dt.Rows[i];
+                                string linkDetail = TextChanger.GetLinkRewrite_Products(drProduct["FriendlyUrlCategory"].ToString(), drProduct["FriendlyUrl"].ToString());
+                        %>
+                        <div class="product__item">
+                            <div class="product__inner">
+                               
+                                <a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>" class="product__image">
+                                    <div class="product__thumb">
+                                         <%= SqlHelper.GetPercentLabel(drProduct) %>
+                                        <img src="<%= Utils.GetFirstImageInGallery_Json(drProduct["Gallery"].ToString(), 400, 400) %>" alt="<%= drProduct["Name"].ToString() %>" />
+                                        <%=SqlHelper.GenFlashSaleFrameCategory(drCategory)%>
+                                    </div>
+                                </a>
+                                <%= SqlHelper.GetTimeCountdownFlashSaleCategory(drCategory) %>
+                                <div class="product__info">
+                                    <h3 class="product__name"><a href="<%= linkDetail %>" title="<%= drProduct["Name"].ToString() %>"><%= drProduct["Name"].ToString() %></a></h3>
+                                    <div class="product__price d-flex align-items-center justify-content-center">
+                                        <div class="price"><%= SqlHelper.GetPrice(PriceReturn.Price, drProduct) %></div>
+                                        <div class="old-price"><%= SqlHelper.GetPrice(PriceReturn.OriginalPrice, drProduct) %></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %><% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<%
+    }
+%>
+
 <% } %>

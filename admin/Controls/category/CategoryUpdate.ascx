@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="CategoryUpdate.ascx.cs" Inherits="admin_Controls_CategoryUpdate" %>
-
+<%@ Import Namespace="System.Globalization" %>
 <div class="obj-edit">
     <form method="post" enctype="multipart/form-data" id="frm_edit">
         <div class="container">
@@ -180,10 +180,10 @@
 
                     <script type="text/javascript">
 
-                       /* $(document).ready(function () {*/
-                            var catid = $("#attr_id");
-                            if (catid.val().length)
-                                GetAttributeProduct(catid.val());
+                        /* $(document).ready(function () {*/
+                        var catid = $("#attr_id");
+                        if (catid.val().length)
+                            GetAttributeProduct(catid.val());
                         /*});*/
 
 
@@ -236,36 +236,36 @@
                         if (Utils.CommaSQLRemove(dr["FilterJson"].ToString()).Length > 5)
                         {
                             %>
-                                    var jsonContent = <%= Utils.CommaSQLRemove(dr["FilterJson"].ToString()) %>;
+                            var jsonContent = <%= Utils.CommaSQLRemove(dr["FilterJson"].ToString()) %>;
 
                             <%
                         }
                         else
                         {
                             %>
-                                    var data = '<%= Utils.CommaSQLRemove(dr["FilterJson"].ToString()) %>';
-                                    var jsonContent = JSON.parse(JSON.stringify(data));
+                            var data = '<%= Utils.CommaSQLRemove(dr["FilterJson"].ToString()) %>';
+                            var jsonContent = JSON.parse(JSON.stringify(data));
                             <%
                         }
                         %>
 
-                                    var divAttrAjax = $(".attrCheck");
-                                    for (var i = 0; i < jsonContent.length; i++) {
-                                        var item = jsonContent[i];
-                                        var checkbox = $("#checkboxAttr_" + item.ID);
-                                        if (checkbox.length) {
-                                            checkbox.prop('checked', true);
-                                        }
-                                        var jsonChild = JSON.parse(JSON.stringify(item.attributeProductChild));
-                                        for (var j = 0; j < jsonChild.length; j++) {
-                                            var itemChild = jsonChild[j];
+                            var divAttrAjax = $(".attrCheck");
+                            for (var i = 0; i < jsonContent.length; i++) {
+                                var item = jsonContent[i];
+                                var checkbox = $("#checkboxAttr_" + item.ID);
+                                if (checkbox.length) {
+                                    checkbox.prop('checked', true);
+                                }
+                                var jsonChild = JSON.parse(JSON.stringify(item.attributeProductChild));
+                                for (var j = 0; j < jsonChild.length; j++) {
+                                    var itemChild = jsonChild[j];
 
-                                            var checkbox = $("#checkboxAttr_" + itemChild.ID);
-                                            if (checkbox.length) {
-                                                checkbox.prop('checked', true);
-                                            }
-                                        }
+                                    var checkbox = $("#checkboxAttr_" + itemChild.ID);
+                                    if (checkbox.length) {
+                                        checkbox.prop('checked', true);
                                     }
+                                }
+                            }
 
                            <%-- var datas = '<%= Utils.CommaSQLRemove(dr["AttributesIDList"].ToString()) %>';
                             var arr = datas.split(',');
@@ -395,7 +395,7 @@
                                 <label for="Main">Menu chính</label><br>
                                 <input type="checkbox" name="Top" id="Top" <%= Utils.SetChecked(positionFlag.HasFlag(PositionMenuFlag.Top))%> />
                                 <label for="Top">Menu ngang</label><br>
-                                 <input type="checkbox" name="SupperTop" id="SupperTop" <%= Utils.SetChecked(positionFlag.HasFlag(PositionMenuFlag.SupperTop))%> />
+                                <input type="checkbox" name="SupperTop" id="SupperTop" <%= Utils.SetChecked(positionFlag.HasFlag(PositionMenuFlag.SupperTop))%> />
                                 <label for="SupperTop">Menu trên</label><br>
                                 <input type="checkbox" name="Bottom" id="Bottom" <%= Utils.SetChecked(positionFlag.HasFlag(PositionMenuFlag.Bottom))%> />
                                 <label for="Bottom">Menu dưới</label><br>
@@ -599,6 +599,95 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div></div>
+                        <div>
+                            <%
+                                string IsFlashSale = "";
+                                string displayFlashSale = "none";
+                                if (!string.IsNullOrEmpty(dr["IsFlashSale"].ToString()) && ConvertUtility.ToBoolean(dr["IsFlashSale"]))
+                                {
+                                    IsFlashSale = " checked";
+                                    displayFlashSale = "block";
+                                }
+                            %>
+                            <input type="checkbox" name="IsFlashSale" id="IsFlashSale" <%= IsFlashSale %> />
+                            <label for="IsFlashSale">Trang dạng Flash Sale Landing Page</label><br>
+                        </div>
+                    </div>
+                    <div style="display: <%= displayFlashSale %>" id="divIsFlashSale">
+                        <div class="form-group">
+                            <div>Thời gian kết thúc FlashSale </div>
+                            <div>
+                                <% 
+                                    string inputDateTime = dr["FlashSaleTimeDisplay"].ToString();
+                                    DateTime dateTime;
+                                    string outputDateTime = inputDateTime;
+                                    if (DateTime.TryParseExact(inputDateTime, "dd/MM/yyyy h:mm:ss tt", CultureInfo.GetCultureInfo("vi-VN"), DateTimeStyles.None, out dateTime))
+                                    {
+                                        outputDateTime = dateTime.ToString("dd/MM/yyyy HH:mm:ss");
+                                    }
+                                %>
+
+                                <input type="text" class="datepicker" autocomplete="off" id="FlashSaleTimeDisplay" name="FlashSaleTimeDisplay" value="<%= outputDateTime %>" style="width: 360px" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>Màu nền </div>
+                            <div>
+                                <input type="text" id="FlashSaleBackgroundColor" name="FlashSaleBackgroundColor" value="<%= dr["FlashSaleBackgroundColor"].ToString()%>" style="width: 360px" />
+                            </div>
+                        </div>
+                        <div class="form-group image-ck">
+                            <div>Ảnh tiêu đề </div>
+                            <div data-thumb="thumbnail_FlashSaleHeader" data-inputtext="FlashSaleHeader" data-folder="flash-sale">
+                                <a href="javascript:;" class="get_ck">
+                                    <img src="<%= FlashSaleHeader %>" id="thumbnail_FlashSaleHeader" alt="Chọn Ảnh" />
+                                </a>
+                                <input type="text" id="FlashSaleHeader" name="FlashSaleHeader" class="get_ck" value="<%= dr["FlashSaleHeader"].ToString()%>" style="width: 300px !important" />
+                            </div>
+                        </div>
+                        <div class="form-group image-ck">
+                            <div>Khung sản phẩm </div>
+                            <div data-thumb="thumbnail_FlashSaleFrame1" data-inputtext="FlashSaleFrame1" data-folder="flash-sale">
+                                <a href="javascript:;" class="get_ck">
+                                    <img src="<%= FlashSaleFrame1 %>" id="thumbnail_FlashSaleFrame1" alt="Chọn Ảnh" />
+                                </a>
+                                <input type="text" id="FlashSaleFrame1" name="FlashSaleFrame1" class="get_ck" value="<%= dr["FlashSaleFrame1"].ToString()%>" style="width: 300px !important" />
+                            </div>
+                        </div>
+                        <div class="form-group image-ck">
+                            <div>Icon phải </div>
+                            <div data-thumb="thumbnail_FlashSaleFrame2" data-inputtext="FlashSaleFrame2" data-folder="flash-sale">
+                                <a href="javascript:;" class="get_ck">
+                                    <img src="<%= FlashSaleFrame2 %>" id="thumbnail_FlashSaleFrame2" alt="Chọn Ảnh" />
+                                </a>
+                                <input type="text" id="FlashSaleFrame2" name="FlashSaleFrame2" class="get_ck" value="<%= dr["FlashSaleFrame2"].ToString()%>" style="width: 300px !important" />
+                            </div>
+                        </div>
+                        <div class="form-group image-ck">
+                            <div>Icon trái </div>
+                            <div data-thumb="thumbnail_FlashSaleFrame3" data-inputtext="FlashSaleFrame3" data-folder="flash-sale">
+                                <a href="javascript:;" class="get_ck">
+                                    <img src="<%= FlashSaleFrame3 %>" id="thumbnail_FlashSaleFrame3" alt="Chọn Ảnh" />
+                                </a>
+                                <input type="text" id="FlashSaleFrame3" name="FlashSaleFrame3" class="get_ck" value="<%= dr["FlashSaleFrame3"].ToString()%>" style="width: 300px !important" />
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var checkbox = document.getElementById('IsFlashSale');
+                            var div = document.getElementById('divIsFlashSale');
+                            checkbox.addEventListener('change', function () {
+                                if (checkbox.checked) {
+                                    div.style.display = 'block';
+                                } else {
+                                    div.style.display = 'none';
+                                }
+                            });
+                        });
+                    </script>
                 </div>
 
 
@@ -628,11 +717,11 @@
                                 var dataValue = $(this).attr("data-value");
                                       <%--  if (dataValue == "delete")
                                             DeleteByID('<%= dr["ID"].ToString() %>', '<%= table %>', '<%= ControlAdminInfo.ShortName %>');--%>
-                                        $('#frm_edit #done').val(dataValue);
-                                        $(this).attr('disabled', 'disabled');
-                                        $(this).html('Loading...');
-                                        $("#frm_edit").submit();
-                                    });
+                                $('#frm_edit #done').val(dataValue);
+                                $(this).attr('disabled', 'disabled');
+                                $(this).html('Loading...');
+                                $("#frm_edit").submit();
+                            });
                         </script>
                     </div>
                 </div>

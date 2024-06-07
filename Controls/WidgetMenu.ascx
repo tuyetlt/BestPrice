@@ -24,15 +24,24 @@
                                 int subMenu = (int)PositionMenuFlag.Main;
                                 string filter2 = string.Format("(Hide is null OR Hide=0) AND PositionMenuFlag & {0} <> 0", subMenu);
                                 DataTable dt_2 = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, Name, FriendlyUrl, Link, LinkTypeMenuFlag, PositionMenuFlag, ParentID", string.Format("ParentID={0} AND {1}", dr_1["ID"], filter2), "Sort");
-
+                                bool HotIcon = false;
+                                if (ConvertUtility.ToBoolean(dr_1["IsFlashSale"]))
+                                    HotIcon = true;
                     %>
                     <li class="nav-item has-children">
                         <div class="d-flex align-items-center">
                             <a href="<%= link_1 %>" class="nav-link col" title="<%= dr_1["Name"].ToString() %>"><%= dr_1["Name"].ToString() %></a>
+                            <%if (HotIcon)
+                                {  %>
+                               <%-- Chèn Icon vào đây--%>
+                            <% } %>
+
                             <%  if (Utils.CheckExist_DataTable(dt_2))
                                 {
-                            %><button type="button" class="btn btn-next-menu"><i class="icon-angle-right"></i></button>
-                            <%} %></div>
+                            %>
+                            <button type="button" class="btn btn-next-menu"><i class="icon-angle-right"></i></button>
+                            <%} %>
+                        </div>
 
                         <div class="dropdown-menu">
                             <button type="button" class="btn btn-prev-menu d-md-none">

@@ -71,28 +71,28 @@ public partial class admin_AdminControl_Controls_TopPanel : System.Web.UI.UserCo
 
     protected void UpdateLogs(string AdminName)
     {
-        try
-        {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["LogSqlServer"].ConnectionString;
-            using (var db = MetaNET.DataHelper.SqlService.GetSqlServiceFromConnectionString(connectionString))
-            {
-                string sqlQuery = @"INSERT INTO [tblLogs]([Name],[IP],[Url],[AdminName],[UserAgent],[CreatedDate]) VALUES (@Name,@IP,@Url,@AdminName,@UserAgent,@CreatedDate); SELECT SCOPE_IDENTITY();";
+        //try
+        //{
+        //    string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["LogSqlServer"].ConnectionString;
+        //    using (var db = MetaNET.DataHelper.SqlService.GetSqlServiceFromConnectionString(connectionString))
+        //    {
+        //        string sqlQuery = @"INSERT INTO [tblLogs]([Name],[IP],[Url],[AdminName],[UserAgent],[CreatedDate]) VALUES (@Name,@IP,@Url,@AdminName,@UserAgent,@CreatedDate); SELECT SCOPE_IDENTITY();";
 
-                db.AddParameter("@Name", System.Data.SqlDbType.NVarChar, Utils.GetDomainName);
-                db.AddParameter("@IP", System.Data.SqlDbType.NVarChar, Utils.GetIPAddress());
-                db.AddParameter("@Url", System.Data.SqlDbType.NVarChar, Utils.GetUrlInfo);
-                db.AddParameter("@AdminName", System.Data.SqlDbType.NVarChar, AdminName);
-                db.AddParameter("@UserAgent", System.Data.SqlDbType.NVarChar, Request.Headers["User-Agent"]);
-                db.AddParameter("@CreatedDate", System.Data.SqlDbType.DateTime, DateTime.Now);
+        //        db.AddParameter("@Name", System.Data.SqlDbType.NVarChar, Utils.GetDomainName);
+        //        db.AddParameter("@IP", System.Data.SqlDbType.NVarChar, Utils.GetIPAddress());
+        //        db.AddParameter("@Url", System.Data.SqlDbType.NVarChar, Utils.GetUrlInfo);
+        //        db.AddParameter("@AdminName", System.Data.SqlDbType.NVarChar, AdminName);
+        //        db.AddParameter("@UserAgent", System.Data.SqlDbType.NVarChar, Request.Headers["User-Agent"]);
+        //        db.AddParameter("@CreatedDate", System.Data.SqlDbType.DateTime, DateTime.Now);
 
-                object result = db.ExecuteSqlScalar<int>(sqlQuery, 0);
-                int insertedId = Convert.ToInt32(result);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-        }
+        //        object result = db.ExecuteSqlScalar<int>(sqlQuery, 0);
+        //        int insertedId = Convert.ToInt32(result);
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine("Error: " + ex.Message);
+        //}
     }
 
 }
