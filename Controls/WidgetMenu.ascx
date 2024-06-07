@@ -15,7 +15,7 @@
                 <ul class="navigation__menu nav is-in-view">
                     <%
                         string filter = string.Format("{0} AND {1}", Utils.CreateFilterHide, Utils.CreateFilterFlags(PositionMenuFlag.Main, "PositionMenuFlag"));
-                        DataTable dt_1 = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, Name, FriendlyUrl, Link, LinkTypeMenuFlag, PositionMenuFlag, ParentID", string.Format("ParentID=0 AND {0}", filter), "Sort", 1, C.MAX_ITEM_MENU);
+                        DataTable dt_1 = SqlHelper.SQLToDataTable(C.CATEGORY_TABLE, "ID, Name, FriendlyUrl, Link, LinkTypeMenuFlag, PositionMenuFlag, ParentID,IsFlashSale", string.Format("ParentID=0 AND {0}", filter), "Sort", 1, C.MAX_ITEM_MENU);
                         if (Utils.CheckExist_DataTable(dt_1))
                         {
                             foreach (DataRow dr_1 in dt_1.Rows)
