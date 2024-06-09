@@ -151,7 +151,7 @@
                         </form>
                     </aside>
                     <div class="box-fillter-btn">
-                        <button class="btn-close-sidebar hidden-md">Bỏ chọn</button>
+                        <button class="btn-close-sidebar btn-remove-all hidden-md">Bỏ chọn</button>
                         <button class="btn-close-sidebar btn-reader-more-fillter hidden-md">Xem 0 Sản phẩm</button>
                     </div>
                 </div>
@@ -194,8 +194,12 @@
 
                     <% if (_totalProduct > C.ROWS_PRODUCTCATEGORY)
                         { %>
-                    <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêm</a></div>
+                       <div class="container-btn show-more"><a id="category_paging" class="btn-see-more">Xem thêm</a></div>
                     <%} %>
+                    <div class="container-btn box-text-show-all show-all">
+                        <a id="category_all" class="btn-see-more"> 
+                            <img src="/themes/images/task.png" alt="Alternate Text" width="20"/> Xem tất cả</a>
+                    </div>
                 </div>
                 <div class="section-readmore-cate">
                     <% if (!Utils.IsNullOrEmpty(drCat["LongDescription"].ToString()))

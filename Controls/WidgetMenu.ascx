@@ -33,7 +33,7 @@
                             <a href="<%= link_1 %>" class="nav-link col" title="<%= dr_1["Name"].ToString() %>"><%= dr_1["Name"].ToString() %></a>
                             <%if (HotIcon)
                                 {  %>
-                               <%-- Chèn Icon vào đây--%>
+                            <img src="/themes/images/sale.gif" alt="Alternate Text" width="24" />
                             <% } %>
 
                             <%  if (Utils.CheckExist_DataTable(dt_2))

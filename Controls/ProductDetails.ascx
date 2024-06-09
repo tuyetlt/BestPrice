@@ -268,13 +268,17 @@
                                     <div class="cnt-title">
                                          Thông tin sản phẩm 
                                     </div>
+                                    <% if (!Utils.IsNullOrEmpty(dr["LongDescription"].ToString()))
+                                        { %>
                                     <div class="list-decription">
                                          <%= longDescription %>
                                     </div>
                                     <div class="bg-article"></div>
+                                    <div class="bg-article"></div>
                                     <p class="show-more">
                                         <a id="readmore-detail" href="javascript:;" class="readmore">Đọc thêm</a>
                                     </p>
+                                    <%}%>
                                 </div>
                                 <div class="tab-thongsokythuat">
                                      <div class="cnt-title">
