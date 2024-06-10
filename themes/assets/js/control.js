@@ -891,7 +891,6 @@
         var pageIndexShowMore = pageIndex;
         pageIndex = parseInt(pageIndex) + 1;
         var categoryID = $("#idCategory").val();
-        console.log("page " + pageIndexShowMore);
         $(".div-ajax-loading").show();
         $(".article-list").css({
             opacity: 0.3
@@ -1296,9 +1295,6 @@ function GetValueFromAttr() {
 
 
         //alert(current_url);
-
-
-        console.log('chọn')
         //if (urlParam != "?")
 
         //    urlParam += "&";
@@ -1352,6 +1348,11 @@ function GetValueFromAttr() {
                 $(".div-ajax-loading").hide();
                 ShowMore(pageIndexShowMore, false);
                 $(".btn-reader-more-fillter").html(" Xem " + $.cookie("TotalProduct") + " sản phẩm");
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 100);
+                return false;
+
             }, 200); 
 
         }
