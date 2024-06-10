@@ -2897,7 +2897,7 @@ header .show_search_content .price .per {
     max-height: 800px;
 }
 .tab-thongtinsp.add .list-decription, .tab-thongsokythuat.add .cnt-table-decription {
-    overflow-y: scroll;
+    max-height: 100%;
 }
 .tab-thongtinsp.add .bg-article, .tab-thongsokythuat.add .bg-article {
     display: none;
@@ -3025,6 +3025,20 @@ header .show_search_content .price .per {
     margin-bottom: 10px;
     padding-right: 5px;
 }*/
+.box-text-show-all{
+    text-align:center;
+}
+.box-text-show-all #category_all {
+    margin: 2em 0;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #5798e4;
+    cursor: pointer;
+    display: inline-block;
+    width: auto;
+    border-radius: 5px;
+}
+
 @media (min-width: 1400px) {
     .header__logo {
         margin-right: 1.5rem;
@@ -3215,14 +3229,14 @@ header .show_search_content .price .per {
         flex-wrap: inherit;
     }
 
-        .block-qty-cart .form-control {
-            min-width: 30px;
-        }
+    .block-qty-cart .form-control {
+        min-width: 30px;
+    }
 
-        .block-qty-cart .btn {
-            padding: 7px 5px;
-            font-size: 12px;
-        }
+    .block-qty-cart .btn {
+        padding: 7px 5px;
+        font-size: 12px;
+    }
 
     .cart__list .cart__item.tbody .cart__action {
         position: relative;
@@ -3267,6 +3281,19 @@ header .show_search_content .price .per {
     }
     .sidebar__filters{
         padding-bottom:50px;
+    }
+    .box-content-description {
+        display: block;
+    }
+
+    .tab-thongtinsp {
+        width: 100%;
+        padding-right:0;
+    }
+
+    .tab-thongsokythuat {
+        width: 100%;
+        padding-left:0;
     }
 }
 

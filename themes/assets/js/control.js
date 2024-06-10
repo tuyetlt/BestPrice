@@ -1037,9 +1037,125 @@ $("#category_paging").click(function () {
         }
     });
 });
+$('.btn-remove-all').click(function () {
+    $('.checkboxAttr').prop("checked", false);
+    $("#loadByFilter").val("1");
+    var list_id = "";
+    var filted_html = "";
+
+    var urlParam = "?";
+
+    window.history.replaceState(null, null, urlParam);
+    $("#attributeIDList").val(list_id);
+    $("#filted").html(filted_html);
+
+    var pageIndex = 1;
+    var rootFilterCategoryID = $("#rootFilterCategoryID").val();
+    var attributeIDList = $("#attributeIDList").val();
+
+    var pageIndexShowMore = pageIndex;
+    pageIndex = parseInt(pageIndex) + 1;
+    var categoryID = "";
+    var keyword = "";
+    if ($("#idCategory").length)
+        categoryID = $("#idCategory").val();
+    else
+        keyword = $("#keyword").val();
+
+    $(".div-ajax-loading").show();
+
+    $(".product-list").css({
+        opacity: 0.3
+    });
+    jQuery.ajax({
+        url: '/ajax/ajax.aspx',
+        type: "GET",
+        data: {
+            action: "product_list",
+            control: "categoryload",
+            rootFilterCategoryID: rootFilterCategoryID,
+            attributeIDList: attributeIDList,
+            pageIndex: pageIndexShowMore,
+            keyword: keyword,
+            categoryID: categoryID
+        },
+        complete: function (response) {
+            setTimeout(function () {
+
+                $('.product-list').html(response.responseText);
+                $(".product-list").css({
+                    opacity: 1
+                });
+                $(".div-ajax-loading").hide();
+                ShowMore(pageIndexShowMore, false);
+                $(".btn-reader-more-fillter").html(" Xem " + $.cookie("TotalProduct") + " sản phẩm");
+            }, 200);
+
+        }
+    });
+    $("#category_all").hide();
+});
+ShowMore(1, true);
+$("#category_all").click(function () {
+    $('.checkboxAttr').prop("checked", false);
+    $("#loadByFilter").val("1");
+    var list_id = "";
+    var filted_html = "";
+
+    var urlParam = "?";
+
+    window.history.replaceState(null, null, urlParam);
+    $("#attributeIDList").val(list_id);
+    $("#filted").html(filted_html);
+
+    var pageIndex = 1;
+    var rootFilterCategoryID = $("#rootFilterCategoryID").val();
+    var attributeIDList = $("#attributeIDList").val();
+
+    var pageIndexShowMore = pageIndex;
+    pageIndex = parseInt(pageIndex) + 1;
+    var categoryID = "";
+    var keyword = "";
+    if ($("#idCategory").length)
+        categoryID = $("#idCategory").val();
+    else
+        keyword = $("#keyword").val();
+
+    $(".div-ajax-loading").show();
+
+    $(".product-list").css({
+        opacity: 0.3
+    });
+    jQuery.ajax({
+        url: '/ajax/ajax.aspx',
+        type: "GET",
+        data: {
+            action: "product_list",
+            control: "categoryload",
+            rootFilterCategoryID: rootFilterCategoryID,
+            attributeIDList: attributeIDList,
+            pageIndex: pageIndexShowMore,
+            keyword: keyword,
+            categoryID: categoryID
+        },
+        complete: function (response) {
+            setTimeout(function () {
+
+                $('.product-list').html(response.responseText);
+                $(".product-list").css({
+                    opacity: 1
+                });
+                $(".div-ajax-loading").hide();
+                ShowMore(pageIndexShowMore, false);
+                $(".btn-reader-more-fillter").html(" Xem " + $.cookie("TotalProduct") + " sản phẩm");
+            }, 200);
+
+        }
+    });
+    $("#category_all").hide();
+});
 
 ShowMore(1, true);
-
 function ShowMore(pageIndex, fistLoad) {
     var TotalProduct = $.cookie("TotalProduct");
     var totalP = $("#totalProduct").val();
@@ -1051,7 +1167,6 @@ function ShowMore(pageIndex, fistLoad) {
 
 
     var leftProduct = TotalProduct - (parseInt(pageIndex) * parseInt(rowCategory));
-
     console.log("pageIndex: " + pageIndex + " - TotalProduct: " + TotalProduct);
 
 
@@ -1144,24 +1259,21 @@ function BindDataToAttr() {
         var checkbox = $("#checkboxAttr_" + value);
         if (checkbox.length) {
             checkbox.prop('checked', true);
-            console.log(value.Access + '_' + value.ID);
+           
+            console.log('1');
         }
     });
 }
 // Load theo Attributes
+$("#category_all").hide();
 function GetValueFromAttr() {
     $("#loadByFilter").val("1");
-
-    //console.log("đã chọn");
-
-
-
-
     var list_id = "";
     var filted_html = "";
 
     var urlParam = "?";
-
+    $("#category_all").hide();
+    $(".btn-close-sidebar").hide();
     $('.checkboxAttr:checked').each(function () {
         if (list_id != null && list_id != '')
             list_id += ",";
@@ -1186,17 +1298,17 @@ function GetValueFromAttr() {
         //alert(current_url);
 
 
-
+        console.log('chọn')
         //if (urlParam != "?")
+
         //    urlParam += "&";
 
         urlParam = "?" + url_parent + "=" + url;
-
+        $("#category_all").show();
+        $(".btn-close-sidebar").show();
     });
-
+    
     window.history.replaceState(null, null, urlParam);
-
-    console.log(list_id);
     $("#attributeIDList").val(list_id);
     $("#filted").html(filted_html);
 
@@ -1232,14 +1344,13 @@ function GetValueFromAttr() {
         },
         complete: function (response) {
             setTimeout(function () {
-                console.log('Toét test')
+
                 $('.product-list').html(response.responseText);
                 $(".product-list").css({
                     opacity: 1
                 });
                 $(".div-ajax-loading").hide();
                 ShowMore(pageIndexShowMore, false);
-                $(".box-fillter-btn").show();
                 $(".btn-reader-more-fillter").html(" Xem " + $.cookie("TotalProduct") + " sản phẩm");
             }, 200); 
 
@@ -1247,6 +1358,7 @@ function GetValueFromAttr() {
     });
 
 }
+
 function RemoveAttr(data_id) {
     var removeitem = $("#filted").find("[data-id='" + data_id + "']");
     console.log(data_id);
@@ -1265,8 +1377,6 @@ function RemoveAttr(data_id) {
     AttrList.val(array.toString());
 
     GetValueFromAttr();
-
-
 
 }
 $('#readmore').click(function () {
